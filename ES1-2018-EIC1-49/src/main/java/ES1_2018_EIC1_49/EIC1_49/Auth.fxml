@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="251.0" prefWidth="593.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ES1_2018_EIC1_49.EIC1_49.facebookAPI">
+   <children>
+      <Button layoutX="370.0" layoutY="103.0" mnemonicParsing="false" onAction="#AuthUser" prefHeight="46.0" prefWidth="124.0" text="Login" />
+      <PasswordField fx:id="password" layoutX="168.0" layoutY="142.0" />
+      <TextField fx:id="username" layoutX="168.0" layoutY="88.0" />
+      <Label layoutX="61.0" layoutY="92.0" text="Username" />
+      <Label layoutX="63.0" layoutY="146.0" text="Password" />
+   </children>
+</AnchorPane>
