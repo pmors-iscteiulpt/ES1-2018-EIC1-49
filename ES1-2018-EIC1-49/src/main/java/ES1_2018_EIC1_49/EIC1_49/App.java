@@ -52,6 +52,7 @@ public class App {
 	private JList<String> list_1;
 	private JScrollPane scrollPane;
 	private static List<Status>status;
+	private JTextField textField_1;
 
 	/**
 	 * Launch the application.
@@ -124,12 +125,6 @@ public class App {
 		frame.getContentPane().add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
 
-		JTextArea txtrEscrevaParaProcurar = new JTextArea();
-		txtrEscrevaParaProcurar.setBounds(45, 13, 346, 50);
-		txtrEscrevaParaProcurar.setForeground(Color.LIGHT_GRAY);
-		txtrEscrevaParaProcurar.setText("Escreva para procurar...");
-		panel.add(txtrEscrevaParaProcurar);
-
 		JToggleButton tglbtnFacebook = new JToggleButton("Facebook");
 		tglbtnFacebook.setBounds(10, 93, 114, 25);
 		tglbtnFacebook.addActionListener(new ActionListener() {
@@ -186,10 +181,19 @@ public class App {
 		panel.add(toggleButton_1);
 
 		JButton btnProcurar = new JButton("Procurar");
-		btnProcurar.setBounds(294, 65, 97, 25);
+		
+		btnProcurar.setBounds(304, 34, 97, 25);
 		btnProcurar.setBackground(SystemColor.info);
 		btnProcurar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				DefaultListModel<String> dlm = new DefaultListModel<String>();
+				for(Status s : status) {
+					if(s.getText().contains(textField_1.getText())) {
+						dlm.addElement(s.getUser().getName() + "-------->" + s.getText());
+					}
+					list_1.setModel(dlm);
+				}
+				
 			}
 		});
 		panel.add(btnProcurar);
@@ -200,6 +204,11 @@ public class App {
 		
 	    list_1 = new JList();
 		scrollPane.setViewportView(list_1);
+		
+		textField_1 = new JTextField();
+		textField_1.setBounds(10, 11, 274, 71);
+		panel.add(textField_1);
+		textField_1.setColumns(10);
 
 		
 	}
