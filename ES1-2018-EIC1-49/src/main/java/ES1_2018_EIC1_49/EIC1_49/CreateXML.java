@@ -28,6 +28,8 @@ import org.xml.sax.SAXException;
 
 public class CreateXML {
 	private File newf = new File("C:\\Users\\Pedro\\git\\ES1-2018-EIC1-49\\ES1-2018-EIC1-49\\src\\main\\java\\ES1_2018_EIC1_49\\config.xml");
+	private App a = new App();
+	private facebookAPI fAPI = new facebookAPI();
 	public void write(User prob) {
 		try {
 			
@@ -55,6 +57,16 @@ public class CreateXML {
 			newElement2.setAttribute("Password", prob.getPassword());
 			newElement2.setAttribute("Curso", prob.getCurso());
 			root.appendChild(newElement2);
+			
+			/*Element newElement3 = doc.createElement("AccessTokens");
+			System.out.println("element - " + newElement3);
+			System.out.println(fAPI.getAccessToken());
+			newElement1.setAttribute("AcessToken facebook",fAPI.getAccessToken() );
+			newElement1.setAttribute("AcessToken Twitter", a.getAccessToken());
+			newElement1.setAttribute("AcessTokenSecret Twitter", a.getAccessTokenSecret());
+			newElement1.setAttribute("AOAuthConsumerKey Twitter", a.getOAuthConsumerKey());
+			newElement1.setAttribute("OAuthConsumerSecret Twitter", a.getOAuthConsumerSecret());
+			root.appendChild(newElement1);*/
 			
 			
 			System.out.println("\nSave XML document.");

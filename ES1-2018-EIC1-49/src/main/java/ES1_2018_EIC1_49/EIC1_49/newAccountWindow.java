@@ -99,6 +99,7 @@ public class newAccountWindow {
 				User newUser = new User(textField.getText(), textField_1.getText(), textField_2.getText());
 				CreateXML createxml = new CreateXML();
 				createxml.write(newUser);
+				frame.setVisible(false);
 				
 			}
 		});

@@ -51,8 +51,12 @@ public class App {
 	private TwitterAPI twitterapi;
 	private JList<String> list_1;
 	private JScrollPane scrollPane;
-	private static List<Status>status;
+	private static List<Status> status;
 	private JTextField textField_1;
+	private String OAuthConsumerKey;
+	private String OAuthConsumerSecret;
+	private String AccessToken;
+	private String AccessTokenSecret;
 
 	/**
 	 * Launch the application.
@@ -147,30 +151,31 @@ public class App {
 		tglbtnTwitter.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
+				OAuthConsumerKey ="kVRX8HYyuuGfREHU52O7AUrWQ";
+				OAuthConsumerSecret ="XwGpzZUWsnTXwXQgSeCqAgDLBvelcOCkkX1RmYf4UwXZ60uoY9";
+				AccessToken = "1050057518121148419-d704OUJA2VWxqFhBHI2j1wkS0e4cpZ";
+				AccessTokenSecret="JSlIzbw0hP0t1tsM7RhUABb0q1yD3ZVh96LYhw766CIn4";
 				ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
-				configurationBuilder.setDebugEnabled(true).setOAuthConsumerKey("kVRX8HYyuuGfREHU52O7AUrWQ")
-				.setOAuthConsumerSecret("XwGpzZUWsnTXwXQgSeCqAgDLBvelcOCkkX1RmYf4UwXZ60uoY9")
-				.setOAuthAccessToken("1050057518121148419-d704OUJA2VWxqFhBHI2j1wkS0e4cpZ")
-				.setOAuthAccessTokenSecret("JSlIzbw0hP0t1tsM7RhUABb0q1yD3ZVh96LYhw766CIn4");
-				
-				
-			TwitterFactory tf = new TwitterFactory(configurationBuilder.build());	
-			twitter4j.Twitter twitter = tf.getInstance();
-		    try {
-				status = twitter.getUserTimeline("ISCTEIUL");
-			} catch (TwitterException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			DefaultListModel<String> dlm = new DefaultListModel<String>();
-			for(Status s : status) {
-				dlm.addElement(s.getUser().getName() + "-------->" + s.getText());
-				
-				
-			}
+				configurationBuilder.setDebugEnabled(true).setOAuthConsumerKey(OAuthConsumerKey)
+						.setOAuthConsumerSecret(OAuthConsumerSecret)
+						.setOAuthAccessToken(AccessToken)
+						.setOAuthAccessTokenSecret(AccessTokenSecret);
+
+				TwitterFactory tf = new TwitterFactory(configurationBuilder.build());
+				twitter4j.Twitter twitter = tf.getInstance();
+				try {
+					status = twitter.getUserTimeline("ISCTEIUL");
+				} catch (TwitterException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				DefaultListModel<String> dlm = new DefaultListModel<String>();
+				for (Status s : status) {
+					dlm.addElement(
+							"Time:" + s.getCreatedAt() + "   " + s.getUser().getName() + "-------->" + s.getText());
+
+				}
 				list_1.setModel(dlm);
-			
-				
 
 			}
 		});
@@ -181,36 +186,91 @@ public class App {
 		panel.add(toggleButton_1);
 
 		JButton btnProcurar = new JButton("Procurar");
-		
+
 		btnProcurar.setBounds(304, 34, 97, 25);
 		btnProcurar.setBackground(SystemColor.info);
 		btnProcurar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				DefaultListModel<String> dlm = new DefaultListModel<String>();
-				for(Status s : status) {
-					if(s.getText().contains(textField_1.getText())) {
+				for (Status s : status) {
+					if (s.getText().contains(textField_1.getText())) {
 						dlm.addElement(s.getUser().getName() + "-------->" + s.getText());
 					}
 					list_1.setModel(dlm);
 				}
-				
+
 			}
 		});
 		panel.add(btnProcurar);
 
-	    scrollPane = new JScrollPane();
+		scrollPane = new JScrollPane();
 		scrollPane.setBounds(134, 102, 431, 269);
 		panel.add(scrollPane);
-		
-	    list_1 = new JList();
+
+		list_1 = new JList();
 		scrollPane.setViewportView(list_1);
-		
+
 		textField_1 = new JTextField();
 		textField_1.setBounds(10, 11, 274, 71);
 		panel.add(textField_1);
 		textField_1.setColumns(10);
 
-		
+	}
+
+	/**
+	 * @return the oAuthConsumerKey
+	 */
+	public String getOAuthConsumerKey() {
+		return OAuthConsumerKey;
+	}
+
+	/**
+	 * @param oAuthConsumerKey the oAuthConsumerKey to set
+	 */
+	public void setOAuthConsumerKey(String oAuthConsumerKey) {
+		OAuthConsumerKey = oAuthConsumerKey;
+	}
+
+	/**
+	 * @return the oAuthConsumerSecret
+	 */
+	public String getOAuthConsumerSecret() {
+		return OAuthConsumerSecret;
+	}
+
+	/**
+	 * @param oAuthConsumerSecret the oAuthConsumerSecret to set
+	 */
+	public void setOAuthConsumerSecret(String oAuthConsumerSecret) {
+		OAuthConsumerSecret = oAuthConsumerSecret;
+	}
+
+	/**
+	 * @return the accessToken
+	 */
+	public String getAccessToken() {
+		return AccessToken;
+	}
+
+	/**
+	 * @param accessToken the accessToken to set
+	 */
+	public void setAccessToken(String accessToken) {
+		AccessToken = accessToken;
+	}
+
+	/**
+	 * @return the accessTokenSecret
+	 */
+	public String getAccessTokenSecret() {
+		return AccessTokenSecret;
+	}
+
+	/**
+	 * @param accessTokenSecret the accessTokenSecret to set
+	 */
+	public void setAccessTokenSecret(String accessTokenSecret) {
+		AccessTokenSecret = accessTokenSecret;
 	}
 
 	private static void addPopup(Component component, final JPopupMenu popup) {
