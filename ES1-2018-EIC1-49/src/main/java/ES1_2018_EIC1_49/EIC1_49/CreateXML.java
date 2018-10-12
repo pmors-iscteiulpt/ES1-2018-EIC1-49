@@ -61,12 +61,15 @@ public class CreateXML {
 			/*Element newElement3 = doc.createElement("AccessTokens");
 			System.out.println("element - " + newElement3);
 			System.out.println(fAPI.getAccessToken());
-			newElement1.setAttribute("AcessToken facebook",fAPI.getAccessToken() );
-			newElement1.setAttribute("AcessToken Twitter", a.getAccessToken());
-			newElement1.setAttribute("AcessTokenSecret Twitter", a.getAccessTokenSecret());
-			newElement1.setAttribute("AOAuthConsumerKey Twitter", a.getOAuthConsumerKey());
-			newElement1.setAttribute("OAuthConsumerSecret Twitter", a.getOAuthConsumerSecret());
-			root.appendChild(newElement1);*/
+			System.out.println(a.getAccessToken());
+			System.out.println(a.getOAuthConsumerKey());
+			
+			newElement3.setAttribute("AcessToken facebook",fAPI.getAccessToken() );
+			newElement3.setAttribute("AcessToken Twitter", a.getAccessToken());
+			newElement3.setAttribute("AcessTokenSecret Twitter", a.getAccessTokenSecret());
+			newElement3.setAttribute("AOAuthConsumerKey Twitter", a.getOAuthConsumerKey());
+			newElement3.setAttribute("OAuthConsumerSecret Twitter", a.getOAuthConsumerSecret());
+			root.appendChild(newElement3);*/
 			
 			
 			System.out.println("\nSave XML document.");

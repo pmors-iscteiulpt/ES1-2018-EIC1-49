@@ -29,7 +29,7 @@ public class facebookAPI {
 	  @FXML
 	  private PasswordField password;
 	  private Post aPostmew;
-	  private String accessToken;
+	  private String accessToken = "EAAGRh7ZAfrgoBAGEh3IAh9xhXDteBgzgrxDLqELJ7F9h1oLO1JnZBLwTpAQX1qp91OP22W7impZCMCbLRBU1PGVFnSUXncph1pklvpf13Y267zmZC1R02Jg7huqoZCgp08KF9LWFGMn6hr3IN8f80TUidZAYcmkkg0gGSKhDXaf3XUZCMk0ckXcEK7wZCTc8pLzmAcuvI26qngZDZD";
 
 
     @FXML
@@ -50,7 +50,7 @@ driver.findElement(By.id("pass")).sendKeys(password.getText());
 driver.findElement(By.id("u_0_2")).click();
 System.out.println("dsd");
 
- accessToken = "EAAGRh7ZAfrgoBAGEh3IAh9xhXDteBgzgrxDLqELJ7F9h1oLO1JnZBLwTpAQX1qp91OP22W7impZCMCbLRBU1PGVFnSUXncph1pklvpf13Y267zmZC1R02Jg7huqoZCgp08KF9LWFGMn6hr3IN8f80TUidZAYcmkkg0gGSKhDXaf3XUZCMk0ckXcEK7wZCTc8pLzmAcuvI26qngZDZD";
+
 FacebookClient fbClient = new DefaultFacebookClient(accessToken);
 Connection<Post> result = fbClient.fetchConnection("me/feed", Post.class);
 

@@ -53,10 +53,10 @@ public class App {
 	private JScrollPane scrollPane;
 	private static List<Status> status;
 	private JTextField textField_1;
-	private String OAuthConsumerKey;
-	private String OAuthConsumerSecret;
-	private String AccessToken;
-	private String AccessTokenSecret;
+    private String OAuthConsumerKey ="kVRX8HYyuuGfREHU52O7AUrWQ";
+	private String OAuthConsumerSecret ="XwGpzZUWsnTXwXQgSeCqAgDLBvelcOCkkX1RmYf4UwXZ60uoY9";
+	private String AccessToken = "1050057518121148419-d704OUJA2VWxqFhBHI2j1wkS0e4cpZ";
+	private String AccessTokenSecret="JSlIzbw0hP0t1tsM7RhUABb0q1yD3ZVh96LYhw766CIn4";
 
 	/**
 	 * Launch the application.
@@ -151,10 +151,7 @@ public class App {
 		tglbtnTwitter.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				OAuthConsumerKey ="kVRX8HYyuuGfREHU52O7AUrWQ";
-				OAuthConsumerSecret ="XwGpzZUWsnTXwXQgSeCqAgDLBvelcOCkkX1RmYf4UwXZ60uoY9";
-				AccessToken = "1050057518121148419-d704OUJA2VWxqFhBHI2j1wkS0e4cpZ";
-				AccessTokenSecret="JSlIzbw0hP0t1tsM7RhUABb0q1yD3ZVh96LYhw766CIn4";
+				
 				ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
 				configurationBuilder.setDebugEnabled(true).setOAuthConsumerKey(OAuthConsumerKey)
 						.setOAuthConsumerSecret(OAuthConsumerSecret)
