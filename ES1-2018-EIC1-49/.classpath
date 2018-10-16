@@ -6,7 +6,7 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5">
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
@@ -16,7 +16,11 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Pedro/Desktop/selenium-java-3.14.0/client-combined-3.14.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Pedro/Desktop/selenium-java-3.14.0/client-combined-3.14.0-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Utilizador/git/ES1-2018-EIC1-49/selenium-java-3.14.0-1/client-combined-3.14.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Utilizador/git/ES1-2018-EIC1-49/selenium-java-3.14.0-1/client-combined-3.14.0-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Utilizador/Desktop/com.sun.net.ssl.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Utilizador/Desktop/javax.mail-api-1.4.6.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Utilizador/Downloads/javamail-1.4.5/mail.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Utilizador/Downloads/com.sun.net.ssl.jar.zip"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

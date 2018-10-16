@@ -75,7 +75,7 @@ public class bdaAPP {
 		btnNewButton.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				Node master = file.read("C:\\Users\\Pedro\\git\\ES1-2018-EIC1-49\\ES1-2018-EIC1-49\\src\\main\\java\\ES1_2018_EIC1_49\\config.xml");
+				Node master = file.read("C:\\Users\\Utilizador\\git\\ES1-2018-EIC1-49\\ES1-2018-EIC1-49\\src\\main\\java\\ES1_2018_EIC1_49\\config.xml");
 				Node UserItem = master.getChildNodes().item(3);
 				if(UserItem.getAttributes().item(2).getFirstChild().getTextContent().equals(textField.getText())|| UserItem.getAttributes().item(1).getFirstChild().getTextContent().equals(passwordField.getPassword())) {
 				try {

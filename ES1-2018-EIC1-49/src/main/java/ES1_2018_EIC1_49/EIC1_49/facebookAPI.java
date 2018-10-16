@@ -42,7 +42,7 @@ String authUrl = "https://graph.facebook.com/oauth/authorize?type=user_agent&cli
         + "user_relationships,user_religion_politics,user_status,user_tagged_places,user_videos,user_website,user_work_history,ads_management,ads_read,email,"
         + "manage_notifications,manage_pages,publish_actions,read_friendlists,read_insights,read_mailbox,read_page_mailboxes,read_stream,rsvp_event";
 
-System.setProperty("webdriver.gecko.driver", "C:\\Users\\Pedro\\Downloads\\geckodriver-v0.23.0-win64\\geckodriver.exe");
+System.setProperty("webdriver.gecko.driver", "C:\\Users\\Utilizador\\git\\ES1-2018-EIC1-49\\geckodriver.exe");
 WebDriver driver = new FirefoxDriver();
 driver.get("http://www.facebook.com");
 driver.findElement(By.id("email")).sendKeys(username.getText());
