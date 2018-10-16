@@ -8,8 +8,12 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import java.awt.Color;
+import java.awt.Font;
 
 public class newAccountWindow {
+
+	private bdaAPP bdaApp;
 
 	/**
 	 * @return the frame
@@ -30,6 +34,7 @@ public class newAccountWindow {
 	private JTextField textField_1;
 	private JTextField textField_2;
 	private JButton btnSave;
+	private JLabel lblCriarNovoUsurio;
 
 	/**
 	 * Launch the application.
@@ -59,50 +64,73 @@ public class newAccountWindow {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 422, 261);
+		frame.getContentPane().setFont(new Font("Tahoma", Font.PLAIN, 15));
+		frame.getContentPane().setBackground(Color.ORANGE);
+		frame.setBounds(100, 100, 500, 500);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		
+
 		JLabel lblNewLabel = new JLabel("Username:");
-		lblNewLabel.setBounds(10, 59, 84, 14);
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblNewLabel.setBounds(67, 238, 84, 14);
 		frame.getContentPane().add(lblNewLabel);
-		
+
 		JLabel lblNewLabel_1 = new JLabel("Password:");
-		lblNewLabel_1.setBounds(10, 106, 84, 14);
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblNewLabel_1.setBounds(73, 271, 71, 14);
 		frame.getContentPane().add(lblNewLabel_1);
-		
+
 		JLabel lblCurso = new JLabel("Curso:");
-		lblCurso.setBounds(10, 157, 46, 14);
+		lblCurso.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblCurso.setBounds(97, 307, 46, 14);
 		frame.getContentPane().add(lblCurso);
-		
+
 		textField = new JTextField();
-		textField.setBounds(85, 56, 86, 20);
+		textField.setBounds(151, 236, 269, 20);
 		frame.getContentPane().add(textField);
 		textField.setColumns(10);
-		
+
 		textField_1 = new JTextField();
-		textField_1.setBounds(85, 103, 86, 20);
+		textField_1.setBounds(151, 269, 269, 20);
 		frame.getContentPane().add(textField_1);
 		textField_1.setColumns(10);
-		
+
 		textField_2 = new JTextField();
-		textField_2.setBounds(85, 154, 86, 20);
+		textField_2.setBounds(151, 305, 269, 20);
 		frame.getContentPane().add(textField_2);
 		textField_2.setColumns(10);
-		
-		btnSave = new JButton("Save");
-		btnSave.setBounds(242, 102, 89, 23);
+
+		btnSave = new JButton("Guardar");
+		btnSave.setBackground(Color.WHITE);
+		btnSave.setBounds(331, 376, 89, 23);
 		frame.getContentPane().add(btnSave);
 		btnSave.addActionListener(new ActionListener() {
-			
+
 			public void actionPerformed(ActionEvent e) {
 				User newUser = new User(textField.getText(), textField_1.getText(), textField_2.getText());
 				CreateXML createxml = new CreateXML();
 				createxml.write(newUser);
 				frame.setVisible(false);
-				
+
 			}
 		});
-	}
 
+		JButton btnVoltar = new JButton("Voltar");
+		btnVoltar.setBackground(Color.WHITE);
+		btnVoltar.setBounds(27, 27, 97, 25);
+		btnVoltar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				bdaApp = new bdaAPP();
+				bdaApp.getFrame().setVisible(true);
+				frame.setVisible(false);
+			}
+		});
+		frame.getContentPane().add(btnVoltar);
+		
+		lblCriarNovoUsurio = new JLabel("Criar novo usuário");
+		lblCriarNovoUsurio.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblCriarNovoUsurio.setBounds(170, 151, 172, 20);
+		frame.getContentPane().add(lblCriarNovoUsurio);
+	}
 }

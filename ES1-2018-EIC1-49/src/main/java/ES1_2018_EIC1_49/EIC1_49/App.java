@@ -24,10 +24,15 @@ import javax.swing.JTextArea;
 import java.awt.Color;
 import javax.swing.JToggleButton;
 
+import org.eclipse.jetty.client.api.Authentication;
+
+import facebook_api.*;
+import mail_api.*;
 import twitter4j.Status;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.conf.ConfigurationBuilder;
+import twitter_api.*;
 
 import java.awt.FlowLayout;
 import java.awt.CardLayout;
@@ -42,21 +47,19 @@ import java.awt.event.ActionEvent;
 import java.awt.SystemColor;
 import javax.swing.JScrollPane;
 import javax.swing.JList;
-
+import javax.swing.ImageIcon;
 public class App {
 
 	private JFrame frame;
-	private JTextField txtFechar;
-	private JTextField textField;
-	private TwitterAPI twitterapi;
-	private JList<String> list_1;
-	private JScrollPane scrollPane;
 	private static List<Status> status;
-	private JTextField textField_1;
-    private String OAuthConsumerKey ="kVRX8HYyuuGfREHU52O7AUrWQ";
-	private String OAuthConsumerSecret ="XwGpzZUWsnTXwXQgSeCqAgDLBvelcOCkkX1RmYf4UwXZ60uoY9";
+	private String OAuthConsumerKey = "kVRX8HYyuuGfREHU52O7AUrWQ";
+	private String OAuthConsumerSecret = "XwGpzZUWsnTXwXQgSeCqAgDLBvelcOCkkX1RmYf4UwXZ60uoY9";
 	private String AccessToken = "1050057518121148419-d704OUJA2VWxqFhBHI2j1wkS0e4cpZ";
-	private String AccessTokenSecret="JSlIzbw0hP0t1tsM7RhUABb0q1yD3ZVh96LYhw766CIn4";
+	private String AccessTokenSecret = "JSlIzbw0hP0t1tsM7RhUABb0q1yD3ZVh96LYhw766CIn4";
+	private bdaAPP bdaAPP;
+	private AuthenticationMailWindow authenticationMailWindow;
+	private TwitterWindow twitterwindow;
+	private AuthenticationFacebookWindow afw;
 
 	/**
 	 * Launch the application.
@@ -100,117 +103,82 @@ public class App {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 602, 449);
+		frame.setBounds(100, 100, 500, 500);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		JMenuBar menuBar = new JMenuBar();
-		frame.setJMenuBar(menuBar);
-
-		JMenu mnFicheiro = new JMenu("Ficheiro");
-		menuBar.add(mnFicheiro);
-
-		JMenuItem mntmAjuda = new JMenuItem("Ajuda");
-		menuBar.add(mntmAjuda);
-
-		textField = new JTextField();
-		menuBar.add(textField);
-		textField.setColumns(10);
-
-		JPopupMenu popupMenu = new JPopupMenu();
-		addPopup(frame.getContentPane(), popupMenu);
-
-		txtFechar = new JTextField();
-		txtFechar.setText("Fechar");
-		popupMenu.add(txtFechar);
-		txtFechar.setColumns(10);
-
 		JPanel panel = new JPanel();
-		panel.setBackground(SystemColor.inactiveCaption);
+		panel.setBackground(Color.ORANGE);
 		frame.getContentPane().add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
 
 		JToggleButton tglbtnFacebook = new JToggleButton("Facebook");
-		tglbtnFacebook.setBounds(10, 93, 114, 25);
+		tglbtnFacebook.setBackground(Color.WHITE);
+		tglbtnFacebook.setBounds(117, 110, 120, 49);
 		tglbtnFacebook.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				new Thread() {
-					@Override
-					public void run() {
-						javafx.application.Application.launch(AuthenticationWindow.class);
-					}
-				}.start();
-				System.out.println("sddsdd");
-
+				afw = new AuthenticationFacebookWindow();
+				afw.getFrame().setVisible(true);
+				frame.setVisible(false);
 			}
 		});
 		panel.add(tglbtnFacebook);
 
 		JToggleButton tglbtnTwitter = new JToggleButton("Twitter");
-		tglbtnTwitter.setBounds(10, 129, 114, 25);
+		tglbtnTwitter.setBackground(Color.WHITE);
+		tglbtnTwitter.setBounds(117, 223, 120, 49);
 		tglbtnTwitter.addActionListener(new ActionListener() {
 
+			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
-				configurationBuilder.setDebugEnabled(true).setOAuthConsumerKey(OAuthConsumerKey)
-						.setOAuthConsumerSecret(OAuthConsumerSecret)
-						.setOAuthAccessToken(AccessToken)
-						.setOAuthAccessTokenSecret(AccessTokenSecret);
-
-				TwitterFactory tf = new TwitterFactory(configurationBuilder.build());
-				twitter4j.Twitter twitter = tf.getInstance();
-				try {
-					status = twitter.getUserTimeline("ISCTEIUL");
-				} catch (TwitterException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				DefaultListModel<String> dlm = new DefaultListModel<String>();
-				for (Status s : status) {
-					dlm.addElement(
-							"Time:" + s.getCreatedAt() + "   " + s.getUser().getName() + "-------->" + s.getText());
-
-				}
-				list_1.setModel(dlm);
-
+				twitterwindow = new TwitterWindow();
+				twitterwindow.getFrame().setVisible(true);
+				frame.setVisible(false);
 			}
 		});
 		panel.add(tglbtnTwitter);
 
-		JToggleButton toggleButton_1 = new JToggleButton("Facebook");
-		toggleButton_1.setBounds(10, 165, 114, 25);
-		panel.add(toggleButton_1);
+		JToggleButton tglbtnEmail = new JToggleButton("E-mail");
+		tglbtnEmail.setBackground(Color.WHITE);
+		tglbtnEmail.setBounds(117, 340, 120, 49);
+		tglbtnEmail.addActionListener(new ActionListener() {
 
-		JButton btnProcurar = new JButton("Procurar");
-
-		btnProcurar.setBounds(304, 34, 97, 25);
-		btnProcurar.setBackground(SystemColor.info);
-		btnProcurar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				DefaultListModel<String> dlm = new DefaultListModel<String>();
-				for (Status s : status) {
-					if (s.getText().contains(textField_1.getText())) {
-						dlm.addElement(s.getUser().getName() + "-------->" + s.getText());
-					}
-					list_1.setModel(dlm);
-				}
-
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				authenticationMailWindow = new AuthenticationMailWindow();
+				authenticationMailWindow.getFrame().setVisible(true);
+				frame.setVisible(false);
 			}
 		});
-		panel.add(btnProcurar);
+		panel.add(tglbtnEmail);
 
-		scrollPane = new JScrollPane();
-		scrollPane.setBounds(134, 102, 431, 269);
-		panel.add(scrollPane);
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon(App.class.getResource("/mail_api/1275392-t100.png")));
+		lblNewLabel.setBounds(249, 302, 126, 124);
+		panel.add(lblNewLabel);
 
-		list_1 = new JList();
-		scrollPane.setViewportView(list_1);
+		JLabel lblNewLabel_1 = new JLabel("New label");
+		lblNewLabel_1.setIcon(new ImageIcon(App.class.getResource("/twitter_api/twitter.png")));
+		lblNewLabel_1.setBounds(249, 180, 107, 134);
+		panel.add(lblNewLabel_1);
 
-		textField_1 = new JTextField();
-		textField_1.setBounds(10, 11, 274, 71);
-		panel.add(textField_1);
-		textField_1.setColumns(10);
+		JLabel lblNewLabel_2 = new JLabel("");
+		lblNewLabel_2.setIcon(new ImageIcon(App.class.getResource("/ES1_2018_EIC1_49/EIC1_49/Facebook-Logo-100.png")));
+		lblNewLabel_2.setBounds(249, 77, 117, 117);
+		panel.add(lblNewLabel_2);
+
+		JButton btnVoltar = new JButton("Log-out");
+		btnVoltar.setBackground(Color.WHITE);
+		btnVoltar.setBounds(27, 27, 97, 25);
+		btnVoltar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				bdaAPP = new bdaAPP();
+				bdaAPP.getFrame().setVisible(true);
+				frame.setVisible(false);
+			}
+		});
+		panel.add(btnVoltar);
 
 	}
 

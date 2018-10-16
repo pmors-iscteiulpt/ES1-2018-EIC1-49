@@ -1,4 +1,4 @@
-package ES1_2018_EIC1_49.EIC1_49;
+package facebook_api;
 
 import com.restfb.Connection;
 import com.restfb.DefaultFacebookClient;

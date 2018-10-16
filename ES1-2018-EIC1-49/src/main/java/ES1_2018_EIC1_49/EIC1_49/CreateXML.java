@@ -25,6 +25,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import facebook_api.facebookAPI;
+
 
 public class CreateXML {
 	private File newf = new File("C:\\Users\\Utilizador\\git\\ES1-2018-EIC1-49\\ES1-2018-EIC1-49\\src\\main\\java\\ES1_2018_EIC1_49\\config.xml");
@@ -85,7 +87,6 @@ public class CreateXML {
 	}
 
 	public Node read(String filename) {
-		System.out.println("Entrei no read");
 		File inputFile = new File(filename);
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder dBuilder;
@@ -96,7 +97,6 @@ public class CreateXML {
 			NodeList nList = doc.getElementsByTagName("File");
 			Node n = nList.item(0);
 			;
-			System.out.println("XML -" + n.getAttributes().item(1));
 			return n;
 		} catch (ParserConfigurationException e) {
 			// TODO Auto-generated catch block
