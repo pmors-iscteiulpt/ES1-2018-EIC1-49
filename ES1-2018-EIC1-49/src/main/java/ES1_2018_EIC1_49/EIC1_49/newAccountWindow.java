@@ -67,6 +67,7 @@ public class newAccountWindow {
 		frame.getContentPane().setFont(new Font("Tahoma", Font.PLAIN, 15));
 		frame.getContentPane().setBackground(Color.ORANGE);
 		frame.setBounds(100, 100, 500, 500);
+		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 

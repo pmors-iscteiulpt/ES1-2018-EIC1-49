@@ -5,8 +5,6 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
-import javax.swing.JList;
-import javax.swing.JScrollPane;
 
 import twitter4j.Status;
 import twitter4j.Twitter;
@@ -56,8 +54,6 @@ public class twitterAPI {
 	}
 	
 	public void logIn() throws URISyntaxException, IOException, TwitterException {
-
-		String testStatus = "Hello from twitter4j";
 
 		ConfigurationBuilder cb = new ConfigurationBuilder();
 		cb.setDebugEnabled(true).setOAuthConsumerKey("42kwK0tk5ewLK2hTCeWVl6ZlP")

@@ -6,23 +6,10 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
-import javax.mail.Message;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 import javax.swing.ImageIcon;
-import javax.swing.JTextField;
 
-import twitter4j.TwitterException;
-
-import javax.swing.JPasswordField;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Date;
-import java.util.Properties;
-
 import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JRadioButton;
@@ -35,22 +22,10 @@ public class SentMailWindow {
 	private JFrame frame;
 	private PresentationMailWindow pmw;
 	private AuthenticationMailWindow amw;
-	
-	public JFrame getFrame() {
-		return frame;
-	}
-
-	public void setFrame(JFrame frame) {
-		this.frame = frame;
-	}
-
+	private MailAPI mail = new MailAPI();
 	public String user;
 	public String pass;
-	private MailAPI mail = new MailAPI();
-	
-	/**
-	 * Launch the application.
-	 */
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -64,17 +39,10 @@ public class SentMailWindow {
 		});
 	}
 
-	/**
-	 * Create the application.
-	 */
 	public SentMailWindow() {
 		initialize();
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	@SuppressWarnings("deprecation")
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(250, 250, 777, 501);
@@ -89,8 +57,13 @@ public class SentMailWindow {
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
+		String mailUser = mail.getUsername();
+		JLabel fancyShowUser = new JLabel(mailUser);
+		fancyShowUser.setBounds(642, 188, 129, 27);
+		panel.add(fancyShowUser);
+		
 		JLabel lblSessoActiva = new JLabel("Sess\u00E3o activa");
-		lblSessoActiva.setBounds(650, 128, 78, 16);
+		lblSessoActiva.setBounds(650, 128, 90, 16);
 		panel.add(lblSessoActiva);
 
 		JLabel lblNewLabel = new JLabel("");
@@ -159,9 +132,13 @@ public class SentMailWindow {
 		lblNewLabel_2.setBounds(676, 380, 64, 32);
 		panel.add(lblNewLabel_2);
 		
-		String mailUser = mail.getUsername();
-		JLabel fancyShowUser = new JLabel(mailUser);
-		fancyShowUser.setBounds(630, 188, 129, 27);
-		panel.add(fancyShowUser);
+
+	}
+	public JFrame getFrame() {
+		return frame;
+	}
+	
+	public void setFrame(JFrame frame) {
+		this.frame = frame;
 	}
 }

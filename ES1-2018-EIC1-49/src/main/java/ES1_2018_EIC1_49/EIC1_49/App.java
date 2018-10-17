@@ -7,7 +7,6 @@ package ES1_2018_EIC1_49.EIC1_49;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
-import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.JPopupMenu;
@@ -17,36 +16,17 @@ import java.awt.event.MouseEvent;
 import java.util.List;
 
 import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JTextField;
-import javax.swing.JMenuItem;
-import javax.swing.JTextArea;
 import java.awt.Color;
 import javax.swing.JToggleButton;
-
-import org.eclipse.jetty.client.api.Authentication;
 
 import facebook_api.*;
 import mail_api.*;
 import twitter4j.Status;
-import twitter4j.TwitterException;
-import twitter4j.TwitterFactory;
-import twitter4j.conf.ConfigurationBuilder;
 import twitter_api.*;
 
-import java.awt.FlowLayout;
-import java.awt.CardLayout;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridLayout;
-
-import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.SystemColor;
-import javax.swing.JScrollPane;
-import javax.swing.JList;
 import javax.swing.ImageIcon;
 public class App {
 
@@ -105,6 +85,7 @@ public class App {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 500, 500);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setResizable(false);
 
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.ORANGE);

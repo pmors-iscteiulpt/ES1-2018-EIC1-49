@@ -9,23 +9,11 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
-import javax.mail.Message;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 import javax.swing.ImageIcon;
 import javax.swing.JTextField;
-
-import twitter4j.TwitterException;
-
 import javax.swing.JPasswordField;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Date;
-import java.util.Properties;
-
 import javax.swing.JButton;
 
 public class AuthenticationMailWindow {
@@ -37,6 +25,9 @@ public class AuthenticationMailWindow {
 	private MailAPI mail = new MailAPI();
 	private SentMailWindow smw = new SentMailWindow();
 	private App app;
+	
+	
+	
 	public String getUser() {
 		return user;
 	}
@@ -142,11 +133,11 @@ public class AuthenticationMailWindow {
 		panel.add(btnIniciarSesso);
 		btnIniciarSesso.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String user = textField.getText();
-				String pass = passwordField.getText();
+				user = textField.getText();
+				pass = passwordField.getText();
 				smw.getFrame().setVisible(true);
 				frame.setVisible(false);
-				mail.verifyCredentials(user, pass);
+				mail.getMailCredentials(user, pass);
 			}
 		});
 

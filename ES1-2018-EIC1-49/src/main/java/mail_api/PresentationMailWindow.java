@@ -6,37 +6,22 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 import javax.swing.ImageIcon;
 import javax.swing.JTextField;
 
 import mail_api.MailAPI;
-import twitter4j.TwitterException;
 
-import javax.swing.JPasswordField;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.ByteArrayInputStream;
-import java.util.Date;
-import java.util.Properties;
 
 import javax.swing.JButton;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
-import javax.swing.JRadioButton;
-
 public class PresentationMailWindow {
 
 	private JFrame frame;
 	public String user;
 	public String pass;
-	MailAPI mail = new MailAPI();
+	private MailAPI mail = new MailAPI();
 	private JTextField textMessageMail;
 	private JTextField sendTo;
 	private JTextField subject;
@@ -118,7 +103,12 @@ public class PresentationMailWindow {
 				btnEnviarEmail.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 //							textMessageMailm = new  MimeMessage(mail.getSession(), new ByteArrayInputStream(textMessageMail.getText().getBytes()));
-						mail.sendEmail2(sendTo.getText(), subject.getText(), textMessageMail.getText());
+						try {
+							mail.sendEmail(sendTo.getText(), subject.getText(), textMessageMail.getText());
+						} catch (Exception e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
 						JOptionPane.showMessageDialog(null, "E-mail enviado com sucesso!", "", JOptionPane.INFORMATION_MESSAGE);
 					}
 				});
@@ -163,9 +153,10 @@ public class PresentationMailWindow {
 				lblAssunto.setBounds(23, 49, 78, 16);
 				panel_2.add(lblAssunto);
 				
+				
 				String mailUser = mail.getUsername();
 				JLabel fancyShowUser = new JLabel(mailUser);
-				fancyShowUser.setBounds(630, 188, 129, 27);
+				fancyShowUser.setBounds(642, 188, 129, 27);
 				panel.add(fancyShowUser);
 	}
 

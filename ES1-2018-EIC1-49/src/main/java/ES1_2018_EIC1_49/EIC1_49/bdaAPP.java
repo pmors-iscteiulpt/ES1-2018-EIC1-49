@@ -7,20 +7,13 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
 import java.awt.Font;
-import java.awt.Image;
-import java.awt.Label;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JTextField;
-
 import org.w3c.dom.Node;
-
 import javax.swing.JPasswordField;
 import java.awt.Color;
-import java.awt.Dimension;
 
 public class bdaAPP {
 
@@ -30,7 +23,6 @@ public class bdaAPP {
 	private JPasswordField passwordField;
 	private CreateXML file = new CreateXML();
 	private App window;
-
 	/**
 	 * Launch the application.
 	 */
@@ -58,7 +50,8 @@ public class bdaAPP {
 		frame.setBounds(250, 250, 500, 500);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		Image img = new ImageIcon(this.getClass().getResource("iscte2.png")).getImage();
+		frame.setResizable(false);
+		new ImageIcon(this.getClass().getResource("iscte2.png")).getImage();
 
 		JButton btnNewButton = new JButton("Aceder");
 		btnNewButton.setBackground(Color.WHITE);
