@@ -114,6 +114,7 @@ public class PresentationMailWindow {
 		panel.add(lblNewLabel_1);
 				
 				JButton btnEnviarEmail = new JButton("Enviar");
+				btnEnviarEmail.setBackground(Color.WHITE);
 				btnEnviarEmail.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 //							textMessageMailm = new  MimeMessage(mail.getSession(), new ByteArrayInputStream(textMessageMail.getText().getBytes()));
@@ -161,12 +162,6 @@ public class PresentationMailWindow {
 				JLabel lblAssunto = new JLabel("Assunto");
 				lblAssunto.setBounds(23, 49, 78, 16);
 				panel_2.add(lblAssunto);
-				
-				JLabel lblNewLabel_2 = new JLabel("");
-				lblNewLabel_2.setBounds(291, 146, 42, 69);
-				panel.add(lblNewLabel_2);
-				lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 18));
-				lblNewLabel_2.setIcon(new ImageIcon(PresentationMailWindow.class.getResource("/test/mail_api/if_list_384887 (2).png")));
 				
 				String mailUser = mail.getUsername();
 				JLabel fancyShowUser = new JLabel(mailUser);

@@ -135,7 +135,7 @@ public class TwitterWindow {
 		frame.getContentPane().add(panel);
 
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(105, 107, 599, 181);
+		scrollPane.setBounds(105, 107, 599, 196);
 		panel.add(scrollPane);
 
 		list_1 = new JList<String>();
