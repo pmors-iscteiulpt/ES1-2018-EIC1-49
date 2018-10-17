@@ -58,7 +58,7 @@ public class App {
 	private String AccessTokenSecret = "JSlIzbw0hP0t1tsM7RhUABb0q1yD3ZVh96LYhw766CIn4";
 	private bdaAPP bdaAPP;
 	private AuthenticationMailWindow authenticationMailWindow;
-	private TwitterWindow twitterwindow;
+	private AuthenticationTwitterWindow twitterwindow;
 	private AuthenticationFacebookWindow afw;
 
 	/**
@@ -131,7 +131,7 @@ public class App {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				twitterwindow = new TwitterWindow();
+				twitterwindow = new AuthenticationTwitterWindow();
 				twitterwindow.getFrame().setVisible(true);
 				frame.setVisible(false);
 			}
