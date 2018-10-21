@@ -26,6 +26,7 @@ public class MailAPI {
 		String[] to = { address };
 		String host = "smtp-mail.outlook.com";
 
+		
 		Properties prop = System.getProperties();
 		prop.put("mail.smtp.starttls.enable", "true");
 		prop.put("mail.smtp.ssl.trust", host);
