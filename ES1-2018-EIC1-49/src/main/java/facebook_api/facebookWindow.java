@@ -21,6 +21,7 @@ import mail_api.SentMailWindow;
 import javax.swing.JToggleButton;
 import javax.swing.JTextField;
 import java.awt.Font;
+import javax.swing.JScrollPane;
 
 public class facebookWindow {
 	private JFrame frame;
@@ -37,6 +38,8 @@ public class facebookWindow {
 	public String pass;
 	private JTextField textField;
 	private AuthenticationFacebookWindow afw;
+	private facebookAPI fapi = new facebookAPI();
+	private JList<String> list_1;
 	
 	/**
 	 * Launch the application.
@@ -108,9 +111,17 @@ public class facebookWindow {
 		panel_1.setBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(0, 0, 0)));
 		panel_1.setBounds(77, 157, 504, 209);
 		panel.add(panel_1);
+		panel_1.setLayout(null);
 		
-		JList list = new JList();
-		panel_1.add(list);
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 11, 484, 187);
+		panel_1.add(scrollPane);
+		
+		list_1 = new JList<String>();
+		scrollPane.setViewportView(list_1);
+		
+		
+		
 		
 		JRadioButton rdbtnEmailsEnviadosPelo = new JRadioButton("ISCTE");
 		rdbtnEmailsEnviadosPelo.setBackground(Color.ORANGE);
@@ -176,5 +187,19 @@ public class facebookWindow {
 		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblNewLabel_4.setBounds(77, 128, 113, 25);
 		panel.add(lblNewLabel_4);
+		
+		JButton btnVerPublicaes = new JButton("Ver publicações");
+		btnVerPublicaes.setBackground(Color.ORANGE);
+		btnVerPublicaes.setBounds(167, 125, 136, 25);
+		panel.add(btnVerPublicaes);
+		btnVerPublicaes.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				fapi.AuthUser();
+				list_1.setModel(fapi.dlm);
+				
+			}
+		});
 	}
 }

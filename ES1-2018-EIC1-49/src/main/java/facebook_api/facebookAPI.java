@@ -9,6 +9,9 @@ import com.restfb.types.User;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+
+import javax.swing.DefaultListModel;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -24,50 +27,50 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class facebookAPI {
-	  @FXML
-	  private TextField username;
-	  @FXML
-	  private PasswordField password;
-	  private Post aPostmew;
-	  private String accessToken = "EAAGRh7ZAfrgoBAGEh3IAh9xhXDteBgzgrxDLqELJ7F9h1oLO1JnZBLwTpAQX1qp91OP22W7impZCMCbLRBU1PGVFnSUXncph1pklvpf13Y267zmZC1R02Jg7huqoZCgp08KF9LWFGMn6hr3IN8f80TUidZAYcmkkg0gGSKhDXaf3XUZCMk0ckXcEK7wZCTc8pLzmAcuvI26qngZDZD";
+	@FXML
+	private TextField username;
+	@FXML
+	private PasswordField password;
+	private Post aPostmew;
+	private String accessToken = "EAAcnZCn5aQZAUBAHOsgGnYnLOmg8ZAtEhGHHeRYNlohM2rpifVs1RCputUzzqPaOpQbmMfbjInFw3aA7SSIarXjbeYP78LH6VJbCZBuysIxUv6IxrWBRG2UomAwT73hAV4YaDLKLBvWTWqBefpiHr1zVXZCAoIJ77o1bqvZBIzfS6hOPJSfyTwBzZBcmKVxIv4eryEbi9VjRwZDZD";
+	DefaultListModel<String> dlm = new DefaultListModel<String>();
 
+	public void AuthUser() {
+		String domain = "http://radixcode.com/";
+		String appID = "1115442835290294";
+		String authUrl = "https://graph.facebook.com/oauth/authorize?type=user_agent&client_id=" + appID
+				+ "&redirect_uri=" + domain + "&scope=user_about_me,"
+				+ "user_actions.books,user_actions.fitness,user_actions.music,user_actions.news,user_actions.video,user_activities,user_birthday,user_education_history,"
+				+ "user_events,user_photos,user_friends,user_games_activity,user_groups,user_hometown,user_interests,user_likes,user_location,user_photos,user_relationship_details,"
+				+ "user_relationships,user_religion_politics,user_status,user_tagged_places,user_videos,user_website,user_work_history,ads_management,ads_read,email,"
+				+ "manage_notifications,manage_pages,publish_actions,read_friendlists,read_insights,read_mailbox,read_page_mailboxes,read_stream,rsvp_event";
 
-    @FXML
-    void AuthUser(ActionEvent event) {
-String domain = "http://radixcode.com/";
-String appID = "1115442835290294";
-String authUrl = "https://graph.facebook.com/oauth/authorize?type=user_agent&client_id="+appID+"&redirect_uri="+domain+"&scope=user_about_me,"
-        + "user_actions.books,user_actions.fitness,user_actions.music,user_actions.news,user_actions.video,user_activities,user_birthday,user_education_history,"
-        + "user_events,user_photos,user_friends,user_games_activity,user_groups,user_hometown,user_interests,user_likes,user_location,user_photos,user_relationship_details,"
-        + "user_relationships,user_religion_politics,user_status,user_tagged_places,user_videos,user_website,user_work_history,ads_management,ads_read,email,"
-        + "manage_notifications,manage_pages,publish_actions,read_friendlists,read_insights,read_mailbox,read_page_mailboxes,read_stream,rsvp_event";
+		/*
+		 * System.setProperty("webdriver.gecko.driver",
+		 * "C:\\Users\\Pedro\\git\\ES1-2018-EIC1-49\\geckodriver.exe"); WebDriver driver
+		 * = new FirefoxDriver(); driver.get("http://www.facebook.com");
+		 * driver.findElement(By.id("email")).sendKeys(username.getText());
+		 * driver.findElement(By.id("pass")).sendKeys(password.getText());
+		 * driver.findElement(By.id("u_0_2")).click(); System.out.println("dsd");
+		 */
 
-System.setProperty("webdriver.gecko.driver", "C:\\Users\\Utilizador\\git\\ES1-2018-EIC1-49\\geckodriver.exe");
-WebDriver driver = new FirefoxDriver();
-driver.get("http://www.facebook.com");
-driver.findElement(By.id("email")).sendKeys(username.getText());
-driver.findElement(By.id("pass")).sendKeys(password.getText());
-driver.findElement(By.id("u_0_2")).click();
-System.out.println("dsd");
+		FacebookClient fbClient = new DefaultFacebookClient(accessToken);
+		Connection<Post> result = fbClient.fetchConnection("me/feed", Post.class);
 
+		int cont = 0;
+		for (List<Post> page : result) {
+			for (Post aPost : page) {
+				if (aPost.getMessage() != null) {
+					aPostmew = aPost;
+					cont++;
+					dlm.addElement(aPost.getCreatedTime() + " - " + aPost.getMessage());
+				}
+			}
+		}
 
-FacebookClient fbClient = new DefaultFacebookClient(accessToken);
-Connection<Post> result = fbClient.fetchConnection("me/feed", Post.class);
-
-int cont =0;
-for(List<Post> page : result) {
-	for(Post aPost : page) {
-		aPostmew = aPost;
-		System.out.println(aPost.getMessage());
-		System.out.println("fb.com/" + aPost.getId());
-		cont++;
+		System.out.println(cont);
+		// driver.quit();
 	}
-}
-
-   System.out.println(cont);
-   driver.quit();
-    }
-
 
 	/**
 	 * @return the accessToken
@@ -76,14 +79,12 @@ for(List<Post> page : result) {
 		return accessToken;
 	}
 
-
 	/**
 	 * @param accessToken the accessToken to set
 	 */
 	public void setAccessToken(String accessToken) {
 		this.accessToken = accessToken;
 	}
-
 
 	/**
 	 * @return the aPostmew
@@ -92,7 +93,6 @@ for(List<Post> page : result) {
 		return aPostmew;
 	}
 
-
 	/**
 	 * @param aPostmew the aPostmew to set
 	 */
@@ -100,7 +100,4 @@ for(List<Post> page : result) {
 		this.aPostmew = aPostmew;
 	}
 
-
-
 }
-
