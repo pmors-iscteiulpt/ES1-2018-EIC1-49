@@ -16,12 +16,15 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Utilizador/git/ES1-2018-EIC1-49/selenium-java-3.14.0-1/client-combined-3.14.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Utilizador/git/ES1-2018-EIC1-49/selenium-java-3.14.0-1/client-combined-3.14.0-sources.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Utilizador/Desktop/com.sun.net.ssl.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Utilizador/Desktop/javax.mail-api-1.4.6.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Utilizador/Downloads/javamail-1.4.5/mail.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Utilizador/Downloads/com.sun.net.ssl.jar.zip"/>
-	<classpathentry kind="lib" path="C:/Users/Utilizador/Desktop/activation.jar.zip"/>
+	<classpathentry kind="lib" path="C:/Users/Pedro/git/ES1-2018-EIC1-49/selenium-java-3.14.0-1/client-combined-3.14.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Pedro/git/ES1-2018-EIC1-49/selenium-java-3.14.0-1/client-combined-3.14.0-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Pedro/Desktop/java-mail-1.4.4.jar (1)/java-mail-1.4.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Pedro/Desktop/com.sun.net.ssl.jar.zip"/>
+	<classpathentry kind="lib" path="C:/Users/Pedro/Desktop/com.sun.net.ssl.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Pedro/Desktop/activation.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Pedro/Desktop/javax.mail.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Pedro/Desktop/javax.mail-api-1.4.6.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Pedro/Desktop/mail.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Pedro/Desktop/org.eclipse.egit_5.1.2.201810061102-r.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

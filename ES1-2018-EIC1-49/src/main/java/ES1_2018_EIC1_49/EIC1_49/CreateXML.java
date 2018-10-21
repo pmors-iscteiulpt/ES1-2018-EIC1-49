@@ -29,7 +29,7 @@ import facebook_api.facebookAPI;
 
 
 public class CreateXML {
-	private File newf = new File("C:\\Users\\Utilizador\\git\\ES1-2018-EIC1-49\\ES1-2018-EIC1-49\\src\\main\\java\\ES1_2018_EIC1_49\\config.xml");
+	private File newf = new File("C:\\Users\\Pedro\\git\\ES1-2018-EIC1-49\\ES1-2018-EIC1-49\\src\\main\\java\\ES1_2018_EIC1_49\\config.xml");
 	private App a = new App();
 	private facebookAPI fAPI = new facebookAPI();
 	public void write(User prob) {
