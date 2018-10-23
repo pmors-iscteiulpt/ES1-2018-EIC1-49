@@ -16,6 +16,7 @@ import javax.swing.JRadioButton;
 import javax.swing.border.MatteBorder;
 
 import mail_api.MailAPI;
+import javax.swing.JScrollPane;
 
 public class SentMailWindow {
 
@@ -25,6 +26,8 @@ public class SentMailWindow {
 	private MailAPI mail = new MailAPI();
 	public String user;
 	public String pass;
+	private JRadioButton rdbtnEmailsEnviadosPelo;
+	private JList<String> list_1;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -95,11 +98,15 @@ public class SentMailWindow {
 		panel_1.setBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(0, 0, 0)));
 		panel_1.setBounds(61, 157, 520, 275);
 		panel.add(panel_1);
+		panel_1.setLayout(null);
 		
-		JList list = new JList();
-		panel_1.add(list);
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 11, 500, 253);
+		panel_1.add(scrollPane);
+		list_1 = new JList<String>();
+		scrollPane.setViewportView(list_1);
 		
-		JRadioButton rdbtnEmailsEnviadosPelo = new JRadioButton("E-mails enviados pelo diretor ");
+	    rdbtnEmailsEnviadosPelo = new JRadioButton("E-mails enviados pelo Iscte ");
 		rdbtnEmailsEnviadosPelo.setBackground(Color.ORANGE);
 		rdbtnEmailsEnviadosPelo.setBounds(345, 62, 236, 25);
 		panel.add(rdbtnEmailsEnviadosPelo);
@@ -126,6 +133,24 @@ public class SentMailWindow {
 		btnFiltrar.setBackground(Color.ORANGE);
 		btnFiltrar.setBounds(486, 124, 97, 25);
 		panel.add(btnFiltrar);
+		btnFiltrar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+			if(rdbtnEmailsEnviadosPelo.isSelected()) {
+				try {
+					mail.getEmail();
+					list_1.setModel(mail.dlm);
+					
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+			}
+				
+			}
+		});
 		
 		JLabel lblNewLabel_2 = new JLabel("");
 		lblNewLabel_2.setIcon(new ImageIcon(SentMailWindow.class.getResource("/mail_api/if_list_384887 (2).png")));
