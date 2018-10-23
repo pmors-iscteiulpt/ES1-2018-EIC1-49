@@ -1,34 +1,29 @@
 package ES1_2018_EIC1_49.EIC1_49;
 
-/**
- * Hello world!
- *
- */
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 import java.awt.BorderLayout;
-import javax.swing.JPopupMenu;
+import java.awt.Color;
 import java.awt.Component;
+import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
-import java.awt.Color;
+import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JToggleButton;
 
-import facebook_api.*;
-import mail_api.*;
+import facebook_api.AuthenticationFacebookWindow;
+import mail_api.AuthenticationMailWindow;
 import twitter4j.Status;
-import twitter_api.*;
+import twitter_api.AuthenticationTwitterWindow;
 
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.ImageIcon;
-public class App {
+public class App extends JFrame {
 
 	private JFrame frame;
 	private static List<Status> status;
@@ -40,6 +35,7 @@ public class App {
 	private AuthenticationMailWindow authenticationMailWindow;
 	private AuthenticationTwitterWindow twitterwindow;
 	private AuthenticationFacebookWindow afw;
+	private App app;
 
 	/**
 	 * Launch the application.
@@ -49,7 +45,7 @@ public class App {
 			public void run() {
 				try {
 					App window = new App();
-					window.frame.setVisible(true);
+//					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -76,21 +72,25 @@ public class App {
 	 */
 	public App() {
 		initialize();
+
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+
 		frame = new JFrame();
 		frame.setBounds(100, 100, 500, 500);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setResizable(false);
+		frame.setVisible(true);
 
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.ORANGE);
 		frame.getContentPane().add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
+		System.out.println(frame.getSize());
 
 		JToggleButton tglbtnFacebook = new JToggleButton("Facebook");
 		tglbtnFacebook.setBackground(Color.WHITE);

@@ -1,21 +1,22 @@
 package ES1_2018_EIC1_49.EIC1_49;
 
+import java.awt.Color;
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import java.awt.Font;
+import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JTextField;
-import org.w3c.dom.Node;
-import javax.swing.JPasswordField;
-import java.awt.Color;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
-public class bdaAPP {
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+
+public class bdaAPP extends JFrame {
 
 	private JFrame frame;
 	private static bdaAPP window1;
@@ -23,6 +24,8 @@ public class bdaAPP {
 	private JPasswordField passwordField;
 	private CreateXML file = new CreateXML();
 	private App window;
+	private java.util.List<Utilizador> users = file.getusersList();
+
 	/**
 	 * Launch the application.
 	 */
@@ -31,7 +34,6 @@ public class bdaAPP {
 			public void run() {
 				try {
 					window1 = new bdaAPP();
-					window1.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -44,6 +46,7 @@ public class bdaAPP {
 	}
 
 	private void initialize() {
+
 		frame = new JFrame();
 		frame.getContentPane().setBackground(Color.ORANGE);
 		frame.getContentPane().setFont(new Font("Monotype Corsiva", Font.BOLD, 16));
@@ -51,6 +54,7 @@ public class bdaAPP {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setResizable(false);
+		frame.setVisible(true);
 		new ImageIcon(this.getClass().getResource("iscte2.png")).getImage();
 
 		JButton btnNewButton = new JButton("Aceder");
@@ -58,24 +62,40 @@ public class bdaAPP {
 		btnNewButton.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				Node master = file.read(
-						"C:\\Users\\Pedro\\git\\ES1-2018-EIC1-49\\ES1-2018-EIC1-49\\src\\main\\java\\ES1_2018_EIC1_49\\config.xml");
-				Node UserItem = master.getChildNodes().item(3);
-				if (UserItem.getAttributes().item(2).getFirstChild().getTextContent().equals(textField.getText())
-						|| UserItem.getAttributes().item(1).getFirstChild().getTextContent()
-								.equals(passwordField.getPassword())) {
+				if (acessGranted() == true) {
 					try {
-						window = new App();
-						window.getFrame().setVisible(true);
-						frame.setVisible(false);
+						frame.dispose();
+
+						App app = new App();
 
 					} catch (Exception e1) {
 						e1.printStackTrace();
 					}
+
 				} else {
-					JOptionPane.showMessageDialog(null, "Username e/ou password incorrectas!", "", JOptionPane.INFORMATION_MESSAGE);
+					System.out.println("Credenciais ERRADAS");
 				}
 			}
+
+			private boolean acessGranted() {
+				String username = String.valueOf(textField.getText());
+				System.out.println(username);
+				String pw = String.valueOf(passwordField.getPassword());
+				System.out.println(pw + "inserida");
+				for (Utilizador u : users) {
+					String usernameData = u.getUsername();
+					String pwData = u.getPw();
+					System.out.println(usernameData + ", " + pwData);
+					if (username.equals(usernameData) && pwData.equals(pw)) {
+
+						return true;
+
+					}
+				}
+
+				return false;
+			}
+
 		});
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		btnNewButton.setBounds(317, 335, 75, 24);
@@ -103,7 +123,7 @@ public class bdaAPP {
 		btnNewButton_1.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				frame.setVisible(false);
+				frame.dispose();
 				newAccountWindow window = new newAccountWindow();
 				window.getFrame().setVisible(true);
 			}
@@ -117,8 +137,7 @@ public class bdaAPP {
 		frame.getContentPane().add(lblNewLabel_2);
 
 		JLabel lblNewLabel_3 = new JLabel("");
-		lblNewLabel_3
-				.setIcon(new ImageIcon(bdaAPP.class.getResource("/mail_api/icons8-administrator-male-24.png")));
+		lblNewLabel_3.setIcon(new ImageIcon(bdaAPP.class.getResource("/mail_api/icons8-administrator-male-24.png")));
 		lblNewLabel_3.setBounds(104, 256, 24, 37);
 		frame.getContentPane().add(lblNewLabel_3);
 
@@ -136,4 +155,5 @@ public class bdaAPP {
 	public void setFrame(JFrame frame) {
 		this.frame = frame;
 	}
+
 }

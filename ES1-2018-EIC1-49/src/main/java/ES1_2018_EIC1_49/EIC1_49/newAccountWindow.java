@@ -39,24 +39,25 @@ public class newAccountWindow {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					newAccountWindow window = new newAccountWindow();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					newAccountWindow window = new newAccountWindow();
+//					window.frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Create the application.
 	 */
 	public newAccountWindow() {
 		initialize();
+		frame.setVisible(true);
 	}
 
 	/**
@@ -108,9 +109,9 @@ public class newAccountWindow {
 		btnSave.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				User newUser = new User(textField.getText(), textField_1.getText(), textField_2.getText());
+				Utilizador newUser = new Utilizador(textField.getText(), textField_1.getText(), textField_2.getText());
 				CreateXML createxml = new CreateXML();
-				createxml.write(newUser);
+				createxml.addUser(newUser);
 				frame.setVisible(false);
 
 			}
@@ -128,7 +129,7 @@ public class newAccountWindow {
 			}
 		});
 		frame.getContentPane().add(btnVoltar);
-		
+
 		lblCriarNovoUsurio = new JLabel("Criar novo usuário");
 		lblCriarNovoUsurio.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblCriarNovoUsurio.setBounds(170, 151, 172, 20);

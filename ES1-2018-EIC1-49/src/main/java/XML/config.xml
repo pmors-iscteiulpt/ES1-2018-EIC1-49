@@ -1,4 +1,19 @@
-<?xml version="1.0" encoding="UTF-8"?><File>
-<User Name="pedro"/>
-<User Curso="lei" Password="almeida" Username="pedro"/>
-</File>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<users>
+    <user>
+        <curso>lei</curso>
+        <pw>123</pw>
+        <username>pedro</username>
+    </user>
+    <user>
+        <curso>lei</curso>
+        <pw>123</pw>
+        <username>ramos</username>
+    </user>
+   
+    <user>
+        <curso>lei</curso>
+        <pw>123</pw>
+        <username>leal</username>
+    </user>
+</users>
