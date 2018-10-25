@@ -6,4 +6,3 @@ Pedro Almeida
 António Correia
 Pedro Ramos
 
-link do vídeo:
