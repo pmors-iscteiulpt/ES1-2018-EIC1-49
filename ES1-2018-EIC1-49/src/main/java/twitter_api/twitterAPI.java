@@ -44,6 +44,7 @@ public class twitterAPI {
 	public String toString() {
 		return super.toString();
 	}
+	
 
 	public static List<Status> getStatus() {
 		return status;

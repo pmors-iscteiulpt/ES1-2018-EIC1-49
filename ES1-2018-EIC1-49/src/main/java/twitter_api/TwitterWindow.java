@@ -89,6 +89,7 @@ public class TwitterWindow {
 		});
 	}
 
+	
 	/**
 	 * @return the frame
 	 */
