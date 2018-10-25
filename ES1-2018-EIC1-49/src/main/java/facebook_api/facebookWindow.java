@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileNotFoundException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -40,7 +42,7 @@ public class facebookWindow {
 	private AuthenticationFacebookWindow afw;
 	private facebookAPI fapi = new facebookAPI();
 	private JList<String> list_1;
-	
+	private printWriter printwriter;
 	/**
 	 * Launch the application.
 	 */
@@ -198,6 +200,14 @@ public class facebookWindow {
 			public void actionPerformed(ActionEvent e) {
 				fapi.AuthUser();
 				list_1.setModel(fapi.dlm);
+				printwriter = new printWriter();
+				try {
+					printwriter.printOnFile(fapi.dlm, new File(
+							"C:\\Users\\Asus\\git\\ES1-2018-EIC1-49\\ES1-2018-EIC1-49\\src\\main\\java\\DataBase\\facebookDataBase.txt"));
+				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				
 			}
 		});

@@ -14,6 +14,8 @@ import javax.swing.JPopupMenu;
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -34,6 +36,7 @@ import javax.swing.event.ListSelectionListener;
 
 import ES1_2018_EIC1_49.EIC1_49.App;
 import ES1_2018_EIC1_49.EIC1_49.bdaAPP;
+import facebook_api.printWriter;
 import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
@@ -71,6 +74,7 @@ public class TwitterWindow {
 	private long statusId;
 	private twitterAPI signin ;
 	private App app;
+	private printWriter printwriter;
 	
 
 	/**
@@ -185,6 +189,7 @@ public class TwitterWindow {
 			public void actionPerformed(ActionEvent e) {
 				twitterAPI.ISCTETimeLine(signin);
 				list_1.setModel(twitterAPI.dlm);
+			
 			}
 		});
 

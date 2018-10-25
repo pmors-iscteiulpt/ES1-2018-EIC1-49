@@ -32,9 +32,10 @@ public class facebookAPI {
 	@FXML
 	private PasswordField password;
 	private Post aPostmew;
-	private String accessToken = "EAAcnZCn5aQZAUBAHOsgGnYnLOmg8ZAtEhGHHeRYNlohM2rpifVs1RCputUzzqPaOpQbmMfbjInFw3aA7SSIarXjbeYP78LH6VJbCZBuysIxUv6IxrWBRG2UomAwT73hAV4YaDLKLBvWTWqBefpiHr1zVXZCAoIJ77o1bqvZBIzfS6hOPJSfyTwBzZBcmKVxIv4eryEbi9VjRwZDZD";
+	private String accessToken = "EAAEZBg2PIN94BALZCYIZAEDejiFV7ajhZCItRhIECZBsmQ6dhtqvZBvbyDvrB9QrMhmrOpfgkAh0vcuRHZB8bYLW7hYsrfJndanz1zLD7TYJYNW25SddQMpvlY51JiNTixh0GKJZCtLVRliwCnYhX7Mjnx8LeLTZBvH3i0AZBRrNsQK4EfzPKktvNMbzVZAVYhqy6uAc0gQTTyeSwZDZD";
 	DefaultListModel<String> dlm = new DefaultListModel<String>();
 
+	
 	public void AuthUser() {
 		String domain = "http://radixcode.com/";
 		String appID = "1115442835290294";
