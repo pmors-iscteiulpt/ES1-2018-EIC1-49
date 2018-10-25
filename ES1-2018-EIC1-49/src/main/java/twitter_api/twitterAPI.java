@@ -30,6 +30,7 @@ public class twitterAPI {
 		TwitterFactory tf = new TwitterFactory(configurationBuilder.build());
 		final Twitter twitterIt = tf.getInstance();
 		try {
+			
 			status = twitterIt.getUserTimeline("ISCTEIUL");
 		} catch (TwitterException e1) {
 			e1.printStackTrace();
