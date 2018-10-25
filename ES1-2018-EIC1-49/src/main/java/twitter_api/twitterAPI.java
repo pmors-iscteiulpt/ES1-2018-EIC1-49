@@ -136,6 +136,7 @@ public class twitterAPI {
 
 		TwitterFactory tf = new TwitterFactory(configurationBuilder.build());
 		Twitter twitterIt = tf.getInstance();
+		
 		try {
 			twitterIt.retweetStatus(statusId);
 		} catch (TwitterException e) {
