@@ -10,17 +10,26 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
 public class CreateXML {
+
+	/**
+	 * @author Pedro Almeida
+	 * @description Criaçao de ficheiro XML para guardar e consultar dados de acesso
+	 */
+
 	private String filepath = "C:\\Users\\Pedro Almeida\\git\\ES1-2018-EIC1-49\\ES1-2018-EIC1-49\\src\\main\\java\\XML\\config.xml";
 	private File xmlFile = new File(filepath);
 
 	private List<Utilizador> usersList;
 
 	public CreateXML() {
-//		Utilizador u = new Utilizador("Pedro", "123", "leiii");
-//		addUser(u);
 		consultarUsers();
 
 	}
+
+	/**
+	 * 
+	 * @description Consulta de utilizadores ja registados no ficheiro
+	 */
 
 	private void consultarUsers() {
 		try {
@@ -41,6 +50,11 @@ public class CreateXML {
 	}
 
 	public void addUser(Utilizador newUser) {
+		/**
+		 * 
+		 * @description Inscricao de um utilizador novo no ficheiro xml
+		 */
+
 		try {
 			JAXBContext jaxbContext = JAXBContext.newInstance(Utilizadores.class);
 
