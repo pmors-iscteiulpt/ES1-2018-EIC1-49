@@ -30,6 +30,7 @@ public class twitterAPI {
 		TwitterFactory tf = new TwitterFactory(configurationBuilder.build());
 		final Twitter twitterIt = tf.getInstance();
 		try {
+			
 			status = twitterIt.getUserTimeline("ISCTEIUL");
 		} catch (TwitterException e1) {
 			e1.printStackTrace();
@@ -44,6 +45,7 @@ public class twitterAPI {
 	public String toString() {
 		return super.toString();
 	}
+	
 
 	public static List<Status> getStatus() {
 		return status;
@@ -134,6 +136,7 @@ public class twitterAPI {
 
 		TwitterFactory tf = new TwitterFactory(configurationBuilder.build());
 		Twitter twitterIt = tf.getInstance();
+		
 		try {
 			twitterIt.retweetStatus(statusId);
 		} catch (TwitterException e) {

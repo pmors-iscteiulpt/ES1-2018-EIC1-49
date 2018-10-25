@@ -56,6 +56,7 @@ public class AuthenticationTwitterWindow {
 		});
 	}
 
+	
 	public AuthenticationTwitterWindow() {
 		initialize();
 	}
