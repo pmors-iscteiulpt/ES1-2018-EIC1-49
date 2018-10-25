@@ -147,6 +147,7 @@ public class MailAPI {
 		prop.put("mail.smtp.port", "587");
 		prop.put("mail.smtp.auth", "true");
 		prop.put("mail.debug", "true");
+		
 
 		Session session = Session.getDefaultInstance(prop);
 		MimeMessage msg = new MimeMessage(session);
