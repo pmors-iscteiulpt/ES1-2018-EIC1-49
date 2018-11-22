@@ -35,7 +35,6 @@ public class AuthenticationFacebookWindow {
 	public String user;
 	public String pass;
 	private MailAPI mail = new MailAPI();
-	private App smw = new App();
 	private App app;
 	private facebookWindow fbw;
 	public String getUser() {
@@ -165,13 +164,7 @@ public class AuthenticationFacebookWindow {
 		this.mail = mail;
 	}
 
-	public App getSmw() {
-		return smw;
-	}
 
-	public void setSmw(App smw) {
-		this.smw = smw;
-	}
 
 	public JFrame getFrame() {
 		return frame;
