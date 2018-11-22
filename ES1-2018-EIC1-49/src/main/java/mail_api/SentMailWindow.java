@@ -17,6 +17,7 @@ import javax.swing.border.MatteBorder;
 
 import mail_api.MailAPI;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 
 public class SentMailWindow {
 
@@ -28,6 +29,7 @@ public class SentMailWindow {
 	public String pass;
 	private JRadioButton rdbtnEmailsEnviadosPelo;
 	private JList<String> list_1;
+	private JTextField textField_1;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -140,7 +142,7 @@ public class SentMailWindow {
 			if(rdbtnEmailsEnviadosPelo.isSelected()) {
 				try {
 					mail.getEmail();
-					list_1.setModel(mail.dlm);
+					list_1.setModel(mail.listaDeEmails);
 					
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
@@ -157,7 +159,36 @@ public class SentMailWindow {
 		lblNewLabel_2.setBounds(676, 380, 64, 32);
 		panel.add(lblNewLabel_2);
 		
+		JPanel panel_3 = new JPanel();
+		panel_3.setBounds(136, 32, 164, 83);
+		panel.add(panel_3);
+		panel_3.setVisible(true);
+		panel_3.setLayout(null);
+		
+		
+		JLabel lblProcurarNoTimeline = new JLabel("Procurar na MailBox");
+		lblProcurarNoTimeline.setBounds(21, 0, 143, 22);
+		panel_3.add(lblProcurarNoTimeline);
+		
+		textField_1 = new JTextField();
+		textField_1.setBounds(21, 24, 116, 22);
+		panel_3.add(textField_1);
+		textField_1.setColumns(10);
 
+		JButton btnProcurar = new JButton("Procurar");
+		btnProcurar.setBackground(new Color(135, 206, 235));
+		btnProcurar.setBounds(21, 45, 116, 25);
+		panel_3.add(btnProcurar);
+		btnProcurar.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				
+				mail.searchForTagInMailBox(textField_1.getText());
+				list_1.clearSelection();
+				list_1.setModel(mail.listaDeProcuraDeEmails);
+			}
+		});
+		
 	}
 	public JFrame getFrame() {
 		return frame;
