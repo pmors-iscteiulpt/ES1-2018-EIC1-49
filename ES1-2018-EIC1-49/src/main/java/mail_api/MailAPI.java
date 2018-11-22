@@ -59,25 +59,32 @@ public class MailAPI {
 	}
 
 	public void getEmail() throws Exception {
-		from = mail.getUsername();
-		pass = mail.getPass();
-
-		try {
-			
-			Properties properties = new Properties();
-			properties.setProperty("mail.store.protocol", "imaps");
-
-			Session emailSession = Session.getDefaultInstance(properties);
-
-			Store emailStore = emailSession.getStore("imaps");
-			emailStore.connect("imap-mail.outlook.com", from, pass);
-
-			Folder emailFolder = emailStore.getFolder("INBOX");
-
-			emailFolder.open(Folder.READ_ONLY);
-
-			Message messages[] = emailFolder.getMessages();
-			System.out.println(messages.length);
+		mail = new MailAPI();
+		 
+        from = mail.getUsername();
+        pass = mail.getPass();
+ 
+        try {
+ 
+            Properties properties = new Properties();
+ 
+            properties.put("mail.pop3.host", "outlook.office365.com");
+            properties.put("mail.pop3.port", "995");
+            properties.put("mail.pop3s.ssl.trust", "*"); // This is the most IMP property
+ 
+            Session emailSession = Session.getDefaultInstance(properties);
+ 
+            // create the POP3 store object and connect with the pop server
+ 
+            Store store = emailSession.getStore("pop3s"); // try imap or impas
+            store.connect("outlook.office365.com", from, password);
+ 
+            // create the folder object and open it
+            Folder emailFolder = store.getFolder("INBOX");
+            emailFolder.open(Folder.READ_ONLY);
+ 
+            // retrieve the messages from the folder in an array and print it
+            Message[] messages = emailFolder.getMessages();
 			
 			for (int i = 0; i < (messages.length + 60) - messages.length; i++) {
 
@@ -101,7 +108,7 @@ public class MailAPI {
 			}
 
 			emailFolder.close(false);
-			emailStore.close();
+			store.close();
 		} catch (NoSuchProviderException nspe) {
 			nspe.printStackTrace();
 		} catch (MessagingException me) {
