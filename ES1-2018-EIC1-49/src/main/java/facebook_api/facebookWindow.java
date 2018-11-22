@@ -43,6 +43,7 @@ public class facebookWindow {
 	private facebookAPI fapi = new facebookAPI();
 	private JList<String> list_1;
 	private printWriter printwriter;
+	private JTextField textField_1;
 	/**
 	 * Launch the application.
 	 */
@@ -111,12 +112,12 @@ public class facebookWindow {
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(0, 0, 0)));
-		panel_1.setBounds(77, 157, 504, 209);
+		panel_1.setBounds(77, 157, 546, 209);
 		panel.add(panel_1);
 		panel_1.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 11, 484, 187);
+		scrollPane.setBounds(0, 0, 546, 209);
 		panel_1.add(scrollPane);
 		
 		list_1 = new JList<String>();
@@ -127,12 +128,12 @@ public class facebookWindow {
 		
 		JRadioButton rdbtnEmailsEnviadosPelo = new JRadioButton("ISCTE");
 		rdbtnEmailsEnviadosPelo.setBackground(Color.ORANGE);
-		rdbtnEmailsEnviadosPelo.setBounds(281, 62, 300, 25);
+		rdbtnEmailsEnviadosPelo.setBounds(321, 53, 300, 25);
 		panel.add(rdbtnEmailsEnviadosPelo);
 		
 		JRadioButton rdbtnEmailsEnviadosPelo_1 = new JRadioButton("[NET] Núcleo de Estudantes de Tecnologias");
 		rdbtnEmailsEnviadosPelo_1.setBackground(Color.ORANGE);
-		rdbtnEmailsEnviadosPelo_1.setBounds(281, 87, 300, 25);
+		rdbtnEmailsEnviadosPelo_1.setBounds(321, 78, 300, 25);
 		panel.add(rdbtnEmailsEnviadosPelo_1);
 		
 		JButton btnNewButton = new JButton("O que?");
@@ -147,7 +148,7 @@ public class facebookWindow {
 		
 		JButton btnFiltrar = new JButton("Filtrar");
 		btnFiltrar.setBackground(Color.ORANGE);
-		btnFiltrar.setBounds(486, 124, 97, 25);
+		btnFiltrar.setBounds(526, 124, 97, 25);
 		panel.add(btnFiltrar);
 		
 		JLabel lblNewLabel_2 = new JLabel("");
@@ -184,7 +185,7 @@ public class facebookWindow {
 		lblEmQueEsts.setBounds(179, 36, 179, 21);
 		panel_2.add(lblEmQueEsts);
 		
-		JLabel lblNewLabel_4 = new JLabel("Publicações");
+		JLabel lblNewLabel_4 = new JLabel("Publica\u00E7\u00F5es");
 		lblNewLabel_4.setBackground(new Color(135, 206, 250));
 		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblNewLabel_4.setBounds(77, 128, 113, 25);
@@ -198,11 +199,12 @@ public class facebookWindow {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				list_1.clearSelection();	
 				fapi.AuthUser();
-				list_1.setModel(fapi.dlm);
+				list_1.setModel(fapi.listaPostsFB);
 				printwriter = new printWriter();
 				try {
-					printwriter.printOnFile(fapi.dlm, new File(
+					printwriter.printOnFile(fapi.listaPostsFB, new File(
 							"C:\\Users\\Asus\\git\\ES1-2018-EIC1-49\\ES1-2018-EIC1-49\\src\\main\\java\\DataBase\\facebookDataBase.txt"));
 				} catch (FileNotFoundException e1) {
 					// TODO Auto-generated catch block
@@ -211,5 +213,38 @@ public class facebookWindow {
 				
 			}
 		});
+		
+		
+		JPanel panel_3 = new JPanel();
+		panel_3.setBounds(136, 32, 164, 83);
+		panel.add(panel_3);
+		panel_3.setVisible(true);
+		panel_3.setLayout(null);
+		
+		
+		JLabel lblProcurarNoTimeline = new JLabel("Procurar no Timeline");
+		lblProcurarNoTimeline.setBounds(21, 0, 143, 22);
+		panel_3.add(lblProcurarNoTimeline);
+		
+		textField_1 = new JTextField();
+		textField_1.setBounds(21, 24, 116, 22);
+		panel_3.add(textField_1);
+		textField_1.setColumns(10);
+
+		JButton btnProcurar = new JButton("Procurar");
+		btnProcurar.setBackground(new Color(135, 206, 235));
+		btnProcurar.setBounds(21, 45, 116, 25);
+		panel_3.add(btnProcurar);
+		btnProcurar.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				fapi.searchForUserPosts(textField_1.getText());
+				list_1.clearSelection();
+				list_1.setModel(fapi.listaForSearchPostsFB);
+			}
+		});
+		
 	}
+	
+	
 }

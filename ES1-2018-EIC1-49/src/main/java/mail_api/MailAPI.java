@@ -24,85 +24,79 @@ public class MailAPI {
 	MailAPI mail;
 	private Address from1;
 	private String subj;
-	 /**
-	 * @return the dlm
+	DefaultListModel<String> listaDeEmails = new DefaultListModel<String>();
+	DefaultListModel<String> listaDeProcuraDeEmails = new DefaultListModel<String>();
+
+	/**
+	 * @return the listaDeEmails
 	 */
-	public DefaultListModel<String> getDlm() {
-		return dlm;
+	public DefaultListModel<String> getlistaDeEmails() {
+		return listaDeEmails;
 	}
 
 	/**
-	 * @param dlm the dlm to set
+	 * @param listaDeEmails the listaDeEmails to set
 	 */
-	public void setDlm(DefaultListModel<String> dlm) {
-		this.dlm = dlm;
+	public void setlistaDeEmails(DefaultListModel<String> listaDeEmails) {
+		this.listaDeEmails = listaDeEmails;
 	}
-
-	DefaultListModel<String> dlm = new DefaultListModel<String>();
-	
 
 	public void getMailCredentials(String user, String pass) {
 		MailAPI.username = user;
 		MailAPI.password = pass;
 	}
-	
-	public  void getEmail() throws Exception{
+
+	public void getEmail() throws Exception {
 		mail = new MailAPI();
 		from = mail.getUsername();
 		pass = mail.getPass();
-		
-		try {					
-				Properties properties = new Properties();
-				properties.setProperty("mail.store.protocol", "imaps" );
-				
-				Session emailSession = Session.getDefaultInstance(properties);
-				
-				Store emailStore = emailSession.getStore("imaps");
-				emailStore.connect("imap-mail.outlook.com",from, pass);
-				
-				Folder emailFolder = emailStore.getFolder("INBOX");
-				
-				emailFolder.open(Folder.READ_ONLY);
-				
-				Message messages[] = emailFolder.getMessages();
-				System.out.println(messages.length);
-				
-				for (int i = 0; i<(messages.length+60)-messages.length; i++) {
-					
-	
-					
-					Message message = messages[i];
-					if(message.getFrom()[0].toString().contains("iscte-iul.pt")) {
-						String result;
-						result = getTextFromMessage(message);
-					
-					
-					System.out.println("Email Number: "+(i+1));
-					System.out.println("Subject: "+ message.getSubject());
-					System.out.println("From: "+ message.getFrom()[0]);
-					System.out.println("Sent Date: "+ message.getSentDate());
-					System.out.println("Message: "+ result);
+
+		try {
+			Properties properties = new Properties();
+			properties.setProperty("mail.store.protocol", "imaps");
+
+			Session emailSession = Session.getDefaultInstance(properties);
+
+			Store emailStore = emailSession.getStore("imaps");
+			emailStore.connect("imap-mail.outlook.com", from, pass);
+
+			Folder emailFolder = emailStore.getFolder("INBOX");
+
+			emailFolder.open(Folder.READ_ONLY);
+
+			Message messages[] = emailFolder.getMessages();
+			System.out.println(messages.length);
+
+			for (int i = 0; i < (messages.length + 60) - messages.length; i++) {
+
+				Message message = messages[i];
+				if (message.getFrom()[0].toString().contains("iscte-iul.pt")) {
+					String result;
+					result = getTextFromMessage(message);
+
+					System.out.println("Email Number: " + (i + 1));
+					System.out.println("Subject: " + message.getSubject());
+					System.out.println("From: " + message.getFrom()[0]);
+					System.out.println("Sent Date: " + message.getSentDate());
+					System.out.println("Message: " + result);
 					from1 = message.getFrom()[0];
-					subj =message.getSubject();
+					subj = message.getSubject();
 					if (message != null) {
-						
-						dlm.addElement("FROM: "+ from1 + "        " +"SUBJECT: "+ subj);
+
+						listaDeEmails.addElement("FROM: " + from1 + "        " + "SUBJECT: " + subj);
 
 					}
 				}
-				}
-				
-				emailFolder.close(false);
-				emailStore.close();
-		}catch ( NoSuchProviderException nspe) {
+			}
+
+			emailFolder.close(false);
+			emailStore.close();
+		} catch (NoSuchProviderException nspe) {
 			nspe.printStackTrace();
-		}catch ( MessagingException me) {
-			me.printStackTrace();	
+		} catch (MessagingException me) {
+			me.printStackTrace();
 		}
-		
-		
-		
-		
+
 	}
 
 	/**
@@ -141,7 +135,6 @@ public class MailAPI {
 		String[] to = { address };
 		String host = "smtp-mail.outlook.com";
 
-		
 		Properties prop = System.getProperties();
 		prop.put("mail.smtp.starttls.enable", "true");
 		prop.put("mail.smtp.ssl.trust", host);
@@ -171,36 +164,35 @@ public class MailAPI {
 		transport.sendMessage(msg, msg.getAllRecipients());
 		transport.close();
 	}
+
 	private String getTextFromMessage(Message message) throws MessagingException, IOException {
-	    String result = "";
-	    if (message.isMimeType("text/plain")) {
-	        result = message.getContent().toString();
-	    } else if (message.isMimeType("multipart/*")) {
-	        MimeMultipart mimeMultipart = (MimeMultipart) message.getContent();
-	        result = getTextFromMimeMultipart(mimeMultipart);
-	    }
-	    return result;
+		String result = "";
+		if (message.isMimeType("text/plain")) {
+			result = message.getContent().toString();
+		} else if (message.isMimeType("multipart/*")) {
+			MimeMultipart mimeMultipart = (MimeMultipart) message.getContent();
+			result = getTextFromMimeMultipart(mimeMultipart);
+		}
+		return result;
 	}
 
-	private String getTextFromMimeMultipart(
-	        MimeMultipart mimeMultipart)  throws MessagingException, IOException{
-	    String result = "";
-	    int count = mimeMultipart.getCount();
-	    for (int i = 0; i < count; i++) {
-	        BodyPart bodyPart = mimeMultipart.getBodyPart(i);
-	        if (bodyPart.isMimeType("text/plain")) {
-	            result = result + "\n" + bodyPart.getContent();
-	            break; // without break same text appears twice in my tests
-	        } else if (bodyPart.isMimeType("text/html")) {
-	            String html = (String) bodyPart.getContent();
-	            result = result + "\n" + org.jsoup.Jsoup.parse(html).text();
-	        } else if (bodyPart.getContent() instanceof MimeMultipart){
-	            result = result + getTextFromMimeMultipart((MimeMultipart)bodyPart.getContent());
-	        }
-	    }
-	    return result;
+	private String getTextFromMimeMultipart(MimeMultipart mimeMultipart) throws MessagingException, IOException {
+		String result = "";
+		int count = mimeMultipart.getCount();
+		for (int i = 0; i < count; i++) {
+			BodyPart bodyPart = mimeMultipart.getBodyPart(i);
+			if (bodyPart.isMimeType("text/plain")) {
+				result = result + "\n" + bodyPart.getContent();
+				break; // without break same text appears twice in my tests
+			} else if (bodyPart.isMimeType("text/html")) {
+				String html = (String) bodyPart.getContent();
+				result = result + "\n" + org.jsoup.Jsoup.parse(html).text();
+			} else if (bodyPart.getContent() instanceof MimeMultipart) {
+				result = result + getTextFromMimeMultipart((MimeMultipart) bodyPart.getContent());
+			}
+		}
+		return result;
 	}
-
 
 	public String getPass() {
 		return password;
@@ -209,7 +201,7 @@ public class MailAPI {
 	public void setPass(String pass) {
 		this.password = pass;
 	}
-	
+
 	public String getUsername() {
 		return username;
 	}
@@ -218,4 +210,17 @@ public class MailAPI {
 		MailAPI.username = username;
 	}
 
+	public void searchForTagInMailBox(String tag) {
+		for (int tweet = 0; tweet < listaDeEmails.size(); tweet++) {
+			String element = listaDeEmails.getElementAt(tweet);
+			String[] partes = element.split(" ");
+			for (int palavras_do_tweet = 0; palavras_do_tweet < partes.length; palavras_do_tweet++) {
+				if (partes[palavras_do_tweet].equals(tag)) {
+					listaDeProcuraDeEmails.addElement(element);
+				}
+			}
+		}
+		listaDeProcuraDeEmails.clear();
+	}
+	
 }
