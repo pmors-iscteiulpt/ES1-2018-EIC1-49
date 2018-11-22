@@ -234,7 +234,7 @@ public class SentMailWindow {
 							}
 						
 						pmw = new PresentationMailWindow();
-						pmw.
+						
 						pmw.getFrame().setVisible(true);
 						frame.setVisible(false);
 						
