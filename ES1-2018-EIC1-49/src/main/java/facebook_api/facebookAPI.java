@@ -32,8 +32,9 @@ public class facebookAPI {
 	@FXML
 	private PasswordField password;
 	private Post aPostmew;
-	private String accessToken = "EAAcnZCn5aQZAUBAHOsgGnYnLOmg8ZAtEhGHHeRYNlohM2rpifVs1RCputUzzqPaOpQbmMfbjInFw3aA7SSIarXjbeYP78LH6VJbCZBuysIxUv6IxrWBRG2UomAwT73hAV4YaDLKLBvWTWqBefpiHr1zVXZCAoIJ77o1bqvZBIzfS6hOPJSfyTwBzZBcmKVxIv4eryEbi9VjRwZDZD";
-	DefaultListModel<String> dlm = new DefaultListModel<String>();
+	private String accessToken = "EAAEZBg2PIN94BAMPDvOtQBHFQtWmK8MmhA0AfxpLDeXmoUKYe3rcQRMZCAxW3sI1R7o5RHbZCYB7fRcZChVTvVJMvrjcxYxUP0L9qgN0ZChJyAZBV1cftbTBxcvSoUyMy66ZAMrklkw0pZC6L8EdDZCxmjHuBGK51UNwnd2JnqR8cvGGTILgrDLf9sjO7K2OZBZBnf7Pp2OLsfvhQZDZD";
+	DefaultListModel<String> listaPostsFB = new DefaultListModel<String>();
+	DefaultListModel<String> listaForSearchPostsFB = new DefaultListModel<String>();
 
 	public void AuthUser() {
 		String domain = "http://radixcode.com/";
@@ -63,7 +64,7 @@ public class facebookAPI {
 				if (aPost.getMessage() != null) {
 					aPostmew = aPost;
 					cont++;
-					dlm.addElement(aPost.getCreatedTime() + " - " + aPost.getMessage());
+					listaPostsFB.addElement(aPost.getCreatedTime() + " - " + aPost.getMessage());
 				}
 			}
 		}
@@ -98,6 +99,20 @@ public class facebookAPI {
 	 */
 	public void setaPostmew(Post aPostmew) {
 		this.aPostmew = aPostmew;
+	}
+
+	public void searchForUserPosts(String tag) {
+		AuthUser();
+		for (int tweet = 0; tweet < listaPostsFB.size(); tweet++) {
+			String element = listaPostsFB.getElementAt(tweet);
+			String[] partes = element.split(" ");
+			for (int palavras_do_tweet = 0; palavras_do_tweet < partes.length; palavras_do_tweet++) {
+				if (partes[palavras_do_tweet].equals(tag)) {
+					listaForSearchPostsFB.addElement(element);
+				}
+			}
+		}
+		listaForSearchPostsFB.clear();
 	}
 
 }
