@@ -1,6 +1,7 @@
 package mail_api;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Properties;
 import javax.mail.Session;
 import javax.mail.Store;
@@ -16,6 +17,8 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.swing.DefaultListModel;
 
+import twitter4j.Status;
+
 public class MailAPI {
 	private static String username;
 	private static String password;
@@ -26,6 +29,15 @@ public class MailAPI {
 	private String subj;
 	DefaultListModel<String> listaDeEmails = new DefaultListModel<String>();
 	DefaultListModel<String> listaDeProcuraDeEmails = new DefaultListModel<String>();
+	public Message messages[];
+
+	public Message[] getMessages() {
+		return messages;
+	}
+
+	public void setMessages(Message[] messages) {
+		this.messages = messages;
+	}
 
 	/**
 	 * @return the listaDeEmails
@@ -48,32 +60,38 @@ public class MailAPI {
 
 	public void getEmail() throws Exception {
 		mail = new MailAPI();
-		from = mail.getUsername();
-		pass = mail.getPass();
-
-		try {
-			Properties properties = new Properties();
-			properties.setProperty("mail.store.protocol", "imaps");
-
-			Session emailSession = Session.getDefaultInstance(properties);
-
-			Store emailStore = emailSession.getStore("imaps");
-			emailStore.connect("imap-mail.outlook.com", from, pass);
-
-			Folder emailFolder = emailStore.getFolder("INBOX");
-
-			emailFolder.open(Folder.READ_ONLY);
-
-			Message messages[] = emailFolder.getMessages();
-			System.out.println(messages.length);
-
+		 
+        from = mail.getUsername();
+        pass = mail.getPass();
+ 
+        try {
+ 
+            Properties properties = new Properties();
+ 
+            properties.put("mail.pop3.host", "outlook.office365.com");
+            properties.put("mail.pop3.port", "995");
+            properties.put("mail.pop3s.ssl.trust", "*"); // This is the most IMP property
+ 
+            Session emailSession = Session.getDefaultInstance(properties);
+ 
+            // create the POP3 store object and connect with the pop server
+ 
+            Store store = emailSession.getStore("pop3s"); // try imap or impas
+            store.connect("outlook.office365.com", from, password);
+ 
+            // create the folder object and open it
+            Folder emailFolder = store.getFolder("INBOX");
+            emailFolder.open(Folder.READ_ONLY);
+ 
+            // retrieve the messages from the folder in an array and print it
+            Message[] messages = emailFolder.getMessages();
+			
 			for (int i = 0; i < (messages.length + 60) - messages.length; i++) {
 
 				Message message = messages[i];
 				if (message.getFrom()[0].toString().contains("iscte-iul.pt")) {
 					String result;
 					result = getTextFromMessage(message);
-
 					System.out.println("Email Number: " + (i + 1));
 					System.out.println("Subject: " + message.getSubject());
 					System.out.println("From: " + message.getFrom()[0]);
@@ -90,7 +108,7 @@ public class MailAPI {
 			}
 
 			emailFolder.close(false);
-			emailStore.close();
+			store.close();
 		} catch (NoSuchProviderException nspe) {
 			nspe.printStackTrace();
 		} catch (MessagingException me) {
@@ -211,6 +229,7 @@ public class MailAPI {
 	}
 
 	public void searchForTagInMailBox(String tag) {
+		listaDeProcuraDeEmails.clear();
 		for (int tweet = 0; tweet < listaDeEmails.size(); tweet++) {
 			String element = listaDeEmails.getElementAt(tweet);
 			String[] partes = element.split(" ");
@@ -220,7 +239,93 @@ public class MailAPI {
 				}
 			}
 		}
-		listaDeProcuraDeEmails.clear();
 	}
-	
+
+	public void showListMailsDirector() throws Exception {
+		from = mail.getUsername();
+		pass = mail.getPass();
+		listaDeProcuraDeEmails.clear();
+
+		try {
+			Properties properties = new Properties();
+			properties.setProperty("mail.store.protocol", "imaps");
+
+			Session emailSession = Session.getDefaultInstance(properties);
+
+			Store emailStore = emailSession.getStore("imaps");
+			emailStore.connect("imap-mail.outlook.com", from, pass);
+
+			Folder emailFolder = emailStore.getFolder("INBOX");
+
+			emailFolder.open(Folder.READ_ONLY);
+
+			Message messages[] = emailFolder.getMessages();
+			System.out.println(messages.length);
+
+			for (int i = 0; i < (messages.length + 60) - messages.length; i++) {
+
+				Message message = messages[i];
+				if (message.getFrom()[0].toString().equals("ricardo.ribeiro@iscte-iul.pt")) {
+					String result;
+					result = getTextFromMessage(message);
+					System.out.println("From: " + message.getFrom()[0]);
+					from1 = message.getFrom()[0];
+					subj = message.getSubject();
+					if (message != null) {
+						listaDeProcuraDeEmails.addElement("FROM: " + from1 + "        " + "SUBJECT: " + subj);
+					}
+				}
+			}
+			emailFolder.close(false);
+			emailStore.close();
+		} catch (NoSuchProviderException nspe) {
+			nspe.printStackTrace();
+		} catch (MessagingException me) {
+			me.printStackTrace();
+		}
+	}
+
+	public void showListMailsISCTE() throws IOException {
+		from = mail.getUsername();
+		pass = mail.getPass();
+		listaDeProcuraDeEmails.clear();
+
+		try {
+			Properties properties = new Properties();
+			properties.setProperty("mail.store.protocol", "imaps");
+
+			Session emailSession = Session.getDefaultInstance(properties);
+
+			Store emailStore = emailSession.getStore("imaps");
+			emailStore.connect("imap-mail.outlook.com", from, pass);
+
+			Folder emailFolder = emailStore.getFolder("INBOX");
+
+			emailFolder.open(Folder.READ_ONLY);
+
+			Message messages[] = emailFolder.getMessages();
+			System.out.println(messages.length);
+
+			for (int i = 0; i < (messages.length + 60) - messages.length; i++) {
+
+				Message message = messages[i];
+				if (message.getSubject().toString().contains("ISCTE-IUL")) {
+					String result;
+					result = getTextFromMessage(message);
+					System.out.println("From: " + message.getFrom()[0]);
+					from1 = message.getFrom()[0];
+					subj = message.getSubject();
+					if (message != null) {
+						listaDeProcuraDeEmails.addElement("FROM: " + from1 + "        " + "SUBJECT: " + subj);
+					}
+				}
+			}
+			emailFolder.close(false);
+			emailStore.close();
+		} catch (NoSuchProviderException nspe) {
+			nspe.printStackTrace();
+		} catch (MessagingException me) {
+			me.printStackTrace();
+		}		
+	}
 }
