@@ -25,14 +25,14 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry kind="lib" path="C:/Users/Pedro Almeida/git/ES1-2018-EIC1-49/JAR&apos;s/activation.jar.zip"/>
-	<classpathentry kind="lib" path="C:/Users/Pedro Almeida/git/ES1-2018-EIC1-49/JAR&apos;s/com.sun.net.ssl.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Pedro Almeida/git/ES1-2018-EIC1-49/JAR&apos;s/com.sun.net.ssl.jar.zip"/>
-	<classpathentry kind="lib" path="C:/Users/Pedro Almeida/git/ES1-2018-EIC1-49/JAR&apos;s/javamail1_4_5.zip"/>
-	<classpathentry kind="lib" path="C:/Users/Pedro Almeida/git/ES1-2018-EIC1-49/JAR&apos;s/javax.mail-api-1.4.6.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Pedro Almeida/git/ES1-2018-EIC1-49/JAR&apos;s/mail.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Pedro Almeida/git/ES1-2018-EIC1-49/JAR&apos;s/mailapi.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Pedro Almeida/git/ES1-2018-EIC1-49/JAR&apos;s/org.eclipse.egit_5.1.2.201810061102-r.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Pedro Almeida/git/ES1-2018-EIC1-49/JAR&apos;s/restfb-2.10.0-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Daniel/git/ES1-2018-EIC1-49/JAR&apos;s/activation.jar.zip"/>
+	<classpathentry kind="lib" path="C:/Users/Daniel/git/ES1-2018-EIC1-49/JAR&apos;s/com.sun.net.ssl.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Daniel/git/ES1-2018-EIC1-49/JAR&apos;s/com.sun.net.ssl.jar.zip"/>
+	<classpathentry kind="lib" path="C:/Users/Daniel/git/ES1-2018-EIC1-49/JAR&apos;s/javamail1_4_5.zip"/>
+	<classpathentry kind="lib" path="C:/Users/Daniel/git/ES1-2018-EIC1-49/JAR&apos;s/javax.mail-api-1.4.6.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Daniel/git/ES1-2018-EIC1-49/JAR&apos;s/mail.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Daniel/git/ES1-2018-EIC1-49/JAR&apos;s/mailapi.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Daniel/git/ES1-2018-EIC1-49/JAR&apos;s/org.eclipse.egit_5.1.2.201810061102-r.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Daniel/git/ES1-2018-EIC1-49/JAR&apos;s/restfb-2.10.0-javadoc.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

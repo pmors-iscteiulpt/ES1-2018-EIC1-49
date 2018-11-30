@@ -38,7 +38,7 @@ public class facebookWindow {
 
 	public String user;
 	public String pass;
-	private JTextField textField;
+	private JTextField facebook_textField;
 	private AuthenticationFacebookWindow afw;
 	private facebookAPI fapi = new facebookAPI();
 	private JList<String> list_1;
@@ -175,10 +175,16 @@ public class facebookWindow {
 		tglbtnPostar.setBounds(408, 35, 84, 25);
 		panel_2.add(tglbtnPostar);
 
-		textField = new JTextField();
-		textField.setColumns(10);
-		textField.setBounds(12, 6, 480, 22);
-		panel_2.add(textField);
+		facebook_textField = new JTextField();
+		facebook_textField.setColumns(10);
+		facebook_textField.setBounds(12, 6, 480, 22);
+		panel_2.add(facebook_textField);
+		
+		tglbtnPostar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				fapi.post(facebook_textField.getText());
+			}
+		});
 
 		JLabel lblEmQueEsts = new JLabel("Em que estás a pensar?");
 		lblEmQueEsts.setFont(new Font("Tahoma", Font.PLAIN, 15));

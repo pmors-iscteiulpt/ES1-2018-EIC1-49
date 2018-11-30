@@ -4,6 +4,8 @@ import com.restfb.Connection;
 import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
 import com.restfb.FacebookClient.AccessToken;
+import com.restfb.Parameter;
+import com.restfb.types.FacebookType;
 import com.restfb.types.Post;
 import com.restfb.types.User;
 import java.net.URL;
@@ -35,7 +37,6 @@ public class facebookAPI {
 	private String accessToken = "EAAEZBg2PIN94BAMPDvOtQBHFQtWmK8MmhA0AfxpLDeXmoUKYe3rcQRMZCAxW3sI1R7o5RHbZCYB7fRcZChVTvVJMvrjcxYxUP0L9qgN0ZChJyAZBV1cftbTBxcvSoUyMy66ZAMrklkw0pZC6L8EdDZCxmjHuBGK51UNwnd2JnqR8cvGGTILgrDLf9sjO7K2OZBZBnf7Pp2OLsfvhQZDZD";
 	DefaultListModel<String> listaPostsFB = new DefaultListModel<String>();
 	DefaultListModel<String> listaForSearchPostsFB = new DefaultListModel<String>();
-
 	public void AuthUser() {
 		String domain = "http://radixcode.com/";
 		String appID = "1115442835290294";
@@ -48,11 +49,13 @@ public class facebookAPI {
 
 		/*
 		 * System.setProperty("webdriver.gecko.driver",
-		 * "C:\\Users\\Pedro\\git\\ES1-2018-EIC1-49\\geckodriver.exe"); WebDriver driver
-		 * = new FirefoxDriver(); driver.get("http://www.facebook.com");
+		 * "C:\\Users\\Pedro\\git\\ES1-2018-EIC1-49\\geckodriver.exe");
+		 * WebDriver driver = new FirefoxDriver();
+		 * driver.get("http://www.facebook.com");
 		 * driver.findElement(By.id("email")).sendKeys(username.getText());
 		 * driver.findElement(By.id("pass")).sendKeys(password.getText());
-		 * driver.findElement(By.id("u_0_2")).click(); System.out.println("dsd");
+		 * driver.findElement(By.id("u_0_2")).click();
+		 * System.out.println("dsd");
 		 */
 
 		FacebookClient fbClient = new DefaultFacebookClient(accessToken);
@@ -81,7 +84,8 @@ public class facebookAPI {
 	}
 
 	/**
-	 * @param accessToken the accessToken to set
+	 * @param accessToken
+	 *            the accessToken to set
 	 */
 	public void setAccessToken(String accessToken) {
 		this.accessToken = accessToken;
@@ -95,7 +99,8 @@ public class facebookAPI {
 	}
 
 	/**
-	 * @param aPostmew the aPostmew to set
+	 * @param aPostmew
+	 *            the aPostmew to set
 	 */
 	public void setaPostmew(Post aPostmew) {
 		this.aPostmew = aPostmew;
@@ -113,6 +118,12 @@ public class facebookAPI {
 			}
 		}
 		listaForSearchPostsFB.clear();
+	}
+
+	@SuppressWarnings("deprecation")
+	public void post(String message) {
+		FacebookClient fbClient = new DefaultFacebookClient(accessToken);
+		fbClient.publish("me/feed", FacebookType.class, Parameter.with("message", message));
 	}
 
 }
