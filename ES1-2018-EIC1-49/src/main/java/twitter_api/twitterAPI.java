@@ -255,5 +255,7 @@ public class twitterAPI {
 			if (millie >= periodo_24)
 				post_24h.addElement(element);
 		}
+		if (post_24h.isEmpty())
+			post_24h.addElement("::Não existe nenhum Tweet nas últimas 24h!::");
 	}
 }
