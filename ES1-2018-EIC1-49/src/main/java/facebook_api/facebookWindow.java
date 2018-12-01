@@ -147,11 +147,6 @@ public class facebookWindow {
 		});
 		panel.add(btnNewButton);
 
-		JButton btnFiltrar = new JButton("Filtrar");
-		btnFiltrar.setBackground(Color.ORANGE);
-		btnFiltrar.setBounds(526, 124, 97, 25);
-		panel.add(btnFiltrar);
-
 		JLabel lblNewLabel_2 = new JLabel("");
 		lblNewLabel_2.setBounds(676, 380, 64, 32);
 		panel.add(lblNewLabel_2);
@@ -203,23 +198,6 @@ public class facebookWindow {
 		btnVerPublicaes.setBackground(Color.ORANGE);
 		btnVerPublicaes.setBounds(167, 125, 136, 25);
 		panel.add(btnVerPublicaes);
-		btnVerPublicaes.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				list_1.clearSelection();
-				fapi.AuthUser();
-				list_1.setModel(fapi.listaPostsFB);
-				printwriter = new printWriter();
-				try {
-					printwriter.printOnFile(fapi.listaPostsFB, new File(
-							"C:\\Users\\Asus\\git\\ES1-2018-EIC1-49\\ES1-2018-EIC1-49\\src\\main\\java\\DataBase\\facebookDataBase.txt"));
-				} catch (FileNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			}
-		});
 
 		JPanel panel_3 = new JPanel();
 		panel_3.setBounds(136, 32, 164, 83);
@@ -248,6 +226,52 @@ public class facebookWindow {
 				list_1.setModel(fapi.listaForSearchPostsFB);
 			}
 		});
+	
+	JPanel panel_5 = new JPanel();
+	panel_5.setBackground(Color.LIGHT_GRAY);
+	panel_5.setBounds(455, 9, 164, 43);
+	panel.add(panel_5);
+	panel_5.setLayout(null);
+	panel_5.setVisible(false);
+	
+	JLabel lblNewLabel1 = new JLabel("");
+	lblNewLabel1.setBounds(121, 0, 43, 43);
+	panel_5.add(lblNewLabel1);
+	lblNewLabel1.setIcon(new ImageIcon("C:\\Users\\Utilizador\\Desktop\\283982_thm.png"));
+	
+	JLabel lblOrganizarPorTempo = new JLabel("\u00DAltimas 24h");
+	lblOrganizarPorTempo.setBounds(33, 0, 76, 16);
+	panel_5.add(lblOrganizarPorTempo);
+	
+	JButton btnFiltrard = new JButton("Filtrar");
+	btnFiltrard.setBackground(new Color(135, 206, 235));
+	btnFiltrard.setBounds(35, 18, 67, 22);
+	panel_5.add(btnFiltrard);
+	btnFiltrard.addActionListener(new ActionListener() {
+		
+		public void actionPerformed(ActionEvent e) {
+			fapi.filtrarUltimas24horas();
+			list_1.setModel(fapi.post_24h);
+		}
+	});
+	
+		btnVerPublicaes.addActionListener(new ActionListener() {
 
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				list_1.clearSelection();
+				fapi.AuthUser();
+				list_1.setModel(fapi.listaPostsFB);
+				printwriter = new printWriter();
+				panel_5.setVisible(true);
+				try {
+					printwriter.printOnFile(fapi.listaPostsFB, new File(
+							"C:\\Users\\Asus\\git\\ES1-2018-EIC1-49\\ES1-2018-EIC1-49\\src\\main\\java\\DataBase\\facebookDataBase.txt"));
+				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
 	}
 }

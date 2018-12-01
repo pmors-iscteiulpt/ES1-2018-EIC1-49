@@ -11,6 +11,7 @@ import com.restfb.types.Page;
 import com.restfb.types.Post;
 import com.restfb.types.User;
 import java.net.URL;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -39,6 +40,7 @@ public class facebookAPI {
 	private String accessToken = "EAAEZBg2PIN94BAMPDvOtQBHFQtWmK8MmhA0AfxpLDeXmoUKYe3rcQRMZCAxW3sI1R7o5RHbZCYB7fRcZChVTvVJMvrjcxYxUP0L9qgN0ZChJyAZBV1cftbTBxcvSoUyMy66ZAMrklkw0pZC6L8EdDZCxmjHuBGK51UNwnd2JnqR8cvGGTILgrDLf9sjO7K2OZBZBnf7Pp2OLsfvhQZDZD";
 	DefaultListModel<String> listaPostsFB = new DefaultListModel<String>();
 	DefaultListModel<String> listaForSearchPostsFB = new DefaultListModel<String>();
+	DefaultListModel<String> post_24h = new DefaultListModel<String>();
 
 	public void AuthUser() {
 		String domain = "http://radixcode.com/";
@@ -68,7 +70,7 @@ public class facebookAPI {
 				if (aPost.getMessage() != null) {
 					aPostmew = aPost;
 					cont++;
-					listaPostsFB.addElement(aPost.getCreatedTime() + " - " + aPost.getMessage());
+					listaPostsFB.addElement(aPost.getCreatedTime() + " - " + aPost.getMessage() + aPost.getCreatedTime().getTime());
 				}
 			}
 		}
@@ -121,19 +123,29 @@ public class facebookAPI {
 
 	public void post(String text_to_post) {
 		try {
-
 			@SuppressWarnings("deprecation")
 			FacebookClient fbClient = new DefaultFacebookClient(accessToken);
-
-			User myuser = fbClient.fetchObject("me", User.class);
-			Page mypage = fbClient.fetchObject("me/feed", Page.class);
-			int counter = 0;
 			fbClient.publish("me/feed", FacebookType.class, Parameter.with("message", text_to_post));
-			counter++;
 		} catch (FacebookException ex) { // So that you can see what went wrong
 			ex.printStackTrace(System.err); // in case you did anything incorrectly
 		}
-
 	}
 
+	
+	public void filtrarUltimas24horas() {
+		Date today = new Date();
+		Long dateInLong = today.getTime();
+		for (int post = 0; post < listaPostsFB.size(); post++) {
+			String element = listaPostsFB.getElementAt(post);
+			String[] partes = element.split(" ");
+			int last_index = partes.length - 1;
+			Long millie = Long.parseLong(partes[last_index]);
+			Long periodo_24 = dateInLong - 86400000;
+			// ultimas 24horas
+			if (millie >= periodo_24)
+				post_24h.addElement(element);
+		}
+		if (post_24h.isEmpty())
+			post_24h.addElement("::Não existe nenhum Tweet nas últimas 24h!::");
+	}
 }
