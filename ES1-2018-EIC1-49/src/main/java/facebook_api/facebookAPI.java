@@ -4,6 +4,10 @@ import com.restfb.Connection;
 import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
 import com.restfb.FacebookClient.AccessToken;
+import com.restfb.Parameter;
+import com.restfb.exception.FacebookException;
+import com.restfb.types.FacebookType;
+import com.restfb.types.Page;
 import com.restfb.types.Post;
 import com.restfb.types.User;
 import java.net.URL;
@@ -113,6 +117,23 @@ public class facebookAPI {
 			}
 		}
 		listaForSearchPostsFB.clear();
+	}
+
+	public void post(String text_to_post) {
+		try {
+
+			@SuppressWarnings("deprecation")
+			FacebookClient fbClient = new DefaultFacebookClient(accessToken);
+
+			User myuser = fbClient.fetchObject("me", User.class);
+			Page mypage = fbClient.fetchObject("me/feed", Page.class);
+			int counter = 0;
+			fbClient.publish("me/feed", FacebookType.class, Parameter.with("message", text_to_post));
+			counter++;
+		} catch (FacebookException ex) { // So that you can see what went wrong
+			ex.printStackTrace(System.err); // in case you did anything incorrectly
+		}
+
 	}
 
 }

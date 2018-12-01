@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.border.MatteBorder;
@@ -174,6 +175,13 @@ public class facebookWindow {
 		tglbtnPostar.setBackground(Color.WHITE);
 		tglbtnPostar.setBounds(408, 35, 84, 25);
 		panel_2.add(tglbtnPostar);
+		tglbtnPostar.addActionListener( new ActionListener() {
+			
+			public void actionPerformed(ActionEvent arg0) {
+				fapi.post(textField.getText());
+				JOptionPane.showMessageDialog(null, "Mensagem postada no seu perfil com sucesso!");
+			}
+		});
 
 		textField = new JTextField();
 		textField.setColumns(10);
