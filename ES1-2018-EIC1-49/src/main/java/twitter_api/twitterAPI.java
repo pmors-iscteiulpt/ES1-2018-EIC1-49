@@ -2,6 +2,7 @@ package twitter_api;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
@@ -27,7 +28,8 @@ public class twitterAPI {
 	DefaultListModel<String> searchTagList = new DefaultListModel<String>();
 	DefaultListModel<String> followersList = new DefaultListModel<String>();
 	DefaultListModel<String> followingList = new DefaultListModel<String>();
-	
+	DefaultListModel<String> post_24h = new DefaultListModel<String>();
+
 	public int numero_followers;
 	public int numero_following;
 
@@ -47,7 +49,8 @@ public class twitterAPI {
 			e1.printStackTrace();
 		}
 		for (Status s : status) {
-			dlm.addElement("[" + s.getUser().getName() + "] " + s.getText() + " " + s.getId());
+			dlm.addElement("[" + s.getUser().getName() + "] " + s.getText() + " " + s.getId() + " "
+					+ s.getCreatedAt().getTime());
 		}
 
 	}
@@ -181,7 +184,7 @@ public class twitterAPI {
 			e.printStackTrace();
 		}
 
-		this.numero_followers=numberFollowers;
+		this.numero_followers = numberFollowers;
 	}
 
 	public void showFollowingList() throws IllegalStateException, TwitterException {
@@ -197,10 +200,10 @@ public class twitterAPI {
 		PagableResponseList<User> prlFollow;
 		followingList.clear();
 		int numberFollowing = 0;
-		
+
 		try {
 			long cursor = -1;
-			prlFollow = twitterIt.getFriendsList(twitterIt.getId(), cursor );
+			prlFollow = twitterIt.getFriendsList(twitterIt.getId(), cursor);
 			for (int i = 0; i < prlFollow.size(); i++) {
 				User user = prlFollow.get(i);
 				numberFollowing = user.getFollowersCount();
@@ -212,13 +215,13 @@ public class twitterAPI {
 
 		this.numero_following = numberFollowing;
 	}
-	
+
 	public String getNumberFollowers() throws IllegalStateException, TwitterException {
 		showFollowersList();
 		String nf = new Integer(numero_followers).toString();
 		return nf;
 	}
-	
+
 	public String getNumberFollowing() throws IllegalStateException, TwitterException {
 		showFollowingList();
 		String nf = new Integer(numero_following).toString();
@@ -237,5 +240,20 @@ public class twitterAPI {
 			}
 		}
 
+	}
+
+	public void filtrarUltimas24horas() {
+		Date today = new Date();
+		Long dateInLong = today.getTime();
+		for (int tweet = 0; tweet < dlm.size(); tweet++) {
+			String element = dlm.getElementAt(tweet);
+			String[] partes = element.split(" ");
+			int last_index = partes.length - 1;
+			Long millie = Long.parseLong(partes[last_index]);
+			Long periodo_24 = dateInLong - 86400000;
+			// ultimas 24horas
+			if (millie >= periodo_24)
+				post_24h.addElement(element);
+		}
 	}
 }

@@ -37,7 +37,7 @@ public class SentMailWindow {
 	private JList<String> list_1;
 	private JTextField textField_1;
 	public String toRespond;
-	
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -137,6 +137,23 @@ public class SentMailWindow {
 		});
 		panel.add(btnNewButton);
 
+		rdbtnEmailsEnviadosPelo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(rdbtnEmailsEnviadosPelo.isSelected()) {
+					rdbtnEmailsDirector.setSelected(false);
+				}				
+			}
+		});
+		
+		rdbtnEmailsDirector.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+				if(rdbtnEmailsDirector.isSelected()) {
+					rdbtnEmailsEnviadosPelo.setSelected(false);
+				}				
+			}
+		});
+	
+		
 		JButton btnFiltrar = new JButton("Filtrar");
 		btnFiltrar.setBackground(Color.ORANGE);
 		btnFiltrar.setBounds(486, 124, 97, 25);
@@ -154,9 +171,16 @@ public class SentMailWindow {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-
 				}
 
+				else if (rdbtnEmailsEnviadosPelo.isSelected()) {
+					try {
+						mail.showListMailsISCTE();
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+					list_1.setModel(mail.listaDeProcuraDeEmails);
+				}
 			}
 		});
 
@@ -184,39 +208,23 @@ public class SentMailWindow {
 		btnProcurar.setBackground(new Color(135, 206, 235));
 		btnProcurar.setBounds(21, 45, 116, 25);
 		panel_3.add(btnProcurar);
-		
+
 		JPanel panel_2 = new JPanel();
 		panel_2.setBounds(61, 433, 100, 32);
 		panel.add(panel_2);
 		panel_2.setLayout(null);
-//		panel_2.setVisible(false);
-		
+		panel_2.setVisible(false);
+
 		JButton btnResponder = new JButton("Responder");
 		btnResponder.setBounds(-1, 5, 103, 25);
 		panel_2.add(btnResponder);
 		btnProcurar.addActionListener(new ActionListener() {
 
-			public void actionPerformed(ActionEvent e){
+			public void actionPerformed(ActionEvent e) {
 				list_1.clearSelection();
-				if (rdbtnEmailsDirector.isEnabled()) {
-					try {
-						mail.showListMailsDirector();
-					} catch (Exception e1) {
-						e1.printStackTrace();
-					}
-					list_1.setModel(mail.listaDeProcuraDeEmails);
-				if(rdbtnEmailsEnviadosPelo.isEnabled()) {
-					try {
-						mail.showListMailsISCTE();
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					}
-					list_1.setModel(mail.listaDeProcuraDeEmails);
-				}
-				} else {
-					mail.searchForTagInMailBox(textField_1.getText());
-					list_1.setModel(mail.listaDeProcuraDeEmails);
-				}
+
+				mail.searchForTagInMailBox(textField_1.getText());
+				list_1.setModel(mail.listaDeProcuraDeEmails);
 			}
 		});
 
@@ -228,23 +236,19 @@ public class SentMailWindow {
 					for (int i = 0; i < mail.getMessages().length; i++) {
 						if (i == index)
 							try {
-								toRespond = mail.getMessages()[i].getFrom().toString();
+								toRespond = mail.getMessages()[i].getFrom()[0].toString();
+								System.out.println(toRespond);
 							} catch (MessagingException e) {
 								e.printStackTrace();
 							}
-						
 						pmw = new PresentationMailWindow();
-						
 						pmw.getFrame().setVisible(true);
 						frame.setVisible(false);
-						
 					}
 				}
 			}
 		});
-	
-		
-		
+
 	}
 
 	public JFrame getFrame() {
