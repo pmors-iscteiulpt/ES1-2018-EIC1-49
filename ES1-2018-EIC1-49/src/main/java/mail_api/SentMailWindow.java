@@ -249,6 +249,34 @@ public class SentMailWindow {
 			}
 		});
 
+		
+		JPanel panel_5 = new JPanel();
+		panel_5.setBackground(Color.LIGHT_GRAY);
+		panel_5.setBounds(455, 9, 164, 43);
+		panel.add(panel_5);
+		panel_5.setLayout(null);
+		panel_5.setVisible(false);
+		
+		JLabel lblNewLabel1 = new JLabel("");
+		lblNewLabel1.setBounds(121, 0, 43, 43);
+		panel_5.add(lblNewLabel1);
+		lblNewLabel1.setIcon(new ImageIcon("C:\\Users\\Utilizador\\Desktop\\283982_thm.png"));
+		
+		JLabel lblOrganizarPorTempo = new JLabel("\u00DAltimas 24h");
+		lblOrganizarPorTempo.setBounds(33, 0, 76, 16);
+		panel_5.add(lblOrganizarPorTempo);
+		
+		JButton btnFiltrard = new JButton("Filtrar");
+		btnFiltrard.setBackground(new Color(135, 206, 235));
+		btnFiltrard.setBounds(35, 18, 67, 22);
+		panel_5.add(btnFiltrard);
+		btnFiltrard.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				mail.filtrarUltimas24horas();
+				list_1.setModel(mail.post_24h);
+			}
+		});
 	}
 
 	public JFrame getFrame() {
@@ -258,4 +286,6 @@ public class SentMailWindow {
 	public void setFrame(JFrame frame) {
 		this.frame = frame;
 	}
+	
+	
 }

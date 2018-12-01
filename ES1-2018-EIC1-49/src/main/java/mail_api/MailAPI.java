@@ -1,6 +1,7 @@
 package mail_api;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 import javax.mail.Session;
@@ -29,8 +30,10 @@ public class MailAPI {
 	MailAPI mail;
 	private Address from1;
 	private String subj;
-	DefaultListModel<String> listaDeEmails = new DefaultListModel<String>();
-	DefaultListModel<String> listaDeProcuraDeEmails = new DefaultListModel<String>();
+	public DefaultListModel<String> listaDeEmails = new DefaultListModel<String>();
+	public DefaultListModel<String> listaDeProcuraDeEmails = new DefaultListModel<String>();
+	public DefaultListModel<String> post_24h = new DefaultListModel<String>();
+
 	public Message messages[];
 
 	public static void main(String[] args) {
@@ -99,7 +102,7 @@ public class MailAPI {
 					from1 = message.getFrom()[0];
 					subj = message.getSubject();
 					if (message != null) {
-						listaDeEmails.addElement("FROM: " + from1 + "        " + "SUBJECT: " + subj);
+						listaDeEmails.addElement("FROM: " + from1 + "        " + "SUBJECT: " + subj + " " + message.getReceivedDate().getTime());
 						
 					}
 				}
@@ -292,5 +295,22 @@ public class MailAPI {
 		} catch (MessagingException me) {
 			me.printStackTrace();
 		}
+	}
+	
+	public void filtrarUltimas24horas() {
+		Date today = new Date();
+		Long dateInLong = today.getTime();
+		for (int mail = 0; mail < listaDeEmails.size(); mail++) {
+			String element = listaDeEmails.getElementAt(mail);
+			String[] partes = element.split(" ");
+			int last_index = partes.length - 1;
+			Long millie = Long.parseLong(partes[last_index]);
+			Long periodo_24 = dateInLong - 86400000;
+			// ultimas 24horas
+			if (millie >= periodo_24)
+				post_24h.addElement(element);
+		}
+		if (post_24h.isEmpty())
+			post_24h.addElement("::Não existe nenhum Tweet nas últimas 24h!::");
 	}
 }
