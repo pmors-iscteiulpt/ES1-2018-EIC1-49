@@ -4,8 +4,11 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -17,10 +20,14 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.border.MatteBorder;
 
+import com.restfb.types.Post;
+
 import mail_api.AuthenticationMailWindow;
 import mail_api.MailAPI;
 import mail_api.PresentationMailWindow;
 import mail_api.SentMailWindow;
+import twitter4j.Status;
+
 import javax.swing.JToggleButton;
 import javax.swing.JTextField;
 import java.awt.Font;
@@ -45,6 +52,7 @@ public class facebookWindow {
 	private JList<String> list_1;
 	private printWriter printwriter;
 	private JTextField textField_1;
+	public static List<Post> post;
 
 	/**
 	 * Launch the application.
@@ -137,20 +145,6 @@ public class facebookWindow {
 		rdbtnEmailsEnviadosPelo_1.setBounds(321, 78, 300, 25);
 		panel.add(rdbtnEmailsEnviadosPelo_1);
 
-		JButton btnNewButton = new JButton("O que?");
-		btnNewButton.setBackground(Color.WHITE);
-		btnNewButton.setBounds(640, 407, 107, 25);
-		btnNewButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		panel.add(btnNewButton);
-
-		JLabel lblNewLabel_2 = new JLabel("");
-		lblNewLabel_2.setBounds(676, 380, 64, 32);
-		panel.add(lblNewLabel_2);
-
 		JLabel lblNewLabel_3 = new JLabel("New label");
 		lblNewLabel_3.setBounds(650, 66, 56, 16);
 		panel.add(lblNewLabel_3);
@@ -163,15 +157,15 @@ public class facebookWindow {
 		JPanel panel_2 = new JPanel();
 		panel_2.setLayout(null);
 		panel_2.setBackground(new Color(30, 144, 255));
-		panel_2.setBounds(77, 379, 504, 73);
+		panel_2.setBounds(77, 379, 546, 73);
 		panel.add(panel_2);
 
 		JToggleButton tglbtnPostar = new JToggleButton("Postar");
 		tglbtnPostar.setBackground(Color.WHITE);
-		tglbtnPostar.setBounds(408, 35, 84, 25);
+		tglbtnPostar.setBounds(450, 35, 84, 25);
 		panel_2.add(tglbtnPostar);
-		tglbtnPostar.addActionListener( new ActionListener() {
-			
+		tglbtnPostar.addActionListener(new ActionListener() {
+
 			public void actionPerformed(ActionEvent arg0) {
 				fapi.post(textField.getText());
 				JOptionPane.showMessageDialog(null, "Mensagem postada no seu perfil com sucesso!");
@@ -180,7 +174,7 @@ public class facebookWindow {
 
 		textField = new JTextField();
 		textField.setColumns(10);
-		textField.setBounds(12, 6, 480, 22);
+		textField.setBounds(12, 6, 522, 22);
 		panel_2.add(textField);
 
 		JLabel lblEmQueEsts = new JLabel("Em que estás a pensar?");
@@ -226,35 +220,35 @@ public class facebookWindow {
 				list_1.setModel(fapi.listaForSearchPostsFB);
 			}
 		});
-	
-	JPanel panel_5 = new JPanel();
-	panel_5.setBackground(Color.LIGHT_GRAY);
-	panel_5.setBounds(455, 9, 164, 43);
-	panel.add(panel_5);
-	panel_5.setLayout(null);
-	panel_5.setVisible(false);
-	
-	JLabel lblNewLabel1 = new JLabel("");
-	lblNewLabel1.setBounds(121, 0, 43, 43);
-	panel_5.add(lblNewLabel1);
-	lblNewLabel1.setIcon(new ImageIcon("C:\\Users\\Utilizador\\Desktop\\283982_thm.png"));
-	
-	JLabel lblOrganizarPorTempo = new JLabel("\u00DAltimas 24h");
-	lblOrganizarPorTempo.setBounds(33, 0, 76, 16);
-	panel_5.add(lblOrganizarPorTempo);
-	
-	JButton btnFiltrard = new JButton("Filtrar");
-	btnFiltrard.setBackground(new Color(135, 206, 235));
-	btnFiltrard.setBounds(35, 18, 67, 22);
-	panel_5.add(btnFiltrard);
-	btnFiltrard.addActionListener(new ActionListener() {
-		
-		public void actionPerformed(ActionEvent e) {
-			fapi.filtrarUltimas24horas();
-			list_1.setModel(fapi.post_24h);
-		}
-	});
-	
+
+		JPanel panel_5 = new JPanel();
+		panel_5.setBackground(Color.LIGHT_GRAY);
+		panel_5.setBounds(455, 9, 164, 43);
+		panel.add(panel_5);
+		panel_5.setLayout(null);
+		panel_5.setVisible(false);
+
+		JLabel lblNewLabel1 = new JLabel("");
+		lblNewLabel1.setBounds(121, 0, 43, 43);
+		panel_5.add(lblNewLabel1);
+		lblNewLabel1.setIcon(new ImageIcon("C:\\Users\\Utilizador\\Desktop\\283982_thm.png"));
+
+		JLabel lblOrganizarPorTempo = new JLabel("\u00DAltimas 24h");
+		lblOrganizarPorTempo.setBounds(33, 0, 76, 16);
+		panel_5.add(lblOrganizarPorTempo);
+
+		JButton btnFiltrard = new JButton("Filtrar");
+		btnFiltrard.setBackground(new Color(135, 206, 235));
+		btnFiltrard.setBounds(35, 18, 67, 22);
+		panel_5.add(btnFiltrard);
+		btnFiltrard.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				fapi.filtrarUltimas24horas();
+				list_1.setModel(fapi.post_24h);
+			}
+		});
+
 		btnVerPublicaes.addActionListener(new ActionListener() {
 
 			@Override
@@ -270,6 +264,22 @@ public class facebookWindow {
 				} catch (FileNotFoundException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
+				}
+			}
+		});
+
+		list_1.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent evt) {
+				int index = list_1.getSelectedIndex();
+				if (evt.getClickCount() == 3) {
+					for (int i = 0; i < fapi.listaPostsFB.size(); i++) {
+						if (index == i) {
+							String[] partes = fapi.listaPostsFB.get(i).split(" ");
+							String title = "Post de  " + partes[0] + " | " + partes[fapi.listaPostsFB.size() - 1];
+							String message = fapi.listaPostsFB.get(i).toString();
+							JOptionPane.showMessageDialog(null, message, title, JOptionPane.INFORMATION_MESSAGE);
+						}
+					}
 				}
 			}
 		});

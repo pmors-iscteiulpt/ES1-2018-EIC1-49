@@ -35,8 +35,8 @@ public class facebookAPI {
 	@FXML
 	private TextField username;
 	@FXML
-	private PasswordField password;
 	private Post aPostmew;
+	private PasswordField password;
 	private String accessToken = "EAAEZBg2PIN94BAMPDvOtQBHFQtWmK8MmhA0AfxpLDeXmoUKYe3rcQRMZCAxW3sI1R7o5RHbZCYB7fRcZChVTvVJMvrjcxYxUP0L9qgN0ZChJyAZBV1cftbTBxcvSoUyMy66ZAMrklkw0pZC6L8EdDZCxmjHuBGK51UNwnd2JnqR8cvGGTILgrDLf9sjO7K2OZBZBnf7Pp2OLsfvhQZDZD";
 	DefaultListModel<String> listaPostsFB = new DefaultListModel<String>();
 	DefaultListModel<String> listaForSearchPostsFB = new DefaultListModel<String>();
@@ -68,9 +68,8 @@ public class facebookAPI {
 		for (List<Post> page : result) {
 			for (Post aPost : page) {
 				if (aPost.getMessage() != null) {
-					aPostmew = aPost;
 					cont++;
-					listaPostsFB.addElement(aPost.getCreatedTime() + " - " + aPost.getMessage() + aPost.getCreatedTime().getTime());
+					listaPostsFB.addElement(aPost.getCreatedTime() + " - " + aPost.getMessage() + " " + aPost.getCreatedTime().getTime());
 				}
 			}
 		}

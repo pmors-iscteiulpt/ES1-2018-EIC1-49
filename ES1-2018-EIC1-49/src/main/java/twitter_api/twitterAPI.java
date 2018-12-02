@@ -24,12 +24,14 @@ public class twitterAPI {
 	public static List<Status> status;
 	public static List<User> user;
 	public static List<URLEntity> entity;
-	DefaultListModel<String> dlm = new DefaultListModel<String>();
-	DefaultListModel<String> searchTagList = new DefaultListModel<String>();
-	DefaultListModel<String> followersList = new DefaultListModel<String>();
-	DefaultListModel<String> followingList = new DefaultListModel<String>();
-	DefaultListModel<String> post_24h = new DefaultListModel<String>();
+	public DefaultListModel<String> dlm = new DefaultListModel<String>();
+	public DefaultListModel<String> searchTagList = new DefaultListModel<String>();
+	public DefaultListModel<String> followersList = new DefaultListModel<String>();
+	public DefaultListModel<String> followingList = new DefaultListModel<String>();
+	public DefaultListModel<String> post_24h = new DefaultListModel<String>();
 
+
+	
 	public int numero_followers;
 	public int numero_following;
 

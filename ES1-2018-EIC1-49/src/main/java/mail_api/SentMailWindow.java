@@ -18,6 +18,7 @@ import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.border.MatteBorder;
 
@@ -139,21 +140,20 @@ public class SentMailWindow {
 
 		rdbtnEmailsEnviadosPelo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(rdbtnEmailsEnviadosPelo.isSelected()) {
+				if (rdbtnEmailsEnviadosPelo.isSelected()) {
 					rdbtnEmailsDirector.setSelected(false);
-				}				
+				}
 			}
 		});
-		
+
 		rdbtnEmailsDirector.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-				if(rdbtnEmailsDirector.isSelected()) {
+			public void actionPerformed(ActionEvent e) {
+				if (rdbtnEmailsDirector.isSelected()) {
 					rdbtnEmailsEnviadosPelo.setSelected(false);
-				}				
+				}
 			}
 		});
-	
-		
+
 		JButton btnFiltrar = new JButton("Filtrar");
 		btnFiltrar.setBackground(Color.ORANGE);
 		btnFiltrar.setBounds(486, 124, 97, 25);
@@ -230,9 +230,9 @@ public class SentMailWindow {
 
 		list_1.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent evt) {
+				int index = list_1.getSelectedIndex();
 				if (evt.getClickCount() == 1) {
 					panel_2.setVisible(true);
-					int index = list_1.getSelectedIndex();
 					for (int i = 0; i < mail.getMessages().length; i++) {
 						if (i == index)
 							try {
@@ -246,32 +246,46 @@ public class SentMailWindow {
 						frame.setVisible(false);
 					}
 				}
+				if (evt.getClickCount() == 3) {
+					for (int i = 0; i < mail.getMessages().length; i++) {
+						if (index == i) {
+							String title;
+							try {
+								title = "Mail de " + mail.getMessages()[i].getFrom() + " | "
+										+ mail.getMessages()[i].getReceivedDate();
+								String message = mail.getMessages()[i].getContentType().toString();
+								JOptionPane.showMessageDialog(null, message, title, JOptionPane.INFORMATION_MESSAGE);
+							} catch (MessagingException e) {
+								e.printStackTrace();
+							}
+						}
+					}
+				}
 			}
 		});
 
-		
 		JPanel panel_5 = new JPanel();
 		panel_5.setBackground(Color.LIGHT_GRAY);
 		panel_5.setBounds(455, 9, 164, 43);
 		panel.add(panel_5);
 		panel_5.setLayout(null);
 		panel_5.setVisible(false);
-		
+
 		JLabel lblNewLabel1 = new JLabel("");
 		lblNewLabel1.setBounds(121, 0, 43, 43);
 		panel_5.add(lblNewLabel1);
 		lblNewLabel1.setIcon(new ImageIcon("C:\\Users\\Utilizador\\Desktop\\283982_thm.png"));
-		
+
 		JLabel lblOrganizarPorTempo = new JLabel("\u00DAltimas 24h");
 		lblOrganizarPorTempo.setBounds(33, 0, 76, 16);
 		panel_5.add(lblOrganizarPorTempo);
-		
+
 		JButton btnFiltrard = new JButton("Filtrar");
 		btnFiltrard.setBackground(new Color(135, 206, 235));
 		btnFiltrard.setBounds(35, 18, 67, 22);
 		panel_5.add(btnFiltrard);
 		btnFiltrard.addActionListener(new ActionListener() {
-			
+
 			public void actionPerformed(ActionEvent e) {
 				mail.filtrarUltimas24horas();
 				list_1.setModel(mail.post_24h);
@@ -286,6 +300,5 @@ public class SentMailWindow {
 	public void setFrame(JFrame frame) {
 		this.frame = frame;
 	}
-	
-	
+
 }

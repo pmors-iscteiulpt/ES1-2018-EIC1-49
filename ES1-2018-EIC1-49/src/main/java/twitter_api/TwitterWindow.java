@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JScrollPane;
@@ -27,6 +28,7 @@ import twitter4j.TwitterException;
 
 public class TwitterWindow {
 	JFrame frame;
+	JFrame frame2;
 	private JTextField txtFechar;
 	private JList<String> list_1;
 	private JScrollPane scrollPane;
@@ -37,6 +39,7 @@ public class TwitterWindow {
 	private twitterAPI signin;
 	private App app;
 	private JTextField textField_1;
+	private PopUp popUp;
 
 	/**
 	 * Launch the application.
@@ -242,29 +245,29 @@ public class TwitterWindow {
 		numero_following.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		numero_following.setBounds(34, 30, 78, 29);
 		panel_4.add(numero_following);
-		
+
 		JPanel panel_5 = new JPanel();
 		panel_5.setBackground(Color.LIGHT_GRAY);
 		panel_5.setBounds(116, 304, 164, 43);
 		panel.add(panel_5);
 		panel_5.setLayout(null);
 		panel_5.setVisible(true);
-		
+
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setBounds(121, 0, 43, 43);
 		panel_5.add(lblNewLabel);
 		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\Utilizador\\Desktop\\283982_thm.png"));
-		
+
 		JLabel lblOrganizarPorTempo = new JLabel("\u00DAltimas 24h");
 		lblOrganizarPorTempo.setBounds(33, 0, 76, 16);
 		panel_5.add(lblOrganizarPorTempo);
-		
+
 		JButton btnFiltrar = new JButton("Filtrar");
 		btnFiltrar.setBackground(new Color(135, 206, 235));
 		btnFiltrar.setBounds(35, 18, 67, 22);
 		panel_5.add(btnFiltrar);
 		btnFiltrar.addActionListener(new ActionListener() {
-			
+
 			public void actionPerformed(ActionEvent e) {
 				twitterAPI.filtrarUltimas24horas();
 				list_1.setModel(twitterAPI.post_24h);
@@ -286,16 +289,26 @@ public class TwitterWindow {
 				panel_2.setVisible(false);
 			}
 		});
-
+		
+		
 		list_1.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent evt) {
+				status = twitterAPI.getStatus();
+				int index = list_1.getSelectedIndex();
 				if (evt.getClickCount() == 1) {
 					panel_2.setVisible(true);
-					int index = list_1.getSelectedIndex();
-					status = twitterAPI.getStatus();
 					for (int i = 0; i < status.size(); i++) {
 						if (i == index)
 							statusId = status.get(i).getId();
+					}
+				}
+				if (evt.getClickCount() == 3) {
+					for (int i = 0; i < status.size(); i++) {
+						if (index == i) {
+							String title= "Tweet de " + status.get(i).getUser().getName() + " | " + status.get(i).getUser().getCreatedAt();
+							String message = status.get(i).getText(); 
+							JOptionPane.showMessageDialog(null, message, title, JOptionPane.INFORMATION_MESSAGE);
+						}
 					}
 				}
 			}
