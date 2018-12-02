@@ -1,17 +1,21 @@
 package ES1_2018_EIC1_49.EIC1_49;
 
-import java.awt.EventQueue;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import javax.swing.JButton;
-import java.awt.Color;
-import java.awt.Font;
 
 public class newAccountWindow {
+
+	/**
+	 * Janela para criar um novo utilizador, para depois ser "gravado" no ficheiro
+	 * xml.
+	 */
 
 	private bdaAPP bdaApp;
 
@@ -35,22 +39,6 @@ public class newAccountWindow {
 	private JTextField textField_2;
 	private JButton btnSave;
 	private JLabel lblCriarNovoUsurio;
-
-	/**
-	 * Launch the application.
-	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					newAccountWindow window = new newAccountWindow();
-//					window.frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
 
 	/**
 	 * Create the application.
