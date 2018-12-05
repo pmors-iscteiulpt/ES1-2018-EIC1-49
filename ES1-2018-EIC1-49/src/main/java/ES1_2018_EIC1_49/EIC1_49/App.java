@@ -38,20 +38,9 @@ public class App extends JFrame {
 	private App app;
 
 	/**
-	 * Launch the application.
+	 * @description Frame onde concentra as funcionalidades do projeto, ou seja,
+	 *              onde acede as funcionalidades do Email, do Facebook e do Twitter
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					App window = new App();
-//					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * @return the frame

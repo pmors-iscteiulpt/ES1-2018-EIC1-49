@@ -50,7 +50,7 @@ public class facebookWindow {
 
 	public String user;
 	public String pass;
-	private JTextField textField;
+	private JTextField facebook_textField;
 	private AuthenticationFacebookWindow afw;
 	private facebookAPI fapi = new facebookAPI();
 	private JList<String> list_1;
@@ -150,6 +150,28 @@ public class facebookWindow {
 		rdbtnEmailsEnviadosPelo_1.setBounds(321, 78, 300, 25);
 		panel.add(rdbtnEmailsEnviadosPelo_1);
 
+<<<<<<< HEAD
+=======
+		JButton btnNewButton = new JButton("O que?");
+		btnNewButton.setBackground(Color.WHITE);
+		btnNewButton.setBounds(640, 407, 107, 25);
+		btnNewButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		panel.add(btnNewButton);
+
+		JButton btnFiltrar = new JButton("Filtrar");
+		btnFiltrar.setBackground(Color.ORANGE);
+		btnFiltrar.setBounds(486, 124, 97, 25);
+		panel.add(btnFiltrar);
+
+		JLabel lblNewLabel_2 = new JLabel("");
+		lblNewLabel_2.setBounds(676, 380, 64, 32);
+		panel.add(lblNewLabel_2);
+
+>>>>>>> refs/remotes/origin/master
 		JLabel lblNewLabel_3 = new JLabel("New label");
 		lblNewLabel_3.setBounds(650, 66, 56, 16);
 		panel.add(lblNewLabel_3);
@@ -177,17 +199,31 @@ public class facebookWindow {
 			}
 		});
 
+<<<<<<< HEAD
 		textField = new JTextField();
 		textField.setColumns(10);
 		textField.setBounds(12, 6, 522, 22);
 		panel_2.add(textField);
+=======
+		facebook_textField = new JTextField();
+		facebook_textField.setColumns(10);
+		facebook_textField.setBounds(12, 6, 480, 22);
+		panel_2.add(facebook_textField);
+		
+		tglbtnPostar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				fapi.post(facebook_textField.getText());
+			}
+		});
+>>>>>>> refs/remotes/origin/master
 
 		JLabel lblEmQueEsts = new JLabel("Em que estás a pensar?");
 		lblEmQueEsts.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblEmQueEsts.setBounds(179, 36, 179, 21);
 		panel_2.add(lblEmQueEsts);
 
-		JLabel lblNewLabel_4 = new JLabel("Publica\u00E7\u00F5es");
+		JLabel lblNewLabel_4 = new JLabel("Publicacoes");
+
 		lblNewLabel_4.setBackground(new Color(135, 206, 250));
 		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblNewLabel_4.setBounds(77, 128, 113, 25);

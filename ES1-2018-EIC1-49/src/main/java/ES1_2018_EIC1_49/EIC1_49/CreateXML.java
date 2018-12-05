@@ -41,6 +41,11 @@ public class CreateXML {
 	}
 
 	public void addUser(Utilizador newUser) {
+		/**
+		 * 
+		 * @description Inscricao de um utilizador novo no ficheiro xml
+		 */
+
 		try {
 			JAXBContext jaxbContext = JAXBContext.newInstance(Utilizadores.class);
 
