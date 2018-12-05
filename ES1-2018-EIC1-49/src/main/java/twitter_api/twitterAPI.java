@@ -62,7 +62,7 @@ public class twitterAPI {
 				e1.printStackTrace();
 			}
 			pw = new PrintWriter(new File(
-					"C:\\Users\\Utilizador\\git\\ES1-2018-EIC1-49\\ES1-2018-EIC1-49\\src\\main\\java\\twitter_api\\tweet.txt"));
+					"C:\\Users\\Pedro\\git\\ES1-2018-EIC1-49\\ES1-2018-EIC1-49\\src\\main\\java\\DataBase\\twitterDataBase.txt"));
 			for (Status s : status) {
 
 				String response = "[" + s.getUser().getName() + "] " + s.getText();
@@ -305,6 +305,6 @@ public class twitterAPI {
 				post_24h.addElement(element);
 		}
 		if (post_24h.isEmpty())
-			post_24h.addElement("::Não existe nenhum Tweet nas últimas 24h!::");
+			post_24h.addElement("::Nï¿½o existe nenhum Tweet nas ï¿½ltimas 24h!::");
 	}
 }

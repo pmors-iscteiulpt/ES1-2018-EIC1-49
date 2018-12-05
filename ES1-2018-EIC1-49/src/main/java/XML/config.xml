@@ -2,34 +2,26 @@
 <users>
     <user>
         <curso>lei</curso>
-        <email_username>pgoaa@iscte.pt</email_username>
-        <fb_username>pedro123@</fb_username>
         <pw>123</pw>
-        <username>pgoaa</username>
+        <username>pedro</username>
     </user>
     <user>
         <curso>lei</curso>
-        <email_username>pmors</email_username>
-        <fb_username>ramos.conas@pt.iscte</fb_username>
         <pw>123</pw>
         <username>ramos</username>
     </user>
     <user>
         <curso>lei</curso>
-        <email_username>pmors@iscte-iul.pt</email_username>
+        <email_username>leal@iscte.com</email_username>
+        <fb_username>leal@iscte.pt</fb_username>
         <pw>123</pw>
         <username>leal</username>
     </user>
     <user>
         <curso>lei</curso>
-        <pw>123</pw>
-        <username>putoTo</username>
-    </user>
-    <user>
-        <curso>patio</curso>
-        <email_username>brr</email_username>
-        <fb_username>brr</fb_username>
-        <pw>abc</pw>
-        <username>brr</username>
+        <email_username>toni@iscte.pt</email_username>
+        <fb_username></fb_username>
+        <pw>asd</pw>
+        <username>antonio</username>
     </user>
 </users>

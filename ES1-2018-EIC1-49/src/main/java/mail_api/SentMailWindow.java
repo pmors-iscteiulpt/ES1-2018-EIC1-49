@@ -65,7 +65,7 @@ public class SentMailWindow {
 		frame = new JFrame();
 		frame.setBounds(250, 250, 777, 501);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 		frame.setResizable(false);
 		frame.getContentPane().setLayout(null);
 
@@ -136,7 +136,7 @@ public class SentMailWindow {
 		btnNewButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				pmw = new PresentationMailWindow();
+				pmw = new PresentationMailWindow(null);
 				pmw.getFrame().setVisible(true);
 				frame.setVisible(false);
 			}
@@ -173,18 +173,22 @@ public class SentMailWindow {
 						list_1.setModel(mail.listaDeEmails);
 
 					} catch (Exception e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 				}
 
-				else if (rdbtnEmailsEnviadosPelo.isSelected()) {
+				if (rdbtnEmailsDirector.isSelected()) {
 					try {
-						mail.showListMailsISCTE();
+						mail.getEmailfromReitora();
+						list_1.setModel(mail.emailsReitor);
+						System.out.println(list_1.isSelectionEmpty());
+
 					} catch (IOException e1) {
 						e1.printStackTrace();
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
 					}
-					list_1.setModel(mail.listaDeProcuraDeEmails);
 				}
 			}
 		});
@@ -236,20 +240,33 @@ public class SentMailWindow {
 		list_1.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent evt) {
 				int index = list_1.getSelectedIndex();
-				if (evt.getClickCount() == 10) {
+				if (evt.getClickCount() == 1) {
 					panel_2.setVisible(true);
-					for (int i = 0; i < mail.getMessages().length; i++) {
-						if (i == index)
-							try {
-								toRespond = mail.getMessages()[i].getFrom()[0].toString();
-								System.out.println(toRespond);
-							} catch (MessagingException e) {
-								e.printStackTrace();
+					btnResponder.addActionListener(new ActionListener() {
+
+						public void actionPerformed(ActionEvent e) {
+							for (int i = 0; i < mail.listaDeEmails.size(); i++) {
+								if (i == index) {
+									toRespond = mail.listaDeEmails.getElementAt(i);
+									System.out.println(toRespond);
+									pmw = new PresentationMailWindow(toRespond);
+									pmw.getFrame().setVisible(true);
+									frame.setVisible(false);
+								}
 							}
-						pmw = new PresentationMailWindow();
-						pmw.getFrame().setVisible(true);
-						frame.setVisible(false);
-					}
+							if (rdbtnEmailsDirector.isSelected()) {
+								for (int i = 0; i < mail.emailsReitor.size(); i++) {
+									if (i == index) {
+										toRespond = mail.emailsReitor.getElementAt(i);
+										System.out.println(toRespond);
+										pmw = new PresentationMailWindow(toRespond);
+										pmw.getFrame().setVisible(true);
+										frame.setVisible(false);
+									}
+								}
+							}
+						}
+					});
 				}
 			}
 		});

@@ -101,6 +101,8 @@ public class newAccountWindow {
 				CreateXML createxml = new CreateXML();
 				createxml.addUser(newUser);
 				frame.setVisible(false);
+				bdaApp = new bdaAPP();
+				bdaApp.setVisible(true);
 
 			}
 		});

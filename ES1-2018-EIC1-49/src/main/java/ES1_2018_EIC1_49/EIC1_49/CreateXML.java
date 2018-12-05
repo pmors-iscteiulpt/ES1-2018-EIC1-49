@@ -12,8 +12,8 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
 public class CreateXML {
-	private String filepath = "C:\\Users\\Utilizador\\git\\ES1-2018-EIC1-49\\ES1-2018-EIC1-49\\src\\main\\java\\XML\\config.xml";
-	private File xmlFile = new File(filepath);
+	private String filepath = "C:\\Users\\Pedro\\git\\ES1-2018-EIC1-49\\ES1-2018-EIC1-49\\src\\main\\java\\XML\\";
+	private File xmlFile = new File(filepath + "config.xml");
 //	private bdaAPP bdaapp = new bdaAPP();
 
 //	sFFFprivate String acess = app.usernameAcessGranted();
@@ -35,7 +35,7 @@ public class CreateXML {
 	}
 
 	/**
-	 * Funçao que consulta os utilizadores no ficheiro
+	 * Funï¿½ao que consulta os utilizadores no ficheiro
 	 * 
 	 * @author Pedro Almeida
 	 * 
@@ -55,7 +55,7 @@ public class CreateXML {
 	}
 
 	/**
-	 * Funçao que adiciona os utilizadores no ficheiro
+	 * Funï¿½ao que adiciona os utilizadores no ficheiro
 	 * 
 	 * @author Pedro Almeida
 	 * 
@@ -216,17 +216,21 @@ public class CreateXML {
 	}
 
 	/**
-	 * Funçao auxiliar para conseguir associar um utilizador ao uma conta
+	 * Funï¿½ao auxiliar para conseguir associar um utilizador ao uma conta
 	 * 
 	 * @author Pedro Almeida
 	 * 
 	 */
 
+	public String getFilepath() {
+		return filepath;
+
+	}
+
 	public int readFromFile() {
 		Scanner scanner = null;
 		try {
-			scanner = new Scanner(new File(
-					"C:\\Users\\Utilizador\\git\\ES1-2018-EIC1-49\\ES1-2018-EIC1-49\\src\\main\\java\\XML\\acessos"));
+			scanner = new Scanner(new File(filepath + "acessos"));
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

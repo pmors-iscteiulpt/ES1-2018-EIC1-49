@@ -58,6 +58,7 @@ public class facebookWindow {
 	private JTextField textField_1;
 	public PopUp_Facebook popup;
 	private JTextField textField;
+	private String message_show;
 
 	/**
 	 * Launch the application.
@@ -295,7 +296,7 @@ public class facebookWindow {
 				panel_5.setVisible(true);
 				try {
 					printwriter.printOnFile(fapi.listaPostsFB, new File(
-							"C:\\Users\\Asus\\git\\ES1-2018-EIC1-49\\ES1-2018-EIC1-49\\src\\main\\java\\DataBase\\facebookDataBase.txt"));
+							"C:\\Users\\Pedro\\git\\ES1-2018-EIC1-49\\ES1-2018-EIC1-49\\src\\main\\java\\DataBase\\facebookDataBase.txt"));
 				} catch (FileNotFoundException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -306,40 +307,24 @@ public class facebookWindow {
 		list_1.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent evt) {
 				int index = list_1.getSelectedIndex();
-				if (evt.getClickCount() == 3) {
-					for (int i = 0; i < fapi.listaPostsFB.size(); i++) {
+				if (evt.getClickCount() == 2) {
+					for (int i = 0; i < fapi.getPosts().size(); i++) {
 						if (index == i) {
-							String domain = "http://radixcode.com/";
-							String appID = "1115442835290294";
-							String authUrl = "https://graph.facebook.com/oauth/authorize?type=user_agent&client_id="
-									+ appID + "&redirect_uri=" + domain + "&scope=user_about_me,"
-									+ "user_actions.books,user_actions.fitness,user_actions.music,user_actions.news,user_actions.video,user_activities,user_birthday,user_education_history,"
-									+ "user_events,user_photos,user_friends,user_games_activity,user_groups,user_hometown,user_interests,user_likes,user_location,user_photos,user_relationship_details,"
-									+ "user_relationships,user_religion_politics,user_status,user_tagged_places,user_videos,user_website,user_work_history,ads_management,ads_read,email,"
-									+ "manage_notifications,manage_pages,publish_actions,read_friendlists,read_insights,read_mailbox,read_page_mailboxes,read_stream,rsvp_event";
+							popup = new PopUp_Facebook();
+							popup.getLblTweetDe().setText(fapi.getPosts().get(i).getName());
+							popup.getLblData().setText(fapi.getPosts().get(i).getCreatedTime().toString());
+							message_show = fapi.getPosts().get(i).getMessage();
+							popup.getTextArea().setText(message_show);
+							popup.getFrame().setVisible(true);
+							popup.getTextArea().setLineWrap(true);
+							popup.getTextArea().setWrapStyleWord(true);
 
-							FacebookClient fbClient = new DefaultFacebookClient(fapi.getAccessToken());
-							Connection<Post> result = fbClient.fetchConnection("me/feed", Post.class);
-
-							for (List<Post> page : result) {
-								for (Post aPost : page) {
-									if (aPost.getMessage() != null) {
-
-										String message_show = aPost.getMessage().toString();
-										popup = new PopUp_Facebook();
-										popup.getLblTweetDe().setText("Postado por: " + aPost.getName().toString());
-										popup.getTextArea().setText(message_show);
-										popup.getLblData().setText(aPost.getCreatedTime().toString());
-										popup.getFrame().setVisible(true);
-										popup.getTextArea().setLineWrap(true);
-										popup.getTextArea().setWrapStyleWord(true);
-									}
-								}
-							}
 						}
+
 					}
 				}
 			}
+
 		});
 	}
 }

@@ -37,8 +37,8 @@ public class MailAPI {
 	private String result;
 	protected List<Message> message2 = new ArrayList<Message>();
 	private Message[] messages;
+	public DefaultListModel<String> emailsReitor = new DefaultListModel<String>();
 
-	
 	public static void main(String[] args) {
 	}
 
@@ -67,6 +67,59 @@ public class MailAPI {
 	public void getMailCredentials(String user, String pass) {
 		MailAPI.username = user;
 		MailAPI.password = pass;
+	}
+
+	public void getEmailfromReitora() throws Exception {
+
+		mail = new MailAPI();
+
+		from = mail.getUsername();
+		pass = mail.getPass();
+
+		try {
+			Properties properties = new Properties();
+
+			properties.put("mail.pop3.host", "outlook.office365.com");
+			properties.put("mail.pop3.port", "995");
+			properties.put("mail.pop3s.ssl.trust", "*"); // This is the most IMP property
+
+			Session emailSession = Session.getInstance(properties);
+
+			// create the POP3 store object and connect with the pop server
+
+			Store store = emailSession.getStore("pop3s"); // try imap or impas
+			store.connect("outlook.office365.com", from, password);
+
+			// create the folder object and open it
+			Folder emailFolder = store.getFolder("INBOX");
+			emailFolder.open(Folder.READ_ONLY);
+
+			// retrieve the messages from the folder in an array and print it
+			Message[] messages = emailFolder.getMessages();
+
+			for (int i = 0; i < (messages.length + 60) - messages.length; i++) {
+
+				Message message = messages[i];
+				if (message.getFrom()[0].toString().contains("reitor@iscte-iul.pt")) {
+					String result;
+					result = getTextFromMessage(message);
+					from1 = message.getFrom()[0];
+					subj = message.getSubject();
+
+					if (message != null) {
+						System.out.println("FROM: " + from1 + "        " + "SUBJECT: " + subj + " ");
+						emailsReitor.addElement("FROM: " + from1 + "        " + "SUBJECT: " + subj + " ");
+
+					}
+				}
+			}
+			emailFolder.close(false);
+			store.close();
+		} catch (NoSuchProviderException nspe) {
+			nspe.printStackTrace();
+		} catch (MessagingException me) {
+			me.printStackTrace();
+		}
 	}
 
 	public void getEmail() throws Exception {
@@ -105,7 +158,7 @@ public class MailAPI {
 					System.out.println(from1);
 					System.out.println(subj);
 					if (message != null) {
-						
+
 						listaDeEmails.addElement("FROM: " + from1 + "        " + "SUBJECT: " + subj);
 					}
 				}
@@ -165,7 +218,7 @@ public class MailAPI {
 		prop.put("mail.smtp.auth", "true");
 		prop.put("mail.debug", "true");
 
-		Session session = Session.getDefaultInstance(prop);
+		Session session = Session.getInstance(prop);
 		MimeMessage msg = new MimeMessage(session);
 		msg.setFrom(new InternetAddress(from));
 		InternetAddress[] toaddress = new InternetAddress[to.length];
@@ -268,7 +321,7 @@ public class MailAPI {
 			properties.put("mail.pop3.port", "995");
 			properties.put("mail.pop3s.ssl.trust", "*"); // This is the most IMP property
 
-			Session emailSession = Session.getDefaultInstance(properties);
+			Session emailSession = Session.getInstance(properties);
 
 			// create the POP3 store object and connect with the pop server
 
@@ -342,6 +395,6 @@ public class MailAPI {
 				post_24h.addElement(element);
 		}
 		if (post_24h.isEmpty())
-			post_24h.addElement("::Não existe nenhum mail nas últimas 24h!::");
+			post_24h.addElement("::Nï¿½o existe nenhum mail nas ï¿½ltimas 24h!::");
 	}
 }
