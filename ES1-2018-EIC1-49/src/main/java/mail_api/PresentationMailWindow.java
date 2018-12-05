@@ -135,7 +135,7 @@ public class PresentationMailWindow {
 				panel.add(panel_2);
 				panel_2.setLayout(null);
 				
-				sendTo = new JTextField(smw.toRespond);
+				sendTo = new JTextField();
 				sendTo.setBounds(84, 13, 116, 22);
 				panel_2.add(sendTo);
 				sendTo.setColumns(10);

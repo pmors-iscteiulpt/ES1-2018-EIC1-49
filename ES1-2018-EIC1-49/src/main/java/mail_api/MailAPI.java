@@ -1,6 +1,7 @@
 package mail_api;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 import javax.mail.Session;
@@ -17,6 +18,8 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.swing.DefaultListModel;
 
+import org.springframework.util.concurrent.ListenableFutureAdapter;
+
 import twitter4j.Status;
 
 public class MailAPI {
@@ -27,9 +30,14 @@ public class MailAPI {
 	MailAPI mail;
 	private Address from1;
 	private String subj;
-	DefaultListModel<String> listaDeEmails = new DefaultListModel<String>();
-	DefaultListModel<String> listaDeProcuraDeEmails = new DefaultListModel<String>();
+	public DefaultListModel<String> listaDeEmails = new DefaultListModel<String>();
+	public DefaultListModel<String> listaDeProcuraDeEmails = new DefaultListModel<String>();
+	public DefaultListModel<String> post_24h = new DefaultListModel<String>();
+
 	public Message messages[];
+
+	public static void main(String[] args) {
+	}
 
 	public Message[] getMessages() {
 		return messages;
@@ -60,53 +68,45 @@ public class MailAPI {
 
 	public void getEmail() throws Exception {
 		mail = new MailAPI();
-		 
-        from = mail.getUsername();
-        pass = mail.getPass();
- 
-        try {
- 
-            Properties properties = new Properties();
- 
-            properties.put("mail.pop3.host", "outlook.office365.com");
-            properties.put("mail.pop3.port", "995");
-            properties.put("mail.pop3s.ssl.trust", "*"); // This is the most IMP property
- 
-            Session emailSession = Session.getDefaultInstance(properties);
- 
-            // create the POP3 store object and connect with the pop server
- 
-            Store store = emailSession.getStore("pop3s"); // try imap or impas
-            store.connect("outlook.office365.com", from, password);
- 
-            // create the folder object and open it
-            Folder emailFolder = store.getFolder("INBOX");
-            emailFolder.open(Folder.READ_ONLY);
- 
-            // retrieve the messages from the folder in an array and print it
-            Message[] messages = emailFolder.getMessages();
-			
+
+		from = mail.getUsername();
+		pass = mail.getPass();
+
+		try {
+			Properties properties = new Properties();
+
+			properties.put("mail.pop3.host", "outlook.office365.com");
+			properties.put("mail.pop3.port", "995");
+			properties.put("mail.pop3s.ssl.trust", "*"); // This is the most IMP property
+
+			Session emailSession = Session.getDefaultInstance(properties);
+
+			// create the POP3 store object and connect with the pop server
+
+			Store store = emailSession.getStore("pop3s"); // try imap or impas
+			store.connect("outlook.office365.com", from, password);
+
+			// create the folder object and open it
+			Folder emailFolder = store.getFolder("INBOX");
+			emailFolder.open(Folder.READ_ONLY);
+
+			// retrieve the messages from the folder in an array and print it
+			Message[] messages = emailFolder.getMessages();
+
 			for (int i = 0; i < (messages.length + 60) - messages.length; i++) {
 
 				Message message = messages[i];
 				if (message.getFrom()[0].toString().contains("iscte-iul.pt")) {
 					String result;
 					result = getTextFromMessage(message);
-					System.out.println("Email Number: " + (i + 1));
-					System.out.println("Subject: " + message.getSubject());
-					System.out.println("From: " + message.getFrom()[0]);
-					System.out.println("Sent Date: " + message.getSentDate());
-					System.out.println("Message: " + result);
 					from1 = message.getFrom()[0];
 					subj = message.getSubject();
 					if (message != null) {
-
-						listaDeEmails.addElement("FROM: " + from1 + "        " + "SUBJECT: " + subj);
-
+						listaDeEmails.addElement("FROM: " + from1 + "        " + "SUBJECT: " + subj + " " + message.getReceivedDate().getTime());
+						
 					}
 				}
 			}
-
 			emailFolder.close(false);
 			store.close();
 		} catch (NoSuchProviderException nspe) {
@@ -114,7 +114,6 @@ public class MailAPI {
 		} catch (MessagingException me) {
 			me.printStackTrace();
 		}
-
 	}
 
 	/**
@@ -183,7 +182,7 @@ public class MailAPI {
 		transport.close();
 	}
 
-	private String getTextFromMessage(Message message) throws MessagingException, IOException {
+	public String getTextFromMessage(Message message) throws MessagingException, IOException {
 		String result = "";
 		if (message.isMimeType("text/plain")) {
 			result = message.getContent().toString();
@@ -242,53 +241,22 @@ public class MailAPI {
 	}
 
 	public void showListMailsDirector() throws Exception {
-		from = mail.getUsername();
-		pass = mail.getPass();
 		listaDeProcuraDeEmails.clear();
-
-		try {
-			Properties properties = new Properties();
-			properties.setProperty("mail.store.protocol", "imaps");
-
-			Session emailSession = Session.getDefaultInstance(properties);
-
-			Store emailStore = emailSession.getStore("imaps");
-			emailStore.connect("imap-mail.outlook.com", from, pass);
-
-			Folder emailFolder = emailStore.getFolder("INBOX");
-
-			emailFolder.open(Folder.READ_ONLY);
-
-			Message messages[] = emailFolder.getMessages();
-			System.out.println(messages.length);
-
-			for (int i = 0; i < (messages.length + 60) - messages.length; i++) {
-
-				Message message = messages[i];
-				if (message.getFrom()[0].toString().equals("ricardo.ribeiro@iscte-iul.pt")) {
-					String result;
-					result = getTextFromMessage(message);
-					System.out.println("From: " + message.getFrom()[0]);
-					from1 = message.getFrom()[0];
-					subj = message.getSubject();
-					if (message != null) {
-						listaDeProcuraDeEmails.addElement("FROM: " + from1 + "        " + "SUBJECT: " + subj);
-					}
+		String mailDaReitora = "<reitora@iscte-iul.pt>";
+		for (int tweet = 0; tweet < listaDeEmails.size(); tweet++) {
+			String element = listaDeEmails.getElementAt(tweet);
+			String[] partes = element.split(" ");
+			for (int palavras_do_tweet = 0; palavras_do_tweet < partes.length; palavras_do_tweet++) {
+				if (partes[palavras_do_tweet].equals(mailDaReitora)) {
+					listaDeProcuraDeEmails.addElement(element);
 				}
 			}
-			emailFolder.close(false);
-			emailStore.close();
-		} catch (NoSuchProviderException nspe) {
-			nspe.printStackTrace();
-		} catch (MessagingException me) {
-			me.printStackTrace();
 		}
 	}
 
 	public void showListMailsISCTE() throws IOException {
 		from = mail.getUsername();
 		pass = mail.getPass();
-		listaDeProcuraDeEmails.clear();
 
 		try {
 			Properties properties = new Properties();
@@ -316,7 +284,7 @@ public class MailAPI {
 					from1 = message.getFrom()[0];
 					subj = message.getSubject();
 					if (message != null) {
-						listaDeProcuraDeEmails.addElement("FROM: " + from1 + "        " + "SUBJECT: " + subj);
+						listaDeEmails.addElement("FROM: " + from1 + "        " + "SUBJECT: " + subj);
 					}
 				}
 			}
@@ -326,6 +294,23 @@ public class MailAPI {
 			nspe.printStackTrace();
 		} catch (MessagingException me) {
 			me.printStackTrace();
-		}		
+		}
+	}
+	
+	public void filtrarUltimas24horas() {
+		Date today = new Date();
+		Long dateInLong = today.getTime();
+		for (int mail = 0; mail < listaDeEmails.size(); mail++) {
+			String element = listaDeEmails.getElementAt(mail);
+			String[] partes = element.split(" ");
+			int last_index = partes.length - 1;
+			Long millie = Long.parseLong(partes[last_index]);
+			Long periodo_24 = dateInLong - 86400000;
+			// ultimas 24horas
+			if (millie >= periodo_24)
+				post_24h.addElement(element);
+		}
+		if (post_24h.isEmpty())
+			post_24h.addElement("::Não existe nenhum Tweet nas últimas 24h!::");
 	}
 }

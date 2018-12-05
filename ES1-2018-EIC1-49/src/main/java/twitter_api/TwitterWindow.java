@@ -1,71 +1,34 @@
 package twitter_api;
 
-/**
- * Hello world!
- *
- */
+import java.awt.Color;
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JMenuBar;
-import javax.swing.JPanel;
-import java.awt.BorderLayout;
-import javax.swing.JPopupMenu;
-import java.awt.Component;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.List;
 
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JTextField;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JTextArea;
-import java.awt.Color;
-import javax.swing.JToggleButton;
-import javax.swing.ListSelectionModel;
-import javax.swing.event.ListDataEvent;
-import javax.swing.event.ListDataListener;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-
-import ES1_2018_EIC1_49.EIC1_49.App;
-import ES1_2018_EIC1_49.EIC1_49.bdaAPP;
-import facebook_api.printWriter;
-import twitter4j.Status;
-import twitter4j.Twitter;
-import twitter4j.TwitterException;
-import twitter4j.TwitterFactory;
-import twitter4j.conf.ConfigurationBuilder;
-
-import java.awt.FlowLayout;
-import java.awt.CardLayout;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridLayout;
-import java.awt.Image;
-
-import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.SystemColor;
-import javax.swing.JScrollPane;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JList;
-import java.awt.Button;
-import javax.swing.SwingConstants;
-import javax.swing.JPasswordField;
-import java.awt.Font;
-import java.awt.Panel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JRadioButtonMenuItem;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import javax.swing.JToggleButton;
+import javax.swing.ListSelectionModel;
+
+import ES1_2018_EIC1_49.EIC1_49.App;
+import twitter4j.Status;
+import twitter4j.TwitterException;
 
 public class TwitterWindow {
 	JFrame frame;
+	JFrame frame2;
 	private JTextField txtFechar;
 	private JList<String> list_1;
 	private JScrollPane scrollPane;
@@ -75,8 +38,8 @@ public class TwitterWindow {
 	private long statusId;
 	private twitterAPI signin;
 	private App app;
-	private printWriter printwriter;
 	private JTextField textField_1;
+	private PopUp popUp;
 
 	/**
 	 * Launch the application.
@@ -135,7 +98,7 @@ public class TwitterWindow {
 		frame.getContentPane().setLayout(null);
 
 		JPanel panel = new JPanel();
-		panel.setBounds(0, 13, 782, 453);
+		panel.setBounds(0, 0, 794, 466);
 		panel.setBackground(new Color(135, 206, 250));
 		frame.getContentPane().add(panel);
 
@@ -159,7 +122,7 @@ public class TwitterWindow {
 		panel.add(panel_3);
 		panel_3.setVisible(false);
 		panel_3.setLayout(null);
-		
+
 		JToggleButton tglbtnTwitter = new JToggleButton("[ISCTE] Tweets");
 		tglbtnTwitter.setBackground(Color.WHITE);
 		tglbtnTwitter.setBounds(575, 82, 129, 25);
@@ -207,11 +170,10 @@ public class TwitterWindow {
 		lblOQueEst.setBounds(136, 39, 244, 21);
 		panel_1.add(lblOQueEst);
 
-
 		JLabel lblProcurarNoTimeline = new JLabel("Procurar no Timeline");
 		lblProcurarNoTimeline.setBounds(21, 0, 143, 22);
 		panel_3.add(lblProcurarNoTimeline);
-		
+
 		textField_1 = new JTextField();
 		textField_1.setBounds(21, 24, 116, 22);
 		panel_3.add(textField_1);
@@ -229,9 +191,7 @@ public class TwitterWindow {
 				list_1.setModel(twitterAPI.searchTagList);
 			}
 		});
-		
-		
-		
+
 		tweetButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -261,30 +221,58 @@ public class TwitterWindow {
 		panel_2.add(lblTweetSelecioando);
 
 		panel.add(tglbtnTwitter);
-		
+
 		JPanel panel_4 = new JPanel();
 		panel_4.setBackground(new Color(30, 144, 255));
 		panel_4.setBounds(506, 13, 196, 59);
 		panel.add(panel_4);
 		panel_4.setLayout(null);
-		
+
 		JButton btnFollowers = new JButton("Followers");
 		btnFollowers.setBounds(0, 0, 97, 33);
 		panel_4.add(btnFollowers);
-		
+
 		JButton btnFollowing = new JButton("Following");
 		btnFollowing.setBounds(92, 0, 104, 33);
 		panel_4.add(btnFollowing);
-		
+
 		JLabel number_followers = new JLabel(twitterAPI.getNumberFollowers());
 		number_followers.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		number_followers.setBounds(124, 30, 85, 29);
 		panel_4.add(number_followers);
-		
+
 		JLabel numero_following = new JLabel(twitterAPI.getNumberFollowing());
 		numero_following.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		numero_following.setBounds(34, 30, 78, 29);
 		panel_4.add(numero_following);
+
+		JPanel panel_5 = new JPanel();
+		panel_5.setBackground(Color.LIGHT_GRAY);
+		panel_5.setBounds(116, 304, 164, 43);
+		panel.add(panel_5);
+		panel_5.setLayout(null);
+		panel_5.setVisible(true);
+
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setBounds(121, 0, 43, 43);
+		panel_5.add(lblNewLabel);
+		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\Utilizador\\Desktop\\283982_thm.png"));
+
+		JLabel lblOrganizarPorTempo = new JLabel("\u00DAltimas 24h");
+		lblOrganizarPorTempo.setBounds(33, 0, 76, 16);
+		panel_5.add(lblOrganizarPorTempo);
+
+		JButton btnFiltrar = new JButton("Filtrar");
+		btnFiltrar.setBackground(new Color(135, 206, 235));
+		btnFiltrar.setBounds(35, 18, 67, 22);
+		panel_5.add(btnFiltrar);
+		btnFiltrar.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				twitterAPI.filtrarUltimas24horas();
+				list_1.setModel(twitterAPI.post_24h);
+			}
+		});
 		btnFollowing.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				list_1.clearSelection();
@@ -305,22 +293,25 @@ public class TwitterWindow {
 		
 		list_1.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent evt) {
+				status = twitterAPI.getStatus();
+				int index = list_1.getSelectedIndex();
 				if (evt.getClickCount() == 1) {
 					panel_2.setVisible(true);
-					int index = list_1.getSelectedIndex();
-					status = twitterAPI.getStatus();
 					for (int i = 0; i < status.size(); i++) {
 						if (i == index)
 							statusId = status.get(i).getId();
 					}
-
+				}
+				if (evt.getClickCount() == 3) {
+					for (int i = 0; i < status.size(); i++) {
+						if (index == i) {
+							String title= "Tweet de " + status.get(i).getUser().getName() + " | " + status.get(i).getUser().getCreatedAt();
+							String message = status.get(i).getText(); 
+							JOptionPane.showMessageDialog(null, message, title, JOptionPane.INFORMATION_MESSAGE);
+						}
+					}
 				}
 			}
 		});
-		
-		
 	}
-	
-	
-
 }

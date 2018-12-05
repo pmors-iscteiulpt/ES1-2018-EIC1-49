@@ -2,6 +2,7 @@ package twitter_api;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
@@ -23,11 +24,14 @@ public class twitterAPI {
 	public static List<Status> status;
 	public static List<User> user;
 	public static List<URLEntity> entity;
-	DefaultListModel<String> dlm = new DefaultListModel<String>();
-	DefaultListModel<String> searchTagList = new DefaultListModel<String>();
-	DefaultListModel<String> followersList = new DefaultListModel<String>();
-	DefaultListModel<String> followingList = new DefaultListModel<String>();
+	public DefaultListModel<String> dlm = new DefaultListModel<String>();
+	public DefaultListModel<String> searchTagList = new DefaultListModel<String>();
+	public DefaultListModel<String> followersList = new DefaultListModel<String>();
+	public DefaultListModel<String> followingList = new DefaultListModel<String>();
+	public DefaultListModel<String> post_24h = new DefaultListModel<String>();
 
+
+	
 	public int numero_followers;
 	public int numero_following;
 
@@ -47,7 +51,8 @@ public class twitterAPI {
 			e1.printStackTrace();
 		}
 		for (Status s : status) {
-			dlm.addElement("[" + s.getUser().getName() + "] " + s.getText() + " " + s.getId());
+			dlm.addElement("[" + s.getUser().getName() + "] " + s.getText() + " " + s.getId() + " "
+					+ s.getCreatedAt().getTime());
 		}
 
 	}
@@ -237,5 +242,22 @@ public class twitterAPI {
 			}
 		}
 
+	}
+
+	public void filtrarUltimas24horas() {
+		Date today = new Date();
+		Long dateInLong = today.getTime();
+		for (int tweet = 0; tweet < dlm.size(); tweet++) {
+			String element = dlm.getElementAt(tweet);
+			String[] partes = element.split(" ");
+			int last_index = partes.length - 1;
+			Long millie = Long.parseLong(partes[last_index]);
+			Long periodo_24 = dateInLong - 86400000;
+			// ultimas 24horas
+			if (millie >= periodo_24)
+				post_24h.addElement(element);
+		}
+		if (post_24h.isEmpty())
+			post_24h.addElement("::Não existe nenhum Tweet nas últimas 24h!::");
 	}
 }
