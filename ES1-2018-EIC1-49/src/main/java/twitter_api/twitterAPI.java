@@ -27,7 +27,7 @@ public class twitterAPI {
 	DefaultListModel<String> searchTagList = new DefaultListModel<String>();
 	DefaultListModel<String> followersList = new DefaultListModel<String>();
 	DefaultListModel<String> followingList = new DefaultListModel<String>();
-	
+
 	public int numero_followers;
 	public int numero_following;
 
@@ -181,7 +181,7 @@ public class twitterAPI {
 			e.printStackTrace();
 		}
 
-		this.numero_followers=numberFollowers;
+		this.numero_followers = numberFollowers;
 	}
 
 	public void showFollowingList() throws IllegalStateException, TwitterException {
@@ -197,10 +197,10 @@ public class twitterAPI {
 		PagableResponseList<User> prlFollow;
 		followingList.clear();
 		int numberFollowing = 0;
-		
+
 		try {
 			long cursor = -1;
-			prlFollow = twitterIt.getFriendsList(twitterIt.getId(), cursor );
+			prlFollow = twitterIt.getFriendsList(twitterIt.getId(), cursor);
 			for (int i = 0; i < prlFollow.size(); i++) {
 				User user = prlFollow.get(i);
 				numberFollowing = user.getFollowersCount();
@@ -212,13 +212,13 @@ public class twitterAPI {
 
 		this.numero_following = numberFollowing;
 	}
-	
+
 	public String getNumberFollowers() throws IllegalStateException, TwitterException {
 		showFollowersList();
 		String nf = new Integer(numero_followers).toString();
 		return nf;
 	}
-	
+
 	public String getNumberFollowing() throws IllegalStateException, TwitterException {
 		showFollowingList();
 		String nf = new Integer(numero_following).toString();

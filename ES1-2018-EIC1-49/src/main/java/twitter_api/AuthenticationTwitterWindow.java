@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.JTextField;
+import javax.xml.bind.JAXBException;
 import javax.swing.JPasswordField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,6 +23,8 @@ public class AuthenticationTwitterWindow {
 	public String pass;
 	private TwitterWindow smw = new TwitterWindow();
 	private App app;
+	private CreateXML createxml = new CreateXML();
+
 	public String getUser() {
 		return user;
 	}
@@ -38,8 +41,6 @@ public class AuthenticationTwitterWindow {
 		this.pass = pass;
 	}
 
-	
-	
 	/**
 	 * Launch the application.
 	 */
@@ -56,7 +57,6 @@ public class AuthenticationTwitterWindow {
 		});
 	}
 
-	
 	public AuthenticationTwitterWindow() {
 		initialize();
 	}
@@ -76,8 +76,7 @@ public class AuthenticationTwitterWindow {
 
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setBounds(197, 34, 100, 100);
-		lblNewLabel.setIcon(
-				new ImageIcon(AuthenticationTwitterWindow.class.getResource("/twitter_api/twitter.png")));
+		lblNewLabel.setIcon(new ImageIcon(AuthenticationTwitterWindow.class.getResource("/twitter_api/twitter.png")));
 		panel.add(lblNewLabel);
 
 		textField = new JTextField();
@@ -90,7 +89,7 @@ public class AuthenticationTwitterWindow {
 		passwordField.setBackground(Color.LIGHT_GRAY);
 		passwordField.setBounds(163, 299, 203, 22);
 		panel.add(passwordField);
-		
+
 		JButton btnVoltar = new JButton("Voltar");
 		btnVoltar.setBackground(Color.WHITE);
 		btnVoltar.setBounds(27, 27, 97, 25);
@@ -104,13 +103,14 @@ public class AuthenticationTwitterWindow {
 		panel.add(btnVoltar);
 
 		JLabel lblNewLabel_1 = new JLabel("");
-		lblNewLabel_1.setIcon(new ImageIcon(AuthenticationTwitterWindow.class.getResource("/mail_api/icons8-administrator-male-24.png")));
+		lblNewLabel_1.setIcon(new ImageIcon(
+				AuthenticationTwitterWindow.class.getResource("/mail_api/icons8-administrator-male-24.png")));
 		lblNewLabel_1.setBounds(115, 241, 31, 22);
 		panel.add(lblNewLabel_1);
 
 		JLabel lblNewLabel_2 = new JLabel("");
-		lblNewLabel_2.setIcon(
-				new ImageIcon(AuthenticationTwitterWindow.class.getResource("/mail_api/icons8-lock-24.png")));
+		lblNewLabel_2
+				.setIcon(new ImageIcon(AuthenticationTwitterWindow.class.getResource("/mail_api/icons8-lock-24.png")));
 		lblNewLabel_2.setBounds(115, 299, 24, 22);
 		panel.add(lblNewLabel_2);
 
@@ -124,16 +124,19 @@ public class AuthenticationTwitterWindow {
 //				String pass = passwordField.getText();
 				smw.getFrame().setVisible(true);
 				frame.setVisible(false);
+				try {
+					createxml.complementUserTwitter(user);
+				} catch (JAXBException e1) {
+					e1.printStackTrace();
+				}
 			}
 		});
-
 
 		JLabel lblInicieASesso = new JLabel("Inicie a sua conta para continuar");
 		lblInicieASesso.setBounds(151, 159, 187, 16);
 		panel.add(lblInicieASesso);
 	}
 
-		
 	public JFrame getFrame() {
 		return frame;
 	}

@@ -36,6 +36,8 @@ public class App extends JFrame {
 	private AuthenticationTwitterWindow twitterwindow;
 	private AuthenticationFacebookWindow afw;
 	private App app;
+//	private int index = new bdaAPP().index;
+	private CreateXML xml = new CreateXML();
 
 	/**
 	 * @description Frame onde concentra as funcionalidades do projeto, ou seja,
@@ -84,11 +86,18 @@ public class App extends JFrame {
 		JToggleButton tglbtnFacebook = new JToggleButton("Facebook");
 		tglbtnFacebook.setBackground(Color.WHITE);
 		tglbtnFacebook.setBounds(117, 110, 120, 49);
+
 		tglbtnFacebook.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
 				afw = new AuthenticationFacebookWindow();
 				afw.getFrame().setVisible(true);
+				if (xml.acessFacebook() != null) {
+					System.out.println(xml.acessFacebook() + "fodasse esta merda");
+
+				} else {
+
+				}
 				frame.setVisible(false);
 			}
 		});
@@ -103,6 +112,7 @@ public class App extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				twitterwindow = new AuthenticationTwitterWindow();
 				twitterwindow.getFrame().setVisible(true);
+
 				frame.setVisible(false);
 			}
 		});
@@ -117,6 +127,7 @@ public class App extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				authenticationMailWindow = new AuthenticationMailWindow();
 				authenticationMailWindow.getFrame().setVisible(true);
+
 				frame.setVisible(false);
 			}
 		});
@@ -227,4 +238,8 @@ public class App extends JFrame {
 			}
 		});
 	}
+
+//	public int getIndex() {
+//		return index;
+//	}
 }
