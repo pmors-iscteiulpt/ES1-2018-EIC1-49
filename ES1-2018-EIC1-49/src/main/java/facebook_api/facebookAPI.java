@@ -40,32 +40,17 @@ public class facebookAPI {
 	@FXML
 	private Post aPostmew;
 	private PasswordField password;
-	private String accessToken = "EAAEZBg2PIN94BAOTKJ82e8TXzfA5PqzgnfyZAqE53YW1OSHHnXrMFZAvkyf5eqWFjdEZB8LMZC1JiXgxnLS2w4RUEuCBbNSoyWcZBSCnJPrRIR7cCfXKITShIkjszoB2uBHTaN8pDmZAWrpgoD4CQBFHh3xhDhXhSYZD";
+	private String accessToken = "EAAEZBg2PIN94BAM2roHjsXELSqW972OLdMz4hUMyuja1ba7dInQPcGEgBJizn1uQ7kIrsZBkXvZCSOLryEsMI2IO5IYESkUmt8O5U9pho6iLZCsXmLTNE8ZBoaVlZB0DCVZArljcAeUcoyP7GDhcgXQfCZBnAoPmV2IUVZC0k5K97WWrnsJVbd5v2047lK3nbUX3LvKtS5TrkcQZDZD";
 	DefaultListModel<String> listaPostsFB = new DefaultListModel<String>();
 
 	DefaultListModel<String> listaForSearchPostsFB = new DefaultListModel<String>();
 	DefaultListModel<String> post_24h = new DefaultListModel<String>();
 	private ArrayList<Post> posts;
-	private Connection<Post> result;
-
-	/**
-	 * @return the result
-	 */
-	public Connection<Post> getResult() {
-		return result;
-	}
-
-	/**
-	 * @param result the result to set
-	 */
-	public void setResult(Connection<Post> result) {
-		this.result = result;
-	}
 
 	public void AuthUser() {
 
 		FacebookClient fbClient = new DefaultFacebookClient(accessToken);
-		result = fbClient.fetchConnection("me/feed", Post.class);
+		Connection<Post> result = fbClient.fetchConnection("me/feed", Post.class);
 
 		posts = new ArrayList<Post>();
 		int cont = 0;
@@ -132,12 +117,12 @@ public class facebookAPI {
 			String element = listaPostsFB.getElementAt(tweet);
 			String[] partes = element.split(" ");
 			for (int palavras_do_tweet = 0; palavras_do_tweet < partes.length; palavras_do_tweet++) {
-				if (partes[palavras_do_tweet].contains(tag)) {
+				if (partes[palavras_do_tweet].equals(tag)) {
 					listaForSearchPostsFB.addElement(element);
 				}
 			}
 		}
-
+		listaForSearchPostsFB.clear();
 	}
 
 	public void post(String text_to_post) {
@@ -153,18 +138,18 @@ public class facebookAPI {
 	public void filtrarUltimas24horas() {
 		Date today = new Date();
 		Long dateInLong = today.getTime();
-		for (int post = 0; post < posts.size(); post++) {
-			Post element = posts.get(post);
-
-			Long millie = element.getCreatedTime().getTime();
+		for (int post = 0; post < listaPostsFB.size(); post++) {
+			String element = listaPostsFB.getElementAt(post);
+			String[] partes = element.split(" ");
+			int last_index = partes.length - 1;
+			Long millie = Long.parseLong(partes[last_index]);
 			Long periodo_24 = dateInLong - 86400000;
 			// ultimas 24horas
-			if (millie >= periodo_24) {
-				listaPostsFB.addElement(element.getCreatedTime() + " - " + element.getMessage());
-			}
-			if (listaPostsFB.isEmpty())
-				listaPostsFB.addElement("::Não existe nenhum Post nas últimas 24h!::");
+			if (millie >= periodo_24)
+				post_24h.addElement(element);
 		}
+		if (post_24h.isEmpty())
+			post_24h.addElement("::Não existe nenhum Post nas últimas 24h!::");
 	}
 
 }
