@@ -12,7 +12,7 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
 public class CreateXML {
-	private String filepath = "C:\\Users\\Pedro Almeida\\git\\ES1-2018-EIC1-49\\ES1-2018-EIC1-49\\src\\main\\java\\XML\\config.xml";
+	private String filepath = "C:\\Users\\Utilizador\\git\\ES1-2018-EIC1-49\\ES1-2018-EIC1-49\\src\\main\\java\\XML\\config.xml";
 	private File xmlFile = new File(filepath);
 //	private bdaAPP bdaapp = new bdaAPP();
 
@@ -226,7 +226,7 @@ public class CreateXML {
 		Scanner scanner = null;
 		try {
 			scanner = new Scanner(new File(
-					"C:\\Users\\Pedro Almeida\\git\\ES1-2018-EIC1-49\\ES1-2018-EIC1-49\\src\\main\\java\\XML\\acessos"));
+					"C:\\Users\\Utilizador\\git\\ES1-2018-EIC1-49\\ES1-2018-EIC1-49\\src\\main\\java\\XML\\acessos"));
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -82,7 +82,7 @@ public class MailAPI {
 			properties.put("mail.pop3.port", "995");
 			properties.put("mail.pop3s.ssl.trust", "*"); // This is the most IMP property
 
-			Session emailSession = Session.getDefaultInstance(properties);
+			Session emailSession = Session.getInstance(properties);
 
 			// create the POP3 store object and connect with the pop server
 

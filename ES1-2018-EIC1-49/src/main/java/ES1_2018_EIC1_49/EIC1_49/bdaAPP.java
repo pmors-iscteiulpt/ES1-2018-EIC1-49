@@ -182,7 +182,7 @@ public class bdaAPP extends JFrame {
 	public void saveInfile(int i) {
 		try {
 			File fac = new File(
-					"C:\\Users\\Pedro Almeida\\git\\ES1-2018-EIC1-49\\ES1-2018-EIC1-49\\src\\main\\java\\XML\\acessos");
+					"C:\\Users\\Utilizador\\git\\ES1-2018-EIC1-49\\ES1-2018-EIC1-49\\src\\main\\java\\XML\\acessos");
 			if (!fac.exists()) {
 				fac.createNewFile();
 			}

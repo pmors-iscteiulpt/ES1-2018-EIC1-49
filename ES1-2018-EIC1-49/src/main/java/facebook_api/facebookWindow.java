@@ -57,8 +57,8 @@ public class facebookWindow {
 	private printWriter printwriter;
 	private JTextField textField_1;
 	public PopUp_Facebook popup;
-	
-	
+	private JTextField textField;
+
 	/**
 	 * Launch the application.
 	 */
@@ -150,8 +150,6 @@ public class facebookWindow {
 		rdbtnEmailsEnviadosPelo_1.setBounds(321, 78, 300, 25);
 		panel.add(rdbtnEmailsEnviadosPelo_1);
 
-<<<<<<< HEAD
-=======
 		JButton btnNewButton = new JButton("O que?");
 		btnNewButton.setBackground(Color.WHITE);
 		btnNewButton.setBounds(640, 407, 107, 25);
@@ -171,7 +169,6 @@ public class facebookWindow {
 		lblNewLabel_2.setBounds(676, 380, 64, 32);
 		panel.add(lblNewLabel_2);
 
->>>>>>> refs/remotes/origin/master
 		JLabel lblNewLabel_3 = new JLabel("New label");
 		lblNewLabel_3.setBounds(650, 66, 56, 16);
 		panel.add(lblNewLabel_3);
@@ -199,23 +196,20 @@ public class facebookWindow {
 			}
 		});
 
-<<<<<<< HEAD
 		textField = new JTextField();
 		textField.setColumns(10);
 		textField.setBounds(12, 6, 522, 22);
 		panel_2.add(textField);
-=======
 		facebook_textField = new JTextField();
 		facebook_textField.setColumns(10);
 		facebook_textField.setBounds(12, 6, 480, 22);
 		panel_2.add(facebook_textField);
-		
+
 		tglbtnPostar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				fapi.post(facebook_textField.getText());
 			}
 		});
->>>>>>> refs/remotes/origin/master
 
 		JLabel lblEmQueEsts = new JLabel("Em que estás a pensar?");
 		lblEmQueEsts.setFont(new Font("Tahoma", Font.PLAIN, 15));
