@@ -1,9 +1,16 @@
 package twitter_api;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.InetSocketAddress;
+import java.net.Socket;
 import java.net.URISyntaxException;
 import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
 
 import javax.swing.DefaultListModel;
 
@@ -29,32 +36,72 @@ public class twitterAPI {
 	public DefaultListModel<String> followersList = new DefaultListModel<String>();
 	public DefaultListModel<String> followingList = new DefaultListModel<String>();
 	public DefaultListModel<String> post_24h = new DefaultListModel<String>();
+	private PrintWriter pw;
 
-
-	
 	public int numero_followers;
 	public int numero_following;
 
-	public void ISCTETimeLine(twitterAPI signin) {
-		ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
-		configurationBuilder.setDebugEnabled(true).setOAuthConsumerKey("42kwK0tk5ewLK2hTCeWVl6ZlP")
-				.setOAuthConsumerSecret("1GI0gnmoazfBM8B6IOtwy8X3e5HveKPBHj6aTPmmXYKiECj3vv")
-				.setOAuthAccessToken("2262665663-xT78OcZzuGAWCZWc4P8B2SoKq0v8hJIiwMejGBD")
-				.setOAuthAccessTokenSecret("As1GmoQKqptgEDGYM4SJ8C2nlThrBf3BmOjj2Yf1lgE2g");
+	public void ISCTETimeLine(twitterAPI signin) throws FileNotFoundException, UnsupportedEncodingException {
 
-		TwitterFactory tf = new TwitterFactory(configurationBuilder.build());
-		final Twitter twitterIt = tf.getInstance();
+		if (connectedToInternet() == false) {
+			getSavedText();
+		} else {
+
+			ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
+			configurationBuilder.setDebugEnabled(true).setOAuthConsumerKey("cgfMyRg4OvgBHqqDLHWqlczI8")
+					.setOAuthConsumerSecret("szP6FycfMw9qDbIwucfbBuIcsY6HCcsrkRpf3xjVAXBNBMCeZx")
+					.setOAuthAccessToken("2262665663-5A9tScXexyBrFffm6wZ6BW4bIRtetP8BtWbLcxr")
+					.setOAuthAccessTokenSecret("IONaPHDBBQ5g7B69056rtAhWHAUmpRZeWvSIO3HubnAVF");
+
+			TwitterFactory tf = new TwitterFactory(configurationBuilder.build());
+			final Twitter twitterIt = tf.getInstance();
+			try {
+
+				status = twitterIt.getUserTimeline("ISCTEIUL");
+			} catch (TwitterException e1) {
+				e1.printStackTrace();
+			}
+			pw = new PrintWriter(new File(
+					"C:\\Users\\Utilizador\\git\\ES1-2018-EIC1-49\\ES1-2018-EIC1-49\\src\\main\\java\\twitter_api\\tweet.txt"));
+			for (Status s : status) {
+
+				String response = "[" + s.getUser().getName() + "] " + s.getText();
+
+				dlm.addElement(response);
+				pw.println(response);
+			}
+			pw.close();
+		}
+	}
+
+	private boolean connectedToInternet() {
+		Socket sock = new Socket();
+		InetSocketAddress addr = new InetSocketAddress("www.google.com", 80);
 		try {
-
-			status = twitterIt.getUserTimeline("ISCTEIUL");
-		} catch (TwitterException e1) {
-			e1.printStackTrace();
+			sock.connect(addr, 3000);
+			return true;
+		} catch (Exception e) {
+			return false;
+		} finally {
+			try {
+				sock.close();
+			} catch (Exception e) {
+			}
 		}
-		for (Status s : status) {
-			dlm.addElement("[" + s.getUser().getName() + "] " + s.getText() + " " + s.getId() + " "
-					+ s.getCreatedAt().getTime());
-		}
+	}
 
+	public void getSavedText() throws FileNotFoundException, UnsupportedEncodingException {
+
+		for (int i = 0; i < dlm.size(); i++) {
+			try {
+				Scanner scanner = new Scanner(
+						("C:\\Users\\Utilizador\\git\\ES1-2018-EIC1-49\\ES1-2018-EIC1-49\\src\\main\\java\\twitter_api\\tweet.txt"));
+				while (scanner.hasNextLine()) {
+					dlm.addElement(scanner.nextLine());
+				}
+			} catch (Exception e) {
+			}
+		}
 	}
 
 	@Override
@@ -73,8 +120,8 @@ public class twitterAPI {
 	public void logIn() throws URISyntaxException, IOException, TwitterException {
 
 		ConfigurationBuilder cb = new ConfigurationBuilder();
-		cb.setDebugEnabled(true).setOAuthConsumerKey("42kwK0tk5ewLK2hTCeWVl6ZlP")
-				.setOAuthConsumerSecret("1GI0gnmoazfBM8B6IOtwy8X3e5HveKPBHj6aTPmmXYKiECj3vv");
+		cb.setDebugEnabled(true).setOAuthConsumerKey("cgfMyRg4OvgBHqqDLHWqlczI8")
+				.setOAuthConsumerSecret("szP6FycfMw9qDbIwucfbBuIcsY6HCcsrkRpf3xjVAXBNBMCeZx");
 		try {
 			TwitterFactory tf = new TwitterFactory(cb.build());
 			Twitter twitter = tf.getInstance();
@@ -130,10 +177,10 @@ public class twitterAPI {
 	public void tweet(String twit, twitterAPI signin) throws TwitterException {
 
 		ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
-		configurationBuilder.setDebugEnabled(true).setOAuthConsumerKey("42kwK0tk5ewLK2hTCeWVl6ZlP")
-				.setOAuthConsumerSecret("1GI0gnmoazfBM8B6IOtwy8X3e5HveKPBHj6aTPmmXYKiECj3vv")
-				.setOAuthAccessToken("2262665663-xT78OcZzuGAWCZWc4P8B2SoKq0v8hJIiwMejGBD")
-				.setOAuthAccessTokenSecret("As1GmoQKqptgEDGYM4SJ8C2nlThrBf3BmOjj2Yf1lgE2g");
+		configurationBuilder.setDebugEnabled(true).setOAuthConsumerKey("cgfMyRg4OvgBHqqDLHWqlczI8")
+				.setOAuthConsumerSecret("szP6FycfMw9qDbIwucfbBuIcsY6HCcsrkRpf3xjVAXBNBMCeZx")
+				.setOAuthAccessToken("2262665663-5A9tScXexyBrFffm6wZ6BW4bIRtetP8BtWbLcxr")
+				.setOAuthAccessTokenSecret("IONaPHDBBQ5g7B69056rtAhWHAUmpRZeWvSIO3HubnAVF");
 
 		TwitterFactory tf = new TwitterFactory(configurationBuilder.build());
 		Twitter twitterIt = tf.getInstance();
@@ -144,10 +191,10 @@ public class twitterAPI {
 
 	public void retweetIt(long statusId, twitterAPI signin) {
 		ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
-		configurationBuilder.setDebugEnabled(true).setOAuthConsumerKey("42kwK0tk5ewLK2hTCeWVl6ZlP")
-				.setOAuthConsumerSecret("1GI0gnmoazfBM8B6IOtwy8X3e5HveKPBHj6aTPmmXYKiECj3vv")
-				.setOAuthAccessToken("2262665663-xT78OcZzuGAWCZWc4P8B2SoKq0v8hJIiwMejGBD")
-				.setOAuthAccessTokenSecret("As1GmoQKqptgEDGYM4SJ8C2nlThrBf3BmOjj2Yf1lgE2g");
+		configurationBuilder.setDebugEnabled(true).setOAuthConsumerKey("cgfMyRg4OvgBHqqDLHWqlczI8")
+				.setOAuthConsumerSecret("szP6FycfMw9qDbIwucfbBuIcsY6HCcsrkRpf3xjVAXBNBMCeZx")
+				.setOAuthAccessToken("2262665663-5A9tScXexyBrFffm6wZ6BW4bIRtetP8BtWbLcxr")
+				.setOAuthAccessTokenSecret("IONaPHDBBQ5g7B69056rtAhWHAUmpRZeWvSIO3HubnAVF");
 
 		TwitterFactory tf = new TwitterFactory(configurationBuilder.build());
 		Twitter twitterIt = tf.getInstance();
@@ -162,10 +209,10 @@ public class twitterAPI {
 
 	public void showFollowersList() throws IllegalStateException, TwitterException {
 		ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
-		configurationBuilder.setDebugEnabled(true).setOAuthConsumerKey("42kwK0tk5ewLK2hTCeWVl6ZlP")
-				.setOAuthConsumerSecret("1GI0gnmoazfBM8B6IOtwy8X3e5HveKPBHj6aTPmmXYKiECj3vv")
-				.setOAuthAccessToken("2262665663-xT78OcZzuGAWCZWc4P8B2SoKq0v8hJIiwMejGBD")
-				.setOAuthAccessTokenSecret("As1GmoQKqptgEDGYM4SJ8C2nlThrBf3BmOjj2Yf1lgE2g");
+		configurationBuilder.setDebugEnabled(true).setOAuthConsumerKey("cgfMyRg4OvgBHqqDLHWqlczI8")
+				.setOAuthConsumerSecret("szP6FycfMw9qDbIwucfbBuIcsY6HCcsrkRpf3xjVAXBNBMCeZx")
+				.setOAuthAccessToken("2262665663-5A9tScXexyBrFffm6wZ6BW4bIRtetP8BtWbLcxr")
+				.setOAuthAccessTokenSecret("IONaPHDBBQ5g7B69056rtAhWHAUmpRZeWvSIO3HubnAVF");
 
 		TwitterFactory tf = new TwitterFactory(configurationBuilder.build());
 		Twitter twitterIt = tf.getInstance();
@@ -191,10 +238,10 @@ public class twitterAPI {
 
 	public void showFollowingList() throws IllegalStateException, TwitterException {
 		ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
-		configurationBuilder.setDebugEnabled(true).setOAuthConsumerKey("42kwK0tk5ewLK2hTCeWVl6ZlP")
-				.setOAuthConsumerSecret("1GI0gnmoazfBM8B6IOtwy8X3e5HveKPBHj6aTPmmXYKiECj3vv")
-				.setOAuthAccessToken("2262665663-xT78OcZzuGAWCZWc4P8B2SoKq0v8hJIiwMejGBD")
-				.setOAuthAccessTokenSecret("As1GmoQKqptgEDGYM4SJ8C2nlThrBf3BmOjj2Yf1lgE2g");
+		configurationBuilder.setDebugEnabled(true).setOAuthConsumerKey("cgfMyRg4OvgBHqqDLHWqlczI8")
+				.setOAuthConsumerSecret("szP6FycfMw9qDbIwucfbBuIcsY6HCcsrkRpf3xjVAXBNBMCeZx")
+				.setOAuthAccessToken("2262665663-5A9tScXexyBrFffm6wZ6BW4bIRtetP8BtWbLcxr")
+				.setOAuthAccessTokenSecret("IONaPHDBBQ5g7B69056rtAhWHAUmpRZeWvSIO3HubnAVF");
 
 		TwitterFactory tf = new TwitterFactory(configurationBuilder.build());
 		Twitter twitterIt = tf.getInstance();

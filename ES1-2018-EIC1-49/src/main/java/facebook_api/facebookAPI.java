@@ -1,39 +1,30 @@
 package facebook_api;
 
-import com.restfb.Connection;
-import com.restfb.DefaultFacebookClient;
-import com.restfb.FacebookClient;
-import com.restfb.FacebookClient.AccessToken;
-import com.restfb.Parameter;
-import com.restfb.exception.FacebookException;
-import com.restfb.types.FacebookType;
-import com.restfb.types.Page;
-import com.restfb.types.Post;
-import com.restfb.types.User;
-import java.net.URL;
 import java.util.Date;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import javax.swing.DefaultListModel;
 
-import javafx.event.ActionEvent;
+import com.restfb.Connection;
+import com.restfb.DefaultFacebookClient;
+import com.restfb.FacebookClient;
+import com.restfb.Parameter;
+import com.restfb.exception.FacebookException;
+import com.restfb.types.FacebookType;
+import com.restfb.types.Post;
+
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
-import org.jboss.netty.util.internal.SystemPropertyUtil;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
+
 
 public class facebookAPI {
 	@FXML
 	private TextField username;
+	public List<Post> post;
+
+
 	@FXML
 	private Post aPostmew;
 	private PasswordField password;
@@ -69,7 +60,7 @@ public class facebookAPI {
 			for (Post aPost : page) {
 				if (aPost.getMessage() != null) {
 					cont++;
-					listaPostsFB.addElement(aPost.getCreatedTime() + " - " + aPost.getMessage() + " " + aPost.getCreatedTime().getTime());
+					listaPostsFB.addElement(aPost.getCreatedTime() + " - " + aPost.getMessage());
 				}
 			}
 		}
@@ -146,5 +137,13 @@ public class facebookAPI {
 		}
 		if (post_24h.isEmpty())
 			post_24h.addElement("::Não existe nenhum Tweet nas últimas 24h!::");
+	}
+
+	public List<Post> getPost() {
+		return post;
+	}
+
+	public void setPost(List<Post> post) {
+		this.post = post;
 	}
 }

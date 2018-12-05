@@ -7,6 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import javax.swing.ImageIcon;
@@ -23,6 +25,7 @@ import javax.swing.JToggleButton;
 import javax.swing.ListSelectionModel;
 
 import ES1_2018_EIC1_49.EIC1_49.App;
+import mail_api.PopUp_Mail;
 import twitter4j.Status;
 import twitter4j.TwitterException;
 
@@ -39,7 +42,7 @@ public class TwitterWindow {
 	private twitterAPI signin;
 	private App app;
 	private JTextField textField_1;
-	private PopUp popUp;
+	private PopUp_Twitter popup;
 
 	/**
 	 * Launch the application.
@@ -128,7 +131,15 @@ public class TwitterWindow {
 		tglbtnTwitter.setBounds(575, 82, 129, 25);
 		tglbtnTwitter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				twitterAPI.ISCTETimeLine(signin);
+				try {
+					twitterAPI.ISCTETimeLine(signin);
+				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (UnsupportedEncodingException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				list_1.setModel(twitterAPI.dlm);
 				panel_3.setVisible(true);
 			}
@@ -289,8 +300,7 @@ public class TwitterWindow {
 				panel_2.setVisible(false);
 			}
 		});
-		
-		
+
 		list_1.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent evt) {
 				status = twitterAPI.getStatus();
@@ -302,12 +312,17 @@ public class TwitterWindow {
 							statusId = status.get(i).getId();
 					}
 				}
-				if (evt.getClickCount() == 3) {
+				if (evt.getClickCount() == 2) {
 					for (int i = 0; i < status.size(); i++) {
 						if (index == i) {
-							String title= "Tweet de " + status.get(i).getUser().getName() + " | " + status.get(i).getUser().getCreatedAt();
-							String message = status.get(i).getText(); 
-							JOptionPane.showMessageDialog(null, message, title, JOptionPane.INFORMATION_MESSAGE);
+							String message_show = status.get(i).getText();
+							popup = new PopUp_Twitter();
+							popup.getLblTweetDe().setText("Tweet de: " + status.get(i).getUser().getName());
+							popup.getTextArea().setText(message_show);
+							popup.getLblData().setText(status.get(i).getCreatedAt().toString());
+							popup.getFrame().setVisible(true);
+							popup.getTextArea().setLineWrap(true);
+							popup.getTextArea().setWrapStyleWord(true);
 						}
 					}
 				}

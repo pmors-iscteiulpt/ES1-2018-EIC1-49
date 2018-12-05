@@ -3,28 +3,30 @@ package mail_api;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.List;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.mail.MessagingException;
-import javax.swing.ImageIcon;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.util.Properties;
 
+import javax.mail.Folder;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.NoSuchProviderException;
+import javax.mail.Session;
+import javax.mail.Store;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.border.MatteBorder;
-
-import mail_api.MailAPI;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.border.MatteBorder;
 
 public class SentMailWindow {
 
@@ -38,6 +40,9 @@ public class SentMailWindow {
 	private JList<String> list_1;
 	private JTextField textField_1;
 	public String toRespond;
+	public java.util.List<Message> mail2 = mail.message2;
+	public Message[] messages = mail.getMessages();
+	public PopUp_Mail popup;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -231,7 +236,7 @@ public class SentMailWindow {
 		list_1.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent evt) {
 				int index = list_1.getSelectedIndex();
-				if (evt.getClickCount() == 1) {
+				if (evt.getClickCount() == 10) {
 					panel_2.setVisible(true);
 					for (int i = 0; i < mail.getMessages().length; i++) {
 						if (i == index)
@@ -246,25 +251,9 @@ public class SentMailWindow {
 						frame.setVisible(false);
 					}
 				}
-				if (evt.getClickCount() == 3) {
-					for (int i = 0; i < mail.getMessages().length; i++) {
-						if (index == i) {
-							String title;
-							try {
-								title = "Mail de " + mail.getMessages()[i].getFrom() + " | "
-										+ mail.getMessages()[i].getReceivedDate();
-								String message = mail.getMessages()[i].getContentType().toString();
-								JOptionPane.showMessageDialog(null, message, title, JOptionPane.INFORMATION_MESSAGE);
-							} catch (MessagingException e) {
-								e.printStackTrace();
-							}
-						}
-					}
-				}
 			}
 		});
 
-		JPanel panel_5 = new JPanel();
 		panel_5.setBackground(Color.LIGHT_GRAY);
 		panel_5.setBounds(455, 9, 164, 43);
 		panel.add(panel_5);
@@ -287,8 +276,61 @@ public class SentMailWindow {
 		btnFiltrard.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				mail.filtrarUltimas24horas();
+				try {
+					mail.filtrarUltimas24horas();
+				} catch (MessagingException e1) {
+					e1.printStackTrace();
+				}
 				list_1.setModel(mail.post_24h);
+			}
+		});
+
+		list_1.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent evt) {
+				int index = list_1.getSelectedIndex();
+
+				if (evt.getClickCount() == 2) {
+					String from = mail.getUsername();
+					String password = mail.getPass();
+
+					try {
+						Properties properties = new Properties();
+						properties.put("mail.pop3.host", "outlook.office365.com");
+						properties.put("mail.pop3.port", "995");
+						properties.put("mail.pop3s.ssl.trust", "*"); // This is the most IMP property
+
+						Session emailSession = Session.getDefaultInstance(properties);
+						Store store = emailSession.getStore("pop3s"); // try imap or impas
+						store.connect("outlook.office365.com", from, password);
+						Folder emailFolder = store.getFolder("INBOX");
+						emailFolder.open(Folder.READ_ONLY);
+						messages = emailFolder.getMessages();
+
+						for (int i = 0; i < (messages.length + 60) - messages.length; i++) {
+
+							Message message = messages[i];
+							if (index == i) {
+
+								String message_show = mail.getTextFromMessage(message);
+								popup = new PopUp_Mail();
+								popup.getLblTweetDe().setText(message.getFrom()[0].toString());
+								popup.getTextArea().setText(message_show);
+								popup.getLblData().setText(message.getSentDate().toString());
+								popup.getFrame().setVisible(true);
+								popup.getTextArea().setLineWrap(true);
+								popup.getTextArea().setWrapStyleWord(true);
+							}
+						}
+						emailFolder.close(false);
+						store.close();
+					} catch (NoSuchProviderException nspe) {
+						nspe.printStackTrace();
+					} catch (MessagingException me) {
+						me.printStackTrace();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
 			}
 		});
 	}
@@ -300,5 +342,7 @@ public class SentMailWindow {
 	public void setFrame(JFrame frame) {
 		this.frame = frame;
 	}
+
+	JPanel panel_5 = new JPanel();
 
 }

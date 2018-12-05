@@ -20,10 +20,14 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.border.MatteBorder;
 
+import com.restfb.Connection;
+import com.restfb.DefaultFacebookClient;
+import com.restfb.FacebookClient;
 import com.restfb.types.Post;
 
 import mail_api.AuthenticationMailWindow;
 import mail_api.MailAPI;
+import mail_api.PopUp_Mail;
 import mail_api.PresentationMailWindow;
 import mail_api.SentMailWindow;
 import twitter4j.Status;
@@ -52,8 +56,9 @@ public class facebookWindow {
 	private JList<String> list_1;
 	private printWriter printwriter;
 	private JTextField textField_1;
-	public static List<Post> post;
-
+	public PopUp_Facebook popup;
+	
+	
 	/**
 	 * Launch the application.
 	 */
@@ -274,10 +279,33 @@ public class facebookWindow {
 				if (evt.getClickCount() == 3) {
 					for (int i = 0; i < fapi.listaPostsFB.size(); i++) {
 						if (index == i) {
-							String[] partes = fapi.listaPostsFB.get(i).split(" ");
-							String title = "Post de  " + partes[0] + " | " + partes[fapi.listaPostsFB.size() - 1];
-							String message = fapi.listaPostsFB.get(i).toString();
-							JOptionPane.showMessageDialog(null, message, title, JOptionPane.INFORMATION_MESSAGE);
+							String domain = "http://radixcode.com/";
+							String appID = "1115442835290294";
+							String authUrl = "https://graph.facebook.com/oauth/authorize?type=user_agent&client_id="
+									+ appID + "&redirect_uri=" + domain + "&scope=user_about_me,"
+									+ "user_actions.books,user_actions.fitness,user_actions.music,user_actions.news,user_actions.video,user_activities,user_birthday,user_education_history,"
+									+ "user_events,user_photos,user_friends,user_games_activity,user_groups,user_hometown,user_interests,user_likes,user_location,user_photos,user_relationship_details,"
+									+ "user_relationships,user_religion_politics,user_status,user_tagged_places,user_videos,user_website,user_work_history,ads_management,ads_read,email,"
+									+ "manage_notifications,manage_pages,publish_actions,read_friendlists,read_insights,read_mailbox,read_page_mailboxes,read_stream,rsvp_event";
+
+							FacebookClient fbClient = new DefaultFacebookClient(fapi.getAccessToken());
+							Connection<Post> result = fbClient.fetchConnection("me/feed", Post.class);
+
+							for (List<Post> page : result) {
+								for (Post aPost : page) {
+									if (aPost.getMessage() != null) {
+
+										String message_show = aPost.getMessage().toString();
+										popup = new PopUp_Facebook();
+										popup.getLblTweetDe().setText("Postado por: " + aPost.getName().toString());
+										popup.getTextArea().setText(message_show);
+										popup.getLblData().setText(aPost.getCreatedTime().toString());
+										popup.getFrame().setVisible(true);
+										popup.getTextArea().setLineWrap(true);
+										popup.getTextArea().setWrapStyleWord(true);
+									}
+								}
+							}
 						}
 					}
 				}
