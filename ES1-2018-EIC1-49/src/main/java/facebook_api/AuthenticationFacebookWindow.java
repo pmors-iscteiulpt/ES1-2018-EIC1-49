@@ -16,6 +16,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.swing.ImageIcon;
 import javax.swing.JTextField;
+import javax.xml.bind.JAXBException;
 
 import twitter4j.TwitterException;
 
@@ -28,6 +29,7 @@ import java.util.Properties;
 
 import javax.swing.JButton;
 import ES1_2018_EIC1_49.EIC1_49.*;
+
 public class AuthenticationFacebookWindow {
 	JFrame frame;
 	private JTextField textField;
@@ -35,8 +37,10 @@ public class AuthenticationFacebookWindow {
 	public String user;
 	public String pass;
 	private MailAPI mail = new MailAPI();
+	private CreateXML createxml = new CreateXML();
 	private App app;
 	private facebookWindow fbw;
+
 	public String getUser() {
 		return user;
 	}
@@ -53,8 +57,6 @@ public class AuthenticationFacebookWindow {
 		this.pass = pass;
 	}
 
-	
-	
 	/**
 	 * Launch the application.
 	 */
@@ -64,7 +66,7 @@ public class AuthenticationFacebookWindow {
 				try {
 					AuthenticationFacebookWindow window = new AuthenticationFacebookWindow();
 					window.frame.setVisible(true);
-					
+
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -98,8 +100,8 @@ public class AuthenticationFacebookWindow {
 
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setBounds(197, 34, 100, 100);
-		lblNewLabel.setIcon(
-				new ImageIcon(AuthenticationFacebookWindow.class.getResource("/ES1_2018_EIC1_49/EIC1_49/Facebook-Logo-100.png")));
+		lblNewLabel.setIcon(new ImageIcon(
+				AuthenticationFacebookWindow.class.getResource("/ES1_2018_EIC1_49/EIC1_49/Facebook-Logo-100.png")));
 		panel.add(lblNewLabel);
 
 		textField = new JTextField();
@@ -112,7 +114,7 @@ public class AuthenticationFacebookWindow {
 		passwordField.setBackground(Color.LIGHT_GRAY);
 		passwordField.setBounds(163, 299, 203, 22);
 		panel.add(passwordField);
-		
+
 		JButton btnVoltar = new JButton("Voltar");
 		btnVoltar.setBackground(Color.WHITE);
 		btnVoltar.setBounds(27, 27, 97, 25);
@@ -126,13 +128,14 @@ public class AuthenticationFacebookWindow {
 		panel.add(btnVoltar);
 
 		JLabel lblNewLabel_1 = new JLabel("");
-		lblNewLabel_1.setIcon(new ImageIcon(AuthenticationFacebookWindow.class.getResource("/mail_api/icons8-administrator-male-24.png")));
+		lblNewLabel_1.setIcon(new ImageIcon(
+				AuthenticationFacebookWindow.class.getResource("/mail_api/icons8-administrator-male-24.png")));
 		lblNewLabel_1.setBounds(115, 241, 31, 22);
 		panel.add(lblNewLabel_1);
 
 		JLabel lblNewLabel_2 = new JLabel("");
-		lblNewLabel_2.setIcon(
-				new ImageIcon(AuthenticationFacebookWindow.class.getResource("/mail_api/icons8-lock-24.png")));
+		lblNewLabel_2
+				.setIcon(new ImageIcon(AuthenticationFacebookWindow.class.getResource("/mail_api/icons8-lock-24.png")));
 		lblNewLabel_2.setBounds(115, 299, 24, 22);
 		panel.add(lblNewLabel_2);
 
@@ -147,16 +150,20 @@ public class AuthenticationFacebookWindow {
 				fbw = new facebookWindow();
 				fbw.getFrame().setVisible(true);
 				frame.setVisible(false);
+				try {
+					createxml.complementUserFacebook(user);
+				} catch (JAXBException e1) {
+					e1.printStackTrace();
+				}
+
 			}
 		});
-
 
 		JLabel lblInicieASesso = new JLabel("Inicie a sua conta para continuar");
 		lblInicieASesso.setBounds(151, 159, 187, 16);
 		panel.add(lblInicieASesso);
 	}
 
-		
 	public MailAPI getMail() {
 		return mail;
 	}
@@ -164,8 +171,6 @@ public class AuthenticationFacebookWindow {
 	public void setMail(MailAPI mail) {
 		this.mail = mail;
 	}
-
-
 
 	public JFrame getFrame() {
 		return frame;

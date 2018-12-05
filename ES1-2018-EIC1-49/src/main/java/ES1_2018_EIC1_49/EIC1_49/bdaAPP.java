@@ -6,6 +6,9 @@ import java.awt.Font;
 import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
@@ -17,6 +20,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.plaf.OptionPaneUI;
 
+import org.apache.commons.io.FileUtils;
+
 public class bdaAPP extends JFrame {
 
 	private JFrame frame;
@@ -25,11 +30,10 @@ public class bdaAPP extends JFrame {
 	private JPasswordField passwordField;
 	private CreateXML file = new CreateXML();
 	private App window;
+	private String userGranted;
+	public int index;
 	private java.util.List<Utilizador> users = file.getusersList();
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -38,6 +42,7 @@ public class bdaAPP extends JFrame {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
+
 			}
 		});
 	}
@@ -45,6 +50,13 @@ public class bdaAPP extends JFrame {
 	public bdaAPP() {
 		initialize();
 	}
+
+	/**
+	 * Construtor da frame
+	 * 
+	 * @author Pedro Almeida
+	 * 
+	 */
 
 	private void initialize() {
 
@@ -80,14 +92,16 @@ public class bdaAPP extends JFrame {
 
 			private boolean acessGranted() {
 				String username = String.valueOf(textField.getText());
-				System.out.println(username);
+
 				String pw = String.valueOf(passwordField.getPassword());
-				System.out.println(pw + "inserida");
-				for (Utilizador u : users) {
-					String usernameData = u.getUsername();
-					String pwData = u.getPw();
-					System.out.println(usernameData + ", " + pwData);
+
+				for (int i = 0; i < users.size(); i++) {
+					String usernameData = users.get(i).getUsername();
+					String pwData = users.get(i).getPw();
 					if (username.equals(usernameData) && pwData.equals(pw)) {
+
+						index = i;
+						saveInfile(index);
 
 						return true;
 
@@ -155,6 +169,29 @@ public class bdaAPP extends JFrame {
 
 	public void setFrame(JFrame frame) {
 		this.frame = frame;
+	}
+
+	/**
+	 * Funcao auxiliar que ajuda ao funcionamento da associacao de utilizadores a
+	 * contas das redes sociais
+	 * 
+	 * @author Pedro Almeida
+	 * 
+	 */
+
+	public void saveInfile(int i) {
+		try {
+			File fac = new File(
+					"C:\\Users\\Pedro Almeida\\git\\ES1-2018-EIC1-49\\ES1-2018-EIC1-49\\src\\main\\java\\XML\\acessos");
+			if (!fac.exists()) {
+				fac.createNewFile();
+			}
+			FileWriter write = new FileWriter(fac);
+			write.write(Integer.toString(i));
+			write.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
