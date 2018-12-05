@@ -40,7 +40,7 @@ public class facebookAPI {
 	@FXML
 	private Post aPostmew;
 	private PasswordField password;
-	private String accessToken = "EAAEZBg2PIN94BAM2roHjsXELSqW972OLdMz4hUMyuja1ba7dInQPcGEgBJizn1uQ7kIrsZBkXvZCSOLryEsMI2IO5IYESkUmt8O5U9pho6iLZCsXmLTNE8ZBoaVlZB0DCVZArljcAeUcoyP7GDhcgXQfCZBnAoPmV2IUVZC0k5K97WWrnsJVbd5v2047lK3nbUX3LvKtS5TrkcQZDZD";
+	private String accessToken = "EAAEZBg2PIN94BACKtNtDCZBfNFPFlpsgdKSEpHOQWWtmdujQZAZBvgGzNk3JQDqe5jAQ7viszVoZCjGz0BjjK21fBc71rCmPC19zlMPpjLE2hHO2rpq7wZBfJBlXenmpyGraHRb9O1pZBMQ9erbDGDTF6C8sZBfStUGIA4maEFrGZBK7FG4EzPen2KTeZCmWUu8TUVhPtLbXDZCmwZDZD";
 	DefaultListModel<String> listaPostsFB = new DefaultListModel<String>();
 
 	DefaultListModel<String> listaForSearchPostsFB = new DefaultListModel<String>();
@@ -117,12 +117,12 @@ public class facebookAPI {
 			String element = listaPostsFB.getElementAt(tweet);
 			String[] partes = element.split(" ");
 			for (int palavras_do_tweet = 0; palavras_do_tweet < partes.length; palavras_do_tweet++) {
-				if (partes[palavras_do_tweet].equals(tag)) {
+				if (partes[palavras_do_tweet].contains(tag)) {
 					listaForSearchPostsFB.addElement(element);
 				}
 			}
 		}
-		listaForSearchPostsFB.clear();
+		
 	}
 
 	public void post(String text_to_post) {

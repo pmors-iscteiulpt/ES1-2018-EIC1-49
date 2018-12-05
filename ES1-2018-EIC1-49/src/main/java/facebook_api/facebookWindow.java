@@ -141,16 +141,6 @@ public class facebookWindow {
 		list_1 = new JList<String>();
 		scrollPane.setViewportView(list_1);
 
-		JRadioButton rdbtnEmailsEnviadosPelo = new JRadioButton("ISCTE");
-		rdbtnEmailsEnviadosPelo.setBackground(Color.ORANGE);
-		rdbtnEmailsEnviadosPelo.setBounds(321, 53, 300, 25);
-		panel.add(rdbtnEmailsEnviadosPelo);
-
-		JRadioButton rdbtnEmailsEnviadosPelo_1 = new JRadioButton("Engenharia de Software I");
-		rdbtnEmailsEnviadosPelo_1.setBackground(Color.ORANGE);
-		rdbtnEmailsEnviadosPelo_1.setBounds(321, 78, 300, 25);
-		panel.add(rdbtnEmailsEnviadosPelo_1);
-
 		JButton btnNewButton = new JButton("O que?");
 		btnNewButton.setBackground(Color.WHITE);
 		btnNewButton.setBounds(640, 407, 107, 25);
@@ -259,7 +249,7 @@ public class facebookWindow {
 
 		JPanel panel_5 = new JPanel();
 		panel_5.setBackground(Color.LIGHT_GRAY);
-		panel_5.setBounds(455, 9, 164, 43);
+		panel_5.setBounds(419, 27, 164, 43);
 		panel.add(panel_5);
 		panel_5.setLayout(null);
 		panel_5.setVisible(false);
