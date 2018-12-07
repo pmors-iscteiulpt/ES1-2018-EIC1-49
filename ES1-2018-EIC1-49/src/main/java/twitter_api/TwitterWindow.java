@@ -23,6 +23,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.ListSelectionModel;
+import javax.xml.crypto.dsig.SignedInfo;
 
 import mail_api.PopUp_Mail;
 import menu.App;
@@ -31,7 +32,6 @@ import twitter4j.TwitterException;
 
 public class TwitterWindow {
 	JFrame frame;
-	JFrame frame2;
 	private JTextField txtFechar;
 	private JList<String> list_1;
 	private JScrollPane scrollPane;
@@ -54,6 +54,8 @@ public class TwitterWindow {
 				try {
 					TwitterWindow window = new TwitterWindow();
 					window.frame.setVisible(true);
+					
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -86,6 +88,7 @@ public class TwitterWindow {
 	}
 
 	private void initialize() throws TwitterException, IllegalStateException, FileNotFoundException {
+		
 		frame = new JFrame();
 		frame.setBounds(500, 500, 800, 500);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -204,10 +207,15 @@ public class TwitterWindow {
 
 		tweetButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(!twitterAPI.connectedToInternet()) {
+					JOptionPane.showMessageDialog(null, "Impossivel enviar tweet offline");
+				}else {
+					
 				try {
 					twitterAPI.tweet(textField.getText(), signin);
 				} catch (TwitterException e1) {
 					e1.printStackTrace();
+				}
 				}
 			}
 		});
@@ -238,23 +246,36 @@ public class TwitterWindow {
 		panel.add(panel_4);
 		panel_4.setLayout(null);
 
-		JButton btnFollowers = new JButton("Followers");
-		btnFollowers.setBounds(0, 0, 97, 33);
-		panel_4.add(btnFollowers);
-
 		JButton btnFollowing = new JButton("Following");
-		btnFollowing.setBounds(92, 0, 104, 33);
+		btnFollowing.setBounds(0, 0, 104, 33);
 		panel_4.add(btnFollowing);
-
-		JLabel number_followers = new JLabel(twitterAPI.getNumberFollowers());
+		
+		twitterAPI.showFollowersList();
+		
+		String nfers = new Integer(twitterAPI.getNum_followers()).toString(); 		
+		JLabel number_followers = new JLabel(nfers);
 		number_followers.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		number_followers.setBounds(124, 30, 85, 29);
 		panel_4.add(number_followers);
 
-		JLabel number_following = new JLabel(twitterAPI.getNumberFollowing());
+		twitterAPI.showFollowingList();
+		String nfing = new Integer(twitterAPI.getNum_following()).toString(); 
+		JLabel number_following = new JLabel(nfing);
 		number_following.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		number_following.setBounds(34, 30, 78, 29);
 		panel_4.add(number_following);
+		
+				JButton btnFollowers = new JButton("Followers");
+				btnFollowers.setBounds(99, 0, 97, 33);
+				panel_4.add(btnFollowers);
+				btnFollowers.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						list_1.clearSelection();
+						list_1.setModel(twitterAPI.getFollowersList());
+						panel_3.setVisible(false);
+						panel_2.setVisible(false);
+					}
+				});
 
 		JPanel panel_5 = new JPanel();
 		panel_5.setBackground(Color.LIGHT_GRAY);
@@ -287,14 +308,6 @@ public class TwitterWindow {
 			public void actionPerformed(ActionEvent e) {
 				list_1.clearSelection();
 				list_1.setModel(twitterAPI.getFollowingList());
-				panel_3.setVisible(false);
-				panel_2.setVisible(false);
-			}
-		});
-		btnFollowers.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				list_1.clearSelection();
-				list_1.setModel(twitterAPI.getFollowersList());
 				panel_3.setVisible(false);
 				panel_2.setVisible(false);
 			}

@@ -8,6 +8,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
@@ -28,7 +29,7 @@ import twitter4j.conf.ConfigurationBuilder;
 public class twitterAPI {
 	String token;
 	String secretToken;
-	private static List<Status> status;
+	private static List<Status> status = new ArrayList<Status>();
 	private static List<User> user;
 	public static List<URLEntity> entity;
 	public DefaultListModel<String> dlm = new DefaultListModel<String>();
@@ -37,12 +38,13 @@ public class twitterAPI {
 	private DefaultListModel<String> followingList = new DefaultListModel<String>();
 	public DefaultListModel<String> post_24h = new DefaultListModel<String>();
 	private PrintWriter pw;
+	private Scanner sc;
 
-	private int numero_followers;
-	private int numero_following;
+	private int num_followers;
+	private int num_following;
 
 	public void logIn() throws URISyntaxException, IOException, TwitterException {
-
+		showFollowersList();
 		ConfigurationBuilder cb = new ConfigurationBuilder();
 		cb.setDebugEnabled(true).setOAuthConsumerKey("cgfMyRg4OvgBHqqDLHWqlczI8")
 				.setOAuthConsumerSecret("szP6FycfMw9qDbIwucfbBuIcsY6HCcsrkRpf3xjVAXBNBMCeZx");
@@ -101,13 +103,13 @@ public class twitterAPI {
 	public void getSavedTweets() throws FileNotFoundException, UnsupportedEncodingException {
 		dlm.clear();
 		try {
-			Scanner scanner = new Scanner(new File(
+			sc = new Scanner(new File(
 					("C:\\Users\\Asus\\git\\ES1-2018-EIC1-49\\ES1-2018-EIC1-49\\src\\main\\java\\twitter_api\\twitterDataBase.txt")));
-			while (scanner.hasNextLine()) {
-				String aux = scanner.nextLine();
+			while (sc.hasNextLine()) {
+				String aux = sc.nextLine();
 				dlm.addElement(aux);
 			}
-			scanner.close();
+			sc.close();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -145,34 +147,40 @@ public class twitterAPI {
 				text = text.replaceAll("\t", " , ");
 				text = text.replaceAll("\n", " , ");
 				pw.println(response + "  " + text);
-
+				System.out.println("naAPI" + getNum_followers());
+				System.out.println("naAPI string" + getNumberFollowers());
 			}
-			String followers = "" + numero_followers;
-			String following = "" + numero_following;
-			pw.println("*");
-			pw.println(followers);
-			pw.println(following);
 			pw.close();
 		}
 	}
 
 	public String getNumberFollowers() {
-		showFollowersList();
-		String nf = new Integer(numero_followers).toString();
+		String nf = new Integer(num_followers).toString();
 		return nf;
 
 	}
 
 	public void getSavedFollowers() throws FileNotFoundException, UnsupportedEncodingException {
 		followersList.clear();
+		String aux = null;
 		try {
-			Scanner scanner = new Scanner(new File(
+			sc = new Scanner(new File(
 					("C:\\Users\\Asus\\git\\ES1-2018-EIC1-49\\ES1-2018-EIC1-49\\src\\main\\java\\twitter_api\\followers.txt")));
-			while (scanner.hasNextLine()) {
-				String aux = scanner.nextLine();
+			while (sc.hasNextLine()) {
+				aux = sc.nextLine();
 				followersList.addElement(aux);
+
 			}
-			scanner.close();
+			sc.close();
+
+			sc = new Scanner(new File(
+					("C:\\Users\\Asus\\git\\ES1-2018-EIC1-49\\ES1-2018-EIC1-49\\src\\main\\java\\twitter_api\\number_followers.txt")));
+			while (sc.hasNextLine()) {
+				aux = sc.nextLine();
+				num_followers = new Integer(aux);
+
+			}
+			sc.close();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -184,12 +192,10 @@ public class twitterAPI {
 		if (connectedToInternet() == false) {
 			try {
 				getSavedFollowers();
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (UnsupportedEncodingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			} catch (FileNotFoundException e1) {
+				e1.printStackTrace();
+			} catch (UnsupportedEncodingException e2) {
+				e2.printStackTrace();
 			}
 		} else {
 			ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
@@ -197,7 +203,6 @@ public class twitterAPI {
 					.setOAuthConsumerSecret("szP6FycfMw9qDbIwucfbBuIcsY6HCcsrkRpf3xjVAXBNBMCeZx")
 					.setOAuthAccessToken("2262665663-5A9tScXexyBrFffm6wZ6BW4bIRtetP8BtWbLcxr")
 					.setOAuthAccessTokenSecret("IONaPHDBBQ5g7B69056rtAhWHAUmpRZeWvSIO3HubnAVF");
-			System.out.println("0");
 			TwitterFactory tf = new TwitterFactory(configurationBuilder.build());
 			Twitter twitterIt = tf.getInstance();
 			getFollowersList().clear();
@@ -211,81 +216,81 @@ public class twitterAPI {
 							"C:\\Users\\Asus\\git\\ES1-2018-EIC1-49\\ES1-2018-EIC1-49\\src\\main\\java\\twitter_api\\followers.txt"));
 					for (User follower : followers) {
 						numberFollowers = follower.getFollowersCount();
-						System.out.println("ISto" + numero_followers);
 						followersList.addElement(follower.getName() + " | " + follower.getScreenName());
 						pw.println(follower.getName() + " | " + follower.getScreenName());
 					}
+					num_followers = numberFollowers;
 					pw.close();
-					
+
 					pw = new PrintWriter(new File(
 							"C:\\Users\\Asus\\git\\ES1-2018-EIC1-49\\ES1-2018-EIC1-49\\src\\main\\java\\twitter_api\\number_followers.txt"));
-					pw.println(getNumberFollowers());
+					pw.println(num_followers);
 					pw.close();
-					this.numero_followers = numberFollowers;
 				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			} catch (IllegalStateException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (TwitterException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IllegalArgumentException e) {
-				e.printStackTrace();
+			} catch (IllegalStateException e1) {
+				e1.printStackTrace();
+			} catch (TwitterException e2) {
+				e2.printStackTrace();
+			} catch (IllegalArgumentException e3) {
+				e3.printStackTrace();
 			}
 		}
 	}
 
-	public String getNumberFollowing() {
-		showFollowingList();
-		String nf = new Integer(numero_following).toString();
-		return nf;
+	public int getNum_followers() {
+		return num_followers;
 	}
 
-	public void getNumberOfFollowersOffline() {
-		followersList.clear();
-		try {
-			Scanner scanner = new Scanner(new File(
-					("C:\\Users\\Asus\\git\\ES1-2018-EIC1-49\\ES1-2018-EIC1-49\\src\\main\\java\\twitter_api\\number_followers.txt")));
-			while (scanner.hasNextLine()) {
-				String aux = scanner.nextLine();
-				numero_followers = new Integer(aux);
-			}
-			scanner.close();
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	public int getNum_following() {
+		return num_following;
 	}
 
-	public void getNumberOfFollowingOffline() {
-		followingList.clear();
-		try {
-			Scanner scanner = new Scanner(new File(
-					("C:\\Users\\Asus\\git\\ES1-2018-EIC1-49\\ES1-2018-EIC1-49\\src\\main\\java\\twitter_api\\number_following.txt")));
-			while (scanner.hasNextLine()) {
-				String aux = scanner.nextLine();
-				numero_following = new Integer(aux);
-			}
-			scanner.close();
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
+	// public String getNumberFollowing() {
+	// showFollowingList();
+	// String nf = new Integer(num_following).toString();
+	// return nf;
+	// }
+	//
+	//
+	// public void getNumberOfFollowingOffline() {
+	// followingList.clear();
+	// try {
+	// Scanner scanner = new Scanner(new File(
+	// ("C:\\Users\\Asus\\git\\ES1-2018-EIC1-49\\ES1-2018-EIC1-49\\src\\main\\java\\twitter_api\\number_following.txt")));
+	// while (scanner.hasNextLine()) {
+	// String aux = scanner.nextLine();
+	// num_following = new Integer(aux);
+	// }
+	// scanner.close();
+	//
+	// } catch (Exception e) {
+	// e.printStackTrace();
+	// }
+	// }
+	//
 	public void getSavedFollowing() throws FileNotFoundException, UnsupportedEncodingException {
 		followingList.clear();
+		String aux = null;
 		try {
-			Scanner scanner = new Scanner(new File(
-					("C:\\Users\\Asus\\git\\ES1-2018-EIC1-49\\ES1-2018-EIC1-49\\src\\main\\java\\twitter_api\\followers.txt")));
-			while (scanner.hasNextLine()) {
-				String aux = scanner.nextLine();
+			sc = new Scanner(new File(
+					("C:\\Users\\Asus\\git\\ES1-2018-EIC1-49\\ES1-2018-EIC1-49\\src\\main\\java\\twitter_api\\following.txt")));
+			while (sc.hasNextLine()) {
+				aux = sc.nextLine();
+
 				followingList.addElement(aux);
 			}
-			scanner.close();
+			sc.close();
+
+			sc = new Scanner(new File(
+					("C:\\Users\\Asus\\git\\ES1-2018-EIC1-49\\ES1-2018-EIC1-49\\src\\main\\java\\twitter_api\\number_following.txt")));
+			while (sc.hasNextLine()) {
+				aux = sc.nextLine();
+				num_following = new Integer(aux);
+
+			}
+			sc.close();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -326,14 +331,13 @@ public class twitterAPI {
 						followingList.addElement(user.getName() + " | " + user.getScreenName());
 						pw.println(user.getName() + " | " + user.getScreenName());
 					}
+					num_following = numberFollowing;
 					pw.close();
 
 					pw = new PrintWriter(new File(
 							"C:\\Users\\Asus\\git\\ES1-2018-EIC1-49\\ES1-2018-EIC1-49\\src\\main\\java\\twitter_api\\number_following.txt"));
-					pw.println(getNumberFollowing());
+					pw.println(num_following);
 					pw.close();
-					this.numero_following = numberFollowing;
-					System.out.println(numberFollowing);
 
 				} catch (FileNotFoundException e) {
 					e.printStackTrace();
@@ -412,10 +416,11 @@ public class twitterAPI {
 	public void filtrarUltimas24horas() {
 		Date today = new Date();
 		Long dateInLong = today.getTime();
+		post_24h.clear();
 		for (int i = 0; i < status.size(); i++) {
 			String element = dlm.getElementAt(i);
 			Long millie = status.get(i).getCreatedAt().getTime();
-			Long periodo_24 = dateInLong - 86400000 * 7;
+			Long periodo_24 = dateInLong - 86400000 * 9;
 			// ultimas 24horas
 			if (millie >= periodo_24)
 				post_24h.addElement(element);
