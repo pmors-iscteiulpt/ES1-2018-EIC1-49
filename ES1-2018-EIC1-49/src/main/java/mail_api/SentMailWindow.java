@@ -250,7 +250,6 @@ public class SentMailWindow {
 									for (int i = 0; i < mail.getListaDeEmails().size(); i++) {
 										if (i == index) {
 											toRespond = mail.getlistaDeEmails().getElementAt(i);
-											System.out.println(toRespond);
 											pmw = new PresentationMailWindow(toRespond);
 											pmw.getFrame().setVisible(true);
 											frame.setVisible(false);
@@ -264,7 +263,6 @@ public class SentMailWindow {
 									for (int i = 0; i < mail.getEmailsReitor().size(); i++) {
 										if (i == index) {
 											toRespond = mail.getEmailsReitor().getElementAt(i);
-											System.out.println(toRespond);
 											pmw = new PresentationMailWindow(toRespond);
 											pmw.getFrame().setVisible(true);
 											frame.setVisible(false);

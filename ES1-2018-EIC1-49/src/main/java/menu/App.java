@@ -37,27 +37,12 @@ public class App extends JFrame {
 	private AuthenticationTwitterWindow twitterwindow;
 	private AuthenticationFacebookWindow afw;
 	private App app;
-//	private int index = new bdaAPP().index;
 	private CreateXML xml = new CreateXML();
 
 	/**
 	 * @description Frame onde concentra as funcionalidades do projeto, ou seja,
 	 *              onde acede as funcionalidades do Email, do Facebook e do Twitter
 	 */
-
-	/**
-	 * @return the frame
-	 */
-	public JFrame getFrame() {
-		return frame;
-	}
-
-	/**
-	 * @param frame the frame to set
-	 */
-	public void setFrame(JFrame frame) {
-		this.frame = frame;
-	}
 
 	/**
 	 * Create the application.
@@ -82,7 +67,6 @@ public class App extends JFrame {
 		panel.setBackground(Color.ORANGE);
 		frame.getContentPane().add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
-		System.out.println(frame.getSize());
 
 		JToggleButton tglbtnFacebook = new JToggleButton("Facebook");
 		tglbtnFacebook.setBackground(Color.WHITE);
@@ -94,7 +78,6 @@ public class App extends JFrame {
 				afw = new AuthenticationFacebookWindow();
 				afw.getFrame().setVisible(true);
 				if (xml.acessFacebook() != null) {
-					System.out.println(xml.acessFacebook() + "fodasse esta merda");
 
 				} else {
 
@@ -164,6 +147,26 @@ public class App extends JFrame {
 
 	}
 
+	private static void addPopup(Component component, final JPopupMenu popup) {
+		component.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					showMenu(e);
+				}
+			}
+
+			public void mouseReleased(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					showMenu(e);
+				}
+			}
+
+			private void showMenu(MouseEvent e) {
+				popup.show(e.getComponent(), e.getX(), e.getY());
+			}
+		});
+	}
+
 	/**
 	 * @return the oAuthConsumerKey
 	 */
@@ -220,27 +223,17 @@ public class App extends JFrame {
 		AccessTokenSecret = accessTokenSecret;
 	}
 
-	private static void addPopup(Component component, final JPopupMenu popup) {
-		component.addMouseListener(new MouseAdapter() {
-			public void mousePressed(MouseEvent e) {
-				if (e.isPopupTrigger()) {
-					showMenu(e);
-				}
-			}
-
-			public void mouseReleased(MouseEvent e) {
-				if (e.isPopupTrigger()) {
-					showMenu(e);
-				}
-			}
-
-			private void showMenu(MouseEvent e) {
-				popup.show(e.getComponent(), e.getX(), e.getY());
-			}
-		});
+	/**
+	 * @return the frame
+	 */
+	public JFrame getFrame() {
+		return frame;
 	}
 
-//	public int getIndex() {
-//		return index;
-//	}
+	/**
+	 * @param frame the frame to set
+	 */
+	public void setFrame(JFrame frame) {
+		this.frame = frame;
+	}
 }

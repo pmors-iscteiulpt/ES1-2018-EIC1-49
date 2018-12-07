@@ -47,10 +47,11 @@ public class facebookAPI {
 	@FXML
 	private Post aPostmew;
 	private PasswordField password;
-	private String accessToken = "EAAEZBg2PIN94BAPt4Fydip95mT6fUAZCVcZCELgrpXV86hzB7uVQHyIHpF4sjXcDRPkkadrqr56rrOjpoj5pNUqv6oVhIdfNb5h0X208EgJ2I9OqU0UnKekmPa8lHgOZCU79pHODTgmYKV2eZArlRhfyNZA6ZAXyotrHdJJkTP2RmbicMJmVJVL6dTMKZCKKzrPlgyNwQERKqgZDZD";
-	DefaultListModel<String> listaPostsFB = new DefaultListModel<String>();
-	DefaultListModel<String> listaForSearchPostsFB = new DefaultListModel<String>();
-	DefaultListModel<String> post_24h = new DefaultListModel<String>();
+	private String accessToken = "EAAEZBg2PIN94BAPcKDeVZCwEiphM72ifwMJOtlSeNji9q6HrFcIYB8Dwlt7pZBmZAyZAbq6CFryecv5FYoNtOYCMNNQYuzAZBWVMwqshw1iYm1gZC9Q3VnloFXIefk5198X9rYXq6ZBr5ZBp3DybZCPISNBCqoam97RaLnj6yYpNdAaxpqhv5OCi2eS3ULhuOBEgLHRjsTTSAJhQZDZD";
+	private DefaultListModel<String> listaPostsFB = new DefaultListModel<String>();
+	private DefaultListModel<String> listaForSearchPostsFB = new DefaultListModel<String>();
+	private DefaultListModel<String> post_24h = new DefaultListModel<String>();
+
 	private List<Post> posts = new ArrayList<Post>();
 	private PrintWriter pw;
 
@@ -65,7 +66,7 @@ public class facebookAPI {
 			posts = new ArrayList<Post>();
 			int cont = 0;
 			pw = new PrintWriter(new File(
-					"C:\\Users\\Asus\\git\\ES1-2018-EIC1-49\\ES1-2018-EIC1-49\\src\\main\\java\\mail_api\\emailsReitora.txt"));
+					"C:\\Users\\Pedro\\git\\ES1-2018-EIC1-49\\ES1-2018-EIC1-49\\src\\main\\java\\mail_api\\emailsReitora.txt"));
 			listaPostsFB.clear();
 			for (List<Post> page : result) {
 				for (Post aPost : page) {
@@ -99,7 +100,7 @@ public class facebookAPI {
 		listaPostsFB.clear();
 		try {
 			Scanner scanner = new Scanner(new File(
-					"C:\\Users\\Asus\\git\\ES1-2018-EIC1-49\\ES1-2018-EIC1-49\\src\\main\\java\\mail_api\\emailsReitora.txt"));
+					"C:\\Users\\Pedro\\git\\ES1-2018-EIC1-49\\ES1-2018-EIC1-49\\src\\main\\java\\mail_api\\emailsReitora.txt"));
 			while (scanner.hasNextLine()) {
 				String aux = scanner.nextLine();
 				listaPostsFB.addElement(aux);
@@ -111,15 +112,6 @@ public class facebookAPI {
 		}
 	}
 
-	public void post(String text_to_post) {
-		try {
-			@SuppressWarnings("deprecation")
-			FacebookClient fbClient = new DefaultFacebookClient(accessToken);
-			fbClient.publish("me/feed", FacebookType.class, Parameter.with("message", text_to_post));
-		} catch (FacebookException ex) { // So that you can see what went wrong
-			ex.printStackTrace(System.err); // in case you did anything incorrectly
-		}
-	}
 
 	public void filtrarUltimas24horas() {
 		Date today = new Date();
@@ -175,4 +167,45 @@ public class facebookAPI {
 		this.aPostmew = aPostmew;
 	}
 
+	/**
+	 * @return the listaPostsFB
+	 */
+	public DefaultListModel<String> getListaPostsFB() {
+		return listaPostsFB;
+	}
+
+	/**
+	 * @param listaPostsFB the listaPostsFB to set
+	 */
+	public void setListaPostsFB(DefaultListModel<String> listaPostsFB) {
+		this.listaPostsFB = listaPostsFB;
+	}
+
+	/**
+	 * @return the listaForSearchPostsFB
+	 */
+	public DefaultListModel<String> getListaForSearchPostsFB() {
+		return listaForSearchPostsFB;
+	}
+
+	/**
+	 * @param listaForSearchPostsFB the listaForSearchPostsFB to set
+	 */
+	public void setListaForSearchPostsFB(DefaultListModel<String> listaForSearchPostsFB) {
+		this.listaForSearchPostsFB = listaForSearchPostsFB;
+	}
+
+	/**
+	 * @return the post_24h
+	 */
+	public DefaultListModel<String> getPost_24h() {
+		return post_24h;
+	}
+
+	/**
+	 * @param post_24h the post_24h to set
+	 */
+	public void setPost_24h(DefaultListModel<String> post_24h) {
+		this.post_24h = post_24h;
+	}
 }

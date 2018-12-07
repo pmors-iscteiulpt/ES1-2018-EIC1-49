@@ -2,25 +2,19 @@ package mail_api;
 
 import java.awt.Color;
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.ImageIcon;
-import javax.swing.JTextField;
-
-import mail_api.MailAPI;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 public class PresentationMailWindow {
 
 	private JFrame frame;
-	public String user;
-	public String pass;
 	private MailAPI mail = new MailAPI();
 	private JTextField textMessageMail;
 	private JTextField sendTo;

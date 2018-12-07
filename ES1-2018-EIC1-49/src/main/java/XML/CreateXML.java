@@ -15,14 +15,9 @@ import menu.Utilizador;
 import menu.Utilizadores;
 
 public class CreateXML {
-	private String filepath = "C:\\Users\\Asus\\git\\ES1-2018-EIC1-49\\ES1-2018-EIC1-49\\src\\main\\java\\XML\\";
+	private String filepath = "C:\\Users\\Pedro\\git\\ES1-2018-EIC1-49\\ES1-2018-EIC1-49\\src\\main\\java\\XML\\";
 	private File xmlFile = new File(filepath + "config.xml");
-//	private bdaAPP bdaapp = new bdaAPP();
-
-//	sFFFprivate String acess = app.usernameAcessGranted();
-
-	int index = readFromFile();;
-
+	private int index = readFromFile();;
 	private List<Utilizador> usersList;
 
 	/**
@@ -132,18 +127,6 @@ public class CreateXML {
 	}
 
 	/**
-	 * getter da lista de users no XML
-	 * 
-	 * @author Pedro Almeida
-	 * 
-	 */
-
-	public List<Utilizador> getusersList() {
-		return usersList;
-
-	}
-
-	/**
 	 * Adiciona os acessos do email ao utilizador em sessao
 	 * 
 	 * @author Pedro Almeida
@@ -225,11 +208,6 @@ public class CreateXML {
 	 * 
 	 */
 
-	public String getFilepath() {
-		return filepath;
-
-	}
-
 	public int readFromFile() {
 		Scanner scanner = null;
 		try {
@@ -245,6 +223,23 @@ public class CreateXML {
 
 		}
 		return index;
+	}
+
+	public String getFilepath() {
+		return filepath;
+
+	}
+
+	/**
+	 * getter da lista de users no XML
+	 * 
+	 * @author Pedro Almeida
+	 * 
+	 */
+
+	public List<Utilizador> getusersList() {
+		return usersList;
+
 	}
 
 }

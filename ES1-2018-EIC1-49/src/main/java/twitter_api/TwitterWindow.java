@@ -9,6 +9,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.ImageIcon;
@@ -43,7 +44,6 @@ public class TwitterWindow {
 	private App app;
 	private JTextField textField_1;
 	private PopUp_Twitter popup;
-	private DataBaseTwitter data;
 
 	/**
 	 * Launch the application.
@@ -301,7 +301,7 @@ public class TwitterWindow {
 
 			public void actionPerformed(ActionEvent e) {
 				twitterAPI.filtrarUltimas24horas();
-				list_1.setModel(twitterAPI.post_24h);
+				list_1.setModel(twitterAPI.getPost_24h());
 			}
 		});
 		btnFollowing.addActionListener(new ActionListener() {
@@ -318,11 +318,11 @@ public class TwitterWindow {
 			public void mouseClicked(MouseEvent evt) {
 				int index = list_1.getSelectedIndex();
 				if (!twitterAPI.connectedToInternet()) {
-					JOptionPane.showMessageDialog(null, "Não pode retweetar offline");
-					System.out.println("Não pode retweetar offline");
+					JOptionPane.showMessageDialog(null, "Nï¿½o pode retweetar offline");
 				} else {
 					if (evt.getClickCount() == 1) {
 						panel_2.setVisible(true);
+						status = twitterAPI.getStatus();
 						for (int i = 0; i < status.size(); i++) {
 							if (i == index)
 								statusId = status.get(i).getId();

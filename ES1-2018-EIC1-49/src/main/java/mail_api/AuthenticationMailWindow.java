@@ -33,22 +33,6 @@ public class AuthenticationMailWindow {
 	private App app;
 	private CreateXML createxml = new CreateXML();
 
-	public String getUser() {
-		return user;
-	}
-
-	public void setUser(String user) {
-		this.user = user;
-	}
-
-	public String getPass() {
-		return pass;
-	}
-
-	public void setPass(String pass) {
-		this.pass = pass;
-	}
-
 	/**
 	 * Launch the application.
 	 */
@@ -139,7 +123,6 @@ public class AuthenticationMailWindow {
 				smw.getFrame().setVisible(true);
 				frame.setVisible(false);
 				mail.getMailCredentials(user, pass);
-				System.out.println(user + "," + pass);
 				try {
 					createxml.complementUserEmail(user);
 				} catch (JAXBException e1) {
@@ -160,4 +143,21 @@ public class AuthenticationMailWindow {
 	public void setFrame(JFrame frame) {
 		this.frame = frame;
 	}
+
+	public String getUser() {
+		return user;
+	}
+
+	public void setUser(String user) {
+		this.user = user;
+	}
+
+	public String getPass() {
+		return pass;
+	}
+
+	public void setPass(String pass) {
+		this.pass = pass;
+	}
+
 }

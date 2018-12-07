@@ -34,13 +34,11 @@ public class facebookWindow {
 
 	public String user;
 	public String pass;
-	private JTextField facebook_textField;
 	private AuthenticationFacebookWindow afw;
 	private facebookAPI fapi = new facebookAPI();
 	private JList<String> list_1;
 	private JTextField textField_1;
 	public PopUp_Facebook popup;
-	private JTextField textField;
 	private String message_show;
 
 	/**
@@ -113,12 +111,12 @@ public class facebookWindow {
 
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(0, 0, 0)));
-		panel_1.setBounds(77, 157, 546, 209);
+		panel_1.setBounds(77, 157, 546, 269);
 		panel.add(panel_1);
 		panel_1.setLayout(null);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(0, 0, 546, 209);
+		scrollPane.setBounds(0, 0, 546, 269);
 		panel_1.add(scrollPane);
 
 		list_1 = new JList<String>();
@@ -136,48 +134,6 @@ public class facebookWindow {
 		label.setIcon(new ImageIcon(facebookWindow.class.getResource("/mail_api/icons8-administrator-male-24.png")));
 		label.setBounds(676, 162, 31, 22);
 		panel.add(label);
-
-		JPanel panel_2 = new JPanel();
-		panel_2.setLayout(null);
-		panel_2.setBackground(new Color(30, 144, 255));
-		panel_2.setBounds(77, 379, 546, 73);
-		panel.add(panel_2);
-
-		JToggleButton tglbtnPostar = new JToggleButton("Postar");
-		tglbtnPostar.setBackground(Color.WHITE);
-		tglbtnPostar.setBounds(450, 35, 84, 25);
-		panel_2.add(tglbtnPostar);
-		tglbtnPostar.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent arg0) {
-				if (!fapi.connectedToInternet()) {
-					JOptionPane.showMessageDialog(null, "N�o � poss�vel fazer um post offline");
-				} else {
-					fapi.post(textField.getText());
-					JOptionPane.showMessageDialog(null, "Mensagem postada no seu perfil com sucesso!");
-				}
-			}
-		});
-
-		textField = new JTextField();
-		textField.setColumns(10);
-		textField.setBounds(12, 6, 522, 22);
-		panel_2.add(textField);
-		facebook_textField = new JTextField();
-		facebook_textField.setColumns(10);
-		facebook_textField.setBounds(12, 6, 480, 22);
-		panel_2.add(facebook_textField);
-
-		tglbtnPostar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				fapi.post(facebook_textField.getText());
-			}
-		});
-
-		JLabel lblEmQueEsts = new JLabel("Em que est\u00E1s a pensar?");
-		lblEmQueEsts.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblEmQueEsts.setBounds(179, 36, 179, 21);
-		panel_2.add(lblEmQueEsts);
 
 		JLabel lblNewLabel_4 = new JLabel("Publica\u00E7\u00F5es");
 
@@ -213,14 +169,14 @@ public class facebookWindow {
 		btnProcurar.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				fapi.listaForSearchPostsFB.clear();
+				fapi.getListaForSearchPostsFB().clear();
 				try {
 					fapi.searchForUserPosts(textField_1.getText());
 				} catch (FileNotFoundException e1) {
 					e1.printStackTrace();
 				}
 				list_1.clearSelection();
-				list_1.setModel(fapi.listaForSearchPostsFB);
+				list_1.setModel(fapi.getListaForSearchPostsFB());
 			}
 		});
 
@@ -248,7 +204,7 @@ public class facebookWindow {
 
 			public void actionPerformed(ActionEvent e) {
 				fapi.filtrarUltimas24horas();
-				list_1.setModel(fapi.post_24h);
+				list_1.setModel(fapi.getPost_24h());
 			}
 		});
 
@@ -256,14 +212,14 @@ public class facebookWindow {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				fapi.listaPostsFB.clear();
+				fapi.getListaPostsFB().clear();
 				try {
 					fapi.AuthUser();
 				} catch (FileNotFoundException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				list_1.setModel(fapi.listaPostsFB);
+				list_1.setModel(fapi.getListaPostsFB());
 				panel_5.setVisible(true);
 			}
 		});

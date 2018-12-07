@@ -20,21 +20,6 @@ public class newAccountWindow {
 	 */
 
 	private bdaAPP bdaApp;
-
-	/**
-	 * @return the frame
-	 */
-	public JFrame getFrame() {
-		return frame;
-	}
-
-	/**
-	 * @param frame the frame to set
-	 */
-	public void setFrame(JFrame frame) {
-		this.frame = frame;
-	}
-
 	private JFrame frame;
 	private JTextField textField;
 	private JTextField textField_1;
@@ -127,4 +112,19 @@ public class newAccountWindow {
 		lblCriarNovoUsurio.setBounds(170, 151, 172, 20);
 		frame.getContentPane().add(lblCriarNovoUsurio);
 	}
+
+	/**
+	 * @return the frame
+	 */
+	public JFrame getFrame() {
+		return frame;
+	}
+
+	/**
+	 * @param frame the frame to set
+	 */
+	public void setFrame(JFrame frame) {
+		this.frame = frame;
+	}
+
 }

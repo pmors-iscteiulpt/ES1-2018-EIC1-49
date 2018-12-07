@@ -41,7 +41,6 @@ public class MailAPI {
 	private Message[] messages;
 	private DefaultListModel<String> emailsReitor = new DefaultListModel<String>();
 	private String Content;
-
 	private PrintWriter pw;
 
 	public void getEmailfromReitora() throws Exception {
@@ -97,7 +96,7 @@ public class MailAPI {
 		emailsReitor.clear();
 		try {
 			Scanner scanner = new Scanner(new File(
-					"C:\\Users\\Asus\\git\\ES1-2018-EIC1-49\\ES1-2018-EIC1-49\\src\\main\\java\\mail_api\\emailsReitora.txt"));
+					"C:\\Users\\Pedro\\git\\ES1-2018-EIC1-49\\ES1-2018-EIC1-49\\src\\main\\java\\mail_api\\emailsReitora.txt"));
 			while (scanner.hasNextLine()) {
 				String aux = scanner.nextLine();
 				emailsReitor.addElement(aux);
@@ -139,8 +138,6 @@ public class MailAPI {
 						from1 = message.getFrom()[0];
 						subj = message.getSubject();
 						Content = mail.getTextFromMessage(message);
-						System.out.println(from1);
-						System.out.println(subj);
 						if (message != null) {
 							listaDeEmails.addElement(
 									"FROM: " + from1 + "        " + "SUBJECT: " + subj + "Message: " + result);
@@ -163,7 +160,7 @@ public class MailAPI {
 		listaDeEmails.clear();
 		try {
 			Scanner scanner = new Scanner(new File(
-					"C:\\Users\\Asus\\git\\ES1-2018-EIC1-49\\ES1-2018-EIC1-49\\src\\main\\java\\mail_api\\emailsReitora.txt"));
+					"C:\\Users\\Pedro\\git\\ES1-2018-EIC1-49\\ES1-2018-EIC1-49\\src\\main\\java\\mail_api\\emails.txt"));
 			while (scanner.hasNextLine()) {
 				String aux = scanner.nextLine();
 				listaDeEmails.addElement(aux);
@@ -181,7 +178,6 @@ public class MailAPI {
 		mail = new MailAPI();
 		from = mail.getUsername();
 		pass = mail.getPass();
-		System.out.println();
 		String[] to = { address };
 		String host = "smtp-mail.outlook.com";
 
@@ -352,8 +348,7 @@ public class MailAPI {
 	}
 
 	/**
-	 * @param from1
-	 *            the from1 to set
+	 * @param from1 the from1 to set
 	 */
 	public void setFrom1(Address from1) {
 		this.from1 = from1;
@@ -367,8 +362,7 @@ public class MailAPI {
 	}
 
 	/**
-	 * @param subj
-	 *            the subj to set
+	 * @param subj the subj to set
 	 */
 	public void setSubj(String subj) {
 		this.subj = subj;

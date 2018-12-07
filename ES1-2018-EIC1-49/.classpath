@@ -6,13 +6,7 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" output="target/test-classes" path="src/test/java">
-		<attributes>
-			<attribute name="test" value="true"/>
-			<attribute name="optional" value="true"/>
-			<attribute name="maven.pomderived" value="true"/>
-		</attributes>
-	</classpathentry>
+	<classpathentry kind="src" path="tests"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>
@@ -23,22 +17,16 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Asus/Desktop/Nova pasta (2)/activation.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Asus/Desktop/Nova pasta (2)/client-combined-3.14.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Asus/Desktop/Nova pasta (2)/client-combined-3.14.0-sources.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Asus/Desktop/Nova pasta (2)/com.sun.net.ssl.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Asus/Desktop/Nova pasta (2)/java-mail-1.4.4.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Asus/Desktop/Nova pasta (2)/javax.mail.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Asus/Desktop/Nova pasta (2)/javax.mail-api-1.4.6.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Asus/Desktop/Nova pasta (2)/jsoup-1.11.3.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Asus/Desktop/Nova pasta (2)/junit.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Asus/Desktop/Nova pasta (2)/mail.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Asus/Desktop/Nova pasta (2)/org.eclipse.egit_5.1.2.201810061102-r.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Asus/Desktop/Nova pasta (2)/restfb-2.10.0-javadoc.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Asus/Desktop/Nova pasta (2)/restfb-2.12.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Asus/Desktop/Nova pasta (2)/twitter4j-async-4.0.7.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Asus/Desktop/Nova pasta (2)/twitter4j-core-4.0.7.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Asus/Desktop/Nova pasta (2)/twitter4j-examples-4.0.7.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Asus/Desktop/Nova pasta (2)/twitter4j-stream-4.0.7.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Pedro/Desktop/Nova pasta (2)/activation.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Pedro/Desktop/Nova pasta (2)/client-combined-3.14.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Pedro/Desktop/Nova pasta (2)/client-combined-3.14.0-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Pedro/Desktop/Nova pasta (2)/com.sun.net.ssl.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Pedro/Desktop/Nova pasta (2)/java-mail-1.4.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Pedro/Desktop/Nova pasta (2)/javax.mail.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Pedro/Desktop/Nova pasta (2)/javax.mail-api-1.4.6.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Pedro/Desktop/Nova pasta (2)/mail.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Pedro/Desktop/Nova pasta (2)/org.eclipse.egit_5.1.2.201810061102-r.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="src" path="/odosodps"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

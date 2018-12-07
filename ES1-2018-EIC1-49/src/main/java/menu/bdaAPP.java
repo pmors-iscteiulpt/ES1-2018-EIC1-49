@@ -89,7 +89,6 @@ public class bdaAPP extends JFrame {
 					}
 
 				} else {
-					System.out.println("Credenciais ERRADAS");
 				}
 			}
 
@@ -166,14 +165,6 @@ public class bdaAPP extends JFrame {
 
 	}
 
-	public JFrame getFrame() {
-		return frame;
-	}
-
-	public void setFrame(JFrame frame) {
-		this.frame = frame;
-	}
-
 	/**
 	 * Funcao auxiliar que ajuda ao funcionamento da associacao de utilizadores a
 	 * contas das redes sociais
@@ -181,7 +172,7 @@ public class bdaAPP extends JFrame {
 	 * @author Pedro Almeida
 	 * 
 	 */
-
+	
 	public void saveInfile(int i) {
 		try {
 			File fac = new File(filepath + "acessos");
@@ -195,5 +186,14 @@ public class bdaAPP extends JFrame {
 			e.printStackTrace();
 		}
 	}
+	
+	public JFrame getFrame() {
+		return frame;
+	}
+
+	public void setFrame(JFrame frame) {
+		this.frame = frame;
+	}
+
 
 }

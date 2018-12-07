@@ -13,7 +13,6 @@ import org.junit.Test;
 import twitter_api.TwitterWindow;
 
 public class TwitterWindowTest {
-	TwitterWindow t = new TwitterWindow();
 
 	@Before
 	public void setUp() throws Exception {
@@ -23,24 +22,5 @@ public class TwitterWindowTest {
 	public void tearDown() throws Exception {
 	}
 
-
-	@Test
-	public void testGetFrame() {
-		
-		
-		assertNotNull(t.getFrame());
-	}
-
-	@Test
-	public void testSetFrame() {
-		JFrame fra = new JFrame();
-		assertNotEquals(t.getFrame(), fra);
-		
-	}
-
-	@Test
-	public void testTwitterWindow() {
-	assertNotNull(t);
-	}
 
 }

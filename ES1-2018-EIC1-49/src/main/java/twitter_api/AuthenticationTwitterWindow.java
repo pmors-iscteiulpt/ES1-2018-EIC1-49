@@ -29,21 +29,6 @@ public class AuthenticationTwitterWindow {
 	private App app;
 	private CreateXML createxml = new CreateXML();
 
-	public String getUser() {
-		return user;
-	}
-
-	public void setUser(String user) {
-		this.user = user;
-	}
-
-	public String getPass() {
-		return pass;
-	}
-
-	public void setPass(String pass) {
-		this.pass = pass;
-	}
 
 	/**
 	 * Launch the application.
@@ -156,4 +141,21 @@ public class AuthenticationTwitterWindow {
 	public void setFrame(JFrame frame) {
 		this.frame = frame;
 	}
+	
+	public String getUser() {
+		return user;
+	}
+
+	public void setUser(String user) {
+		this.user = user;
+	}
+
+	public String getPass() {
+		return pass;
+	}
+
+	public void setPass(String pass) {
+		this.pass = pass;
+	}
+
 }

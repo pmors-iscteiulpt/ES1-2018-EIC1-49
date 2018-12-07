@@ -11,7 +11,7 @@ import org.junit.Test;
 import mail_api.PresentationMailWindow;
 
 public class PresentationMailWindowTest {
-	PresentationMailWindow p = new PresentationMailWindow();
+	PresentationMailWindow p = new PresentationMailWindow(null);
 
 	@Before
 	public void setUp() throws Exception {

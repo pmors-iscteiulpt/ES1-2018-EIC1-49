@@ -32,31 +32,15 @@ import java.util.Properties;
 import javax.swing.JButton;
 
 public class AuthenticationFacebookWindow {
-	JFrame frame;
+	private JFrame frame;
 	private JTextField textField;
 	private JPasswordField passwordField;
-	public String user;
-	public String pass;
+	private String user;
+	private String pass;
 	private MailAPI mail = new MailAPI();
 	private CreateXML createxml = new CreateXML();
 	private App app;
 	private facebookWindow fbw;
-
-	public String getUser() {
-		return user;
-	}
-
-	public void setUser(String user) {
-		this.user = user;
-	}
-
-	public String getPass() {
-		return pass;
-	}
-
-	public void setPass(String pass) {
-		this.pass = pass;
-	}
 
 	/**
 	 * Launch the application.
@@ -101,7 +85,8 @@ public class AuthenticationFacebookWindow {
 
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setBounds(197, 34, 100, 100);
-		lblNewLabel.setIcon(new ImageIcon(AuthenticationFacebookWindow.class.getResource("/facebook_api/Facebook-Logo-100.png")));
+		lblNewLabel.setIcon(
+				new ImageIcon(AuthenticationFacebookWindow.class.getResource("/facebook_api/Facebook-Logo-100.png")));
 		panel.add(lblNewLabel);
 
 		textField = new JTextField();
@@ -178,5 +163,21 @@ public class AuthenticationFacebookWindow {
 
 	public void setFrame(JFrame frame) {
 		this.frame = frame;
+	}
+
+	public String getUser() {
+		return user;
+	}
+
+	public void setUser(String user) {
+		this.user = user;
+	}
+
+	public String getPass() {
+		return pass;
+	}
+
+	public void setPass(String pass) {
+		this.pass = pass;
 	}
 }
