@@ -1,8 +1,9 @@
 package facebook_api;
 
 import java.awt.Color;
-import ES1_2018_EIC1_49.EIC1_49.*;
+
 import mail_api.MailAPI;
+import menu.*;
 
 import java.awt.EventQueue;
 
@@ -28,7 +29,6 @@ import java.util.Date;
 import java.util.Properties;
 
 import javax.swing.JButton;
-import ES1_2018_EIC1_49.EIC1_49.*;
 
 public class AuthenticationFacebookWindow {
 	JFrame frame;

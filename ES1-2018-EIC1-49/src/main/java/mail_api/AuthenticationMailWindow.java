@@ -1,8 +1,9 @@
 package mail_api;
 
 import java.awt.Color;
-import ES1_2018_EIC1_49.EIC1_49.*;
+
 import mail_api.MailAPI;
+import menu.*;
 
 import java.awt.EventQueue;
 

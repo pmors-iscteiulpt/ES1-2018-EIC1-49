@@ -22,7 +22,7 @@ import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.ListSelectionModel;
 
-import ES1_2018_EIC1_49.EIC1_49.App;
+import menu.App;
 import twitter4j.Status;
 import twitter4j.TwitterException;
 

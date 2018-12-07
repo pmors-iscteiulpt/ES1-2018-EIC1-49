@@ -1,7 +1,6 @@
 package twitter_api;
 
 import java.awt.Color;
-import ES1_2018_EIC1_49.EIC1_49.*;
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -9,6 +8,9 @@ import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.JTextField;
 import javax.xml.bind.JAXBException;
+
+import menu.*;
+
 import javax.swing.JPasswordField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
