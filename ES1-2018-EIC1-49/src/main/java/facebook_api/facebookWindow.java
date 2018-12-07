@@ -21,6 +21,10 @@ import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.border.MatteBorder;
 
+/**
+ * @author Leal
+ *
+ */
 public class facebookWindow {
 	private JFrame frame;
 

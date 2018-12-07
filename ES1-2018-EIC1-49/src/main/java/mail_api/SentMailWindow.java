@@ -27,6 +27,11 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.border.MatteBorder;
 
+/**
+ * @author Pedro
+ *
+ */
+
 public class SentMailWindow {
 
 	private JFrame frame;
@@ -358,10 +363,16 @@ public class SentMailWindow {
 		});
 	}
 
+	/**
+	 * @return
+	 */
 	public JFrame getFrame() {
 		return frame;
 	}
 
+	/**
+	 * @param frame
+	 */
 	public void setFrame(JFrame frame) {
 		this.frame = frame;
 	}

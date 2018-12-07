@@ -26,6 +26,11 @@ import twitter4j.auth.AccessToken;
 import twitter4j.auth.RequestToken;
 import twitter4j.conf.ConfigurationBuilder;
 
+/**
+ * @author Antonio
+ *
+ */
+
 public class twitterAPI {
 	private String token;
 	private String secretToken;
@@ -56,6 +61,12 @@ public class twitterAPI {
 	private int num_followers;
 	private int num_following;
 
+	/**
+	 * login
+	 * @throws URISyntaxException
+	 * @throws IOException
+	 * @throws TwitterException
+	 */
 	public void logIn() throws URISyntaxException, IOException, TwitterException {
 		showFollowersList();
 		ConfigurationBuilder cb = new ConfigurationBuilder();
@@ -93,6 +104,11 @@ public class twitterAPI {
 		}
 	}
 
+	/**
+	 * buscar tweets offline
+	 * @throws FileNotFoundException
+	 * @throws UnsupportedEncodingException
+	 */
 	public void getSavedTweets() throws FileNotFoundException, UnsupportedEncodingException {
 		dlm.clear();
 		try {
@@ -109,6 +125,12 @@ public class twitterAPI {
 		}
 	}
 
+	/**
+	 * buscar tweets online
+	 * @param signin
+	 * @throws FileNotFoundException
+	 * @throws UnsupportedEncodingException
+	 */
 	public void ISCTETimeLine(twitterAPI signin) throws FileNotFoundException, UnsupportedEncodingException {
 
 		if (connectedToInternet() == false) {
@@ -146,6 +168,11 @@ public class twitterAPI {
 	}
 
 
+	/**
+	 * buscar followers offline
+	 * @throws FileNotFoundException
+	 * @throws UnsupportedEncodingException
+	 */
 	public void getSavedFollowers() throws FileNotFoundException, UnsupportedEncodingException {
 		followersList.clear();
 		String aux = null;
@@ -173,6 +200,9 @@ public class twitterAPI {
 		}
 	}
 
+	/**
+	 * buscar follewers online
+	 */
 	public void showFollowersList() {
 
 		if (connectedToInternet() == false) {
@@ -226,7 +256,9 @@ public class twitterAPI {
 	}
 
 	
-
+	/**
+	 * buscar following offline
+	 */
 	public void getSavedFollowing() throws FileNotFoundException, UnsupportedEncodingException {
 		followingList.clear();
 		String aux = null;
@@ -253,7 +285,9 @@ public class twitterAPI {
 			e.printStackTrace();
 		}
 	}
-
+	/**
+	 * mostrar following online
+	 */
 	public void showFollowingList() {
 		if (connectedToInternet() == false) {
 			try {
@@ -309,6 +343,12 @@ public class twitterAPI {
 		}
 	}
 
+	/**
+	 * twittar
+	 * @param twit
+	 * @param signin
+	 * @throws TwitterException
+	 */
 	public void tweet(String twit, twitterAPI signin) throws TwitterException {
 		ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
 		configurationBuilder.setDebugEnabled(true).setOAuthConsumerKey("cgfMyRg4OvgBHqqDLHWqlczI8")
@@ -323,6 +363,11 @@ public class twitterAPI {
 		System.out.println("tweet postado");
 	}
 
+	/**
+	 * retwittar
+	 * @param statusId
+	 * @param signin
+	 */
 	public void retweetIt(long statusId, twitterAPI signin) {
 		ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
 		configurationBuilder.setDebugEnabled(true).setOAuthConsumerKey("cgfMyRg4OvgBHqqDLHWqlczI8")
@@ -340,6 +385,10 @@ public class twitterAPI {
 		}
 	}
 
+	/**
+	 * filtrar por tag
+	 * @param tag
+	 */
 	public void searchForTagInISCTETimeLine(String tag) {
 		for (int tweet = 0; tweet < dlm.size(); tweet++) {
 			String element = dlm.getElementAt(tweet);
@@ -353,6 +402,10 @@ public class twitterAPI {
 
 	}
 
+	/**
+	 * verifica ligação  à internet
+	 * @return
+	 */
 	public boolean connectedToInternet() {
 		Socket sock = new Socket();
 		InetSocketAddress addr = new InetSocketAddress("www.google.com", 80);
@@ -369,6 +422,9 @@ public class twitterAPI {
 		}
 	}
 
+	/**
+	 * filtrar 24h
+	 */
 	public void filtrarUltimas24horas() {
 		Date today = new Date();
 		Long dateInLong = today.getTime();
@@ -385,41 +441,71 @@ public class twitterAPI {
 			post_24h.addElement("::N�o existe nenhum Tweet nas �ltimas 24h!::");
 	}
 
+	/**
+	 * @return
+	 */
 	public static List<Status> getStatus() {
 		return status;
 	}
 
+	/**
+	 * @param status
+	 */
 	public static void setStatus(List<Status> status) {
 		twitterAPI.status = status;
 	}
 
+	/**
+	 * @return
+	 */
 	public DefaultListModel<String> getSearchTagList() {
 		return searchTagList;
 	}
 
+	/**
+	 * @param searchTagList
+	 */
 	public void setSearchTagList(DefaultListModel<String> searchTagList) {
 		this.searchTagList = searchTagList;
 	}
 
+	/**
+	 * @return
+	 */
 	public DefaultListModel<String> getFollowingList() {
 		return followingList;
 	}
 
+	/**
+	 * @param followingList
+	 */
 	public void setFollowingList(DefaultListModel<String> followingList) {
 		this.followingList = followingList;
 	}
 
+	/**
+	 * @return
+	 */
 	public DefaultListModel<String> getFollowersList() {
 		return followersList;
 	}
 
+	/**
+	 * @param followersList
+	 */
 	public void setFollowersList(DefaultListModel<String> followersList) {
 		this.followersList = followersList;
 	}
+	/**
+	 * @return
+	 */
 	public int getNum_followers() {
 		return num_followers;
 	}
 
+	/**
+	 * @return
+	 */
 	public int getNum_following() {
 		return num_following;
 	}

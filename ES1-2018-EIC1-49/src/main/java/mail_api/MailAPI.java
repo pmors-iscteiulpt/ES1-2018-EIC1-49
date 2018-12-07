@@ -25,6 +25,11 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.swing.DefaultListModel;
 
+/**
+ * @author Pedro
+ *
+ */
+
 public class MailAPI {
 	private static String username;
 	private static String password;
@@ -43,6 +48,10 @@ public class MailAPI {
 	private String Content;
 	private PrintWriter pw;
 
+	/**
+	 * obtem mails da reitora
+	 * @throws Exception
+	 */
 	public void getEmailfromReitora() throws Exception {
 
 		if (!connectedToInternet()) {
@@ -92,6 +101,9 @@ public class MailAPI {
 		}
 	}
 
+	/**
+	 * obtem mails reitora offline
+	 */
 	private void getEmailsReitoraOffline() {
 		emailsReitor.clear();
 		try {
@@ -108,6 +120,10 @@ public class MailAPI {
 		}
 	}
 
+	/**
+	 * obtem mails
+	 * @throws Exception
+	 */
 	public void getEmail() throws Exception {
 		mail = new MailAPI();
 		from = mail.getUsername();
@@ -156,6 +172,9 @@ public class MailAPI {
 		}
 	}
 
+	/**
+	 * obtem mails offline
+	 */
 	private void getEmailsOffline() {
 		listaDeEmails.clear();
 		try {
@@ -174,6 +193,13 @@ public class MailAPI {
 		}
 	}
 
+	/**
+	 * envia mail
+	 * @param address
+	 * @param subject
+	 * @param message
+	 * @throws Exception
+	 */
 	public void sendEmail(String address, String subject, String message) throws Exception {
 		mail = new MailAPI();
 		from = mail.getUsername();
@@ -253,6 +279,10 @@ public class MailAPI {
 		}
 	}
 
+	/**
+	 * mostra mails da reitora
+	 * @throws Exception
+	 */
 	public void showListMailsReitora() throws Exception {
 		listaDeProcuraDeEmails.clear();
 		String mailDaReitora = "<reitora@iscte-iul.pt>";
@@ -267,14 +297,24 @@ public class MailAPI {
 		}
 	}
 
+	/**
+	 * @return
+	 */
 	public List<Message> getMessage2() {
 		return message2;
 	}
 
+	/**
+	 * @param message2
+	 */
 	public void setMessage2(List<Message> message2) {
 		this.message2 = message2;
 	}
 
+	/**
+	 * verifica ligacao à net
+	 * @return
+	 */
 	public boolean connectedToInternet() {
 		Socket sock = new Socket();
 		InetSocketAddress addr = new InetSocketAddress("www.google.com", 80);
@@ -291,6 +331,10 @@ public class MailAPI {
 		}
 	}
 
+	/**
+	 * filtra 24h
+	 * @throws MessagingException
+	 */
 	public void filtrarUltimas24horas() throws MessagingException {
 		Date today = new Date();
 		Long dateInLong = today.getTime();
@@ -306,43 +350,74 @@ public class MailAPI {
 			post_24h.addElement("::N�o existe nenhum mail nas �ltimas 24h!::");
 	}
 
+	/**
+	 * @return
+	 */
 	public String getPass() {
 		return password;
 	}
 
+	/**
+	 * @param pass
+	 */
 	public void setPass(String pass) {
 		this.password = pass;
 	}
 
+	/**
+	 * @return
+	 */
 	public String getUsername() {
 		return username;
 	}
 
+	/**
+	 * @param username
+	 */
 	public static void setUsername(String username) {
 		MailAPI.username = username;
 	}
 
+	/**
+	 * @return
+	 */
 	public Message[] getMessages() {
 		return messages;
 	}
 
+	/**
+	 * @param messages
+	 */
 	public void setMessages(Message[] messages) {
 		this.messages = messages;
 	}
 
+	/**
+	 * @return
+	 */
 	public DefaultListModel<String> getlistaDeEmails() {
 		return listaDeEmails;
 	}
 
+	/**
+	 * @param listaDeEmails
+	 */
 	public void setlistaDeEmails(DefaultListModel<String> listaDeEmails) {
 		this.listaDeEmails = listaDeEmails;
 	}
 
+	/**
+	 * @param user
+	 * @param pass
+	 */
 	public void getMailCredentials(String user, String pass) {
 		MailAPI.username = user;
 		MailAPI.password = pass;
 	}
 
+	/**
+	 * @return
+	 */
 	public Address getFrom1() {
 		return from1;
 	}
@@ -368,74 +443,128 @@ public class MailAPI {
 		this.subj = subj;
 	}
 
+	/**
+	 * @return
+	 */
 	public static String getPassword() {
 		return password;
 	}
 
+	/**
+	 * @param password
+	 */
 	public static void setPassword(String password) {
 		MailAPI.password = password;
 	}
 
+	/**
+	 * @return
+	 */
 	public static String getFrom() {
 		return from;
 	}
 
+	/**
+	 * @param from
+	 */
 	public static void setFrom(String from) {
 		MailAPI.from = from;
 	}
 
+	/**
+	 * @return
+	 */
 	public MailAPI getMail() {
 		return mail;
 	}
 
+	/**
+	 * @param mail
+	 */
 	public void setMail(MailAPI mail) {
 		this.mail = mail;
 	}
 
+	/**
+	 * @return
+	 */
 	public DefaultListModel<String> getListaDeEmails() {
 		return listaDeEmails;
 	}
 
+	/**
+	 * @param listaDeEmails
+	 */
 	public void setListaDeEmails(DefaultListModel<String> listaDeEmails) {
 		this.listaDeEmails = listaDeEmails;
 	}
 
+	/**
+	 * @return
+	 */
 	public DefaultListModel<String> getListaDeProcuraDeEmails() {
 		return listaDeProcuraDeEmails;
 	}
 
+	/**
+	 * @param listaDeProcuraDeEmails
+	 */
 	public void setListaDeProcuraDeEmails(DefaultListModel<String> listaDeProcuraDeEmails) {
 		this.listaDeProcuraDeEmails = listaDeProcuraDeEmails;
 	}
 
+	/**
+	 * @return
+	 */
 	public DefaultListModel<String> getPost_24h() {
 		return post_24h;
 	}
 
+	/**
+	 * @param post_24h
+	 */
 	public void setPost_24h(DefaultListModel<String> post_24h) {
 		this.post_24h = post_24h;
 	}
 
+	/**
+	 * @return
+	 */
 	public String getResult() {
 		return result;
 	}
 
+	/**
+	 * @param result
+	 */
 	public void setResult(String result) {
 		this.result = result;
 	}
 
+	/**
+	 * @return
+	 */
 	public DefaultListModel<String> getEmailsReitor() {
 		return emailsReitor;
 	}
 
+	/**
+	 * @param emailsReitor
+	 */
 	public void setEmailsReitor(DefaultListModel<String> emailsReitor) {
 		this.emailsReitor = emailsReitor;
 	}
 
+	/**
+	 * @return
+	 */
 	public PrintWriter getPw() {
 		return pw;
 	}
 
+	/**
+	 * @param pw
+	 */
 	public void setPw(PrintWriter pw) {
 		this.pw = pw;
 	}

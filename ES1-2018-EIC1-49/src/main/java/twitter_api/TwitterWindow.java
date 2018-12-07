@@ -31,6 +31,10 @@ import menu.App;
 import twitter4j.Status;
 import twitter4j.TwitterException;
 
+/**
+ * @author Antonio
+ *
+ */
 public class TwitterWindow {
 	JFrame frame;
 	private JTextField txtFechar;

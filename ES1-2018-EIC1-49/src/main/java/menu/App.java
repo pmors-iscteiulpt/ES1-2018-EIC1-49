@@ -24,6 +24,12 @@ import mail_api.AuthenticationMailWindow;
 import twitter4j.Status;
 import twitter_api.AuthenticationTwitterWindow;
 
+/**
+ * @author Antonio
+ *
+ */
+
+ 
 public class App extends JFrame {
 
 	private JFrame frame;
@@ -147,6 +153,11 @@ public class App extends JFrame {
 
 	}
 
+	/**
+	 * adicionar popup
+	 * @param component
+	 * @param popup
+	 */
 	private static void addPopup(Component component, final JPopupMenu popup) {
 		component.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {

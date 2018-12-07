@@ -24,6 +24,10 @@ import org.apache.commons.io.FileUtils;
 
 import XML.CreateXML;
 
+/**
+ * @author Antonio
+ *
+ */
 public class bdaAPP extends JFrame {
 
 	private JFrame frame;
@@ -75,7 +79,11 @@ public class bdaAPP extends JFrame {
 
 		JButton btnNewButton = new JButton("Aceder");
 		btnNewButton.setBackground(Color.WHITE);
-		btnNewButton.addActionListener(new ActionListener() {
+		btnNewButton.addActionListener(/**
+		 * @author Pedro
+		 *
+		 */
+		new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
 				if (acessGranted() == true) {
@@ -92,6 +100,10 @@ public class bdaAPP extends JFrame {
 				}
 			}
 
+			/**
+			 * verifica acesso
+			 * @return
+			 */
 			private boolean acessGranted() {
 				String username = String.valueOf(textField.getText());
 
@@ -187,10 +199,16 @@ public class bdaAPP extends JFrame {
 		}
 	}
 	
+	/**
+	 * @return
+	 */
 	public JFrame getFrame() {
 		return frame;
 	}
 
+	/**
+	 * @param frame
+	 */
 	public void setFrame(JFrame frame) {
 		this.frame = frame;
 	}

@@ -40,6 +40,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
+/**
+ * @author Leal
+ *
+ */
 public class facebookAPI {
 	@FXML
 	private TextField username;
@@ -55,6 +59,10 @@ public class facebookAPI {
 	private List<Post> posts = new ArrayList<Post>();
 	private PrintWriter pw;
 
+	/**
+	 * buscar posts
+	 * @throws FileNotFoundException
+	 */
 	public void AuthUser() throws FileNotFoundException {
 
 		if (!connectedToInternet()) {
@@ -82,6 +90,11 @@ public class facebookAPI {
 		}
 	}
 
+	/**
+	 * filtrar por tag
+	 * @param tag
+	 * @throws FileNotFoundException
+	 */
 	public void searchForUserPosts(String tag) throws FileNotFoundException {
 		AuthUser();
 		for (int tweet = 0; tweet < listaPostsFB.size(); tweet++) {
@@ -96,6 +109,9 @@ public class facebookAPI {
 
 	}
 
+	/**
+	 * buscar posts offline
+	 */
 	public void getPostsOffline() {
 		listaPostsFB.clear();
 		try {
@@ -113,6 +129,9 @@ public class facebookAPI {
 	}
 
 
+	/**
+	 * filtar 24h
+	 */
 	public void filtrarUltimas24horas() {
 		Date today = new Date();
 		Long dateInLong = today.getTime();
@@ -127,6 +146,10 @@ public class facebookAPI {
 			post_24h.addElement("::N�o existe nenhum Post nas �ltimas 24h!::");
 	}
 
+	/**
+	 * verifica ligacao à net
+	 * @return
+	 */
 	public boolean connectedToInternet() {
 		Socket sock = new Socket();
 		InetSocketAddress addr = new InetSocketAddress("www.google.com", 80);
@@ -143,26 +166,44 @@ public class facebookAPI {
 		}
 	}
 
+	/**
+	 * @return
+	 */
 	public List<Post> getPosts() {
 		return posts;
 	}
 
+	/**
+	 * @param posts
+	 */
 	public void setPosts(ArrayList<Post> posts) {
 		this.posts = posts;
 	}
 
+	/**
+	 * @return
+	 */
 	public String getAccessToken() {
 		return accessToken;
 	}
 
+	/**
+	 * @param accessToken
+	 */
 	public void setAccessToken(String accessToken) {
 		this.accessToken = accessToken;
 	}
 
+	/**
+	 * @return
+	 */
 	public Post getaPostmew() {
 		return aPostmew;
 	}
 
+	/**
+	 * @param aPostmew
+	 */
 	public void setaPostmew(Post aPostmew) {
 		this.aPostmew = aPostmew;
 	}

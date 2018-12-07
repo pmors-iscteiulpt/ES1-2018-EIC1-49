@@ -22,6 +22,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 
+/**
+ * @author Pedro
+ *
+ */
 public class AuthenticationMailWindow {
 	private JFrame frame;
 	private JTextField textField;
@@ -136,26 +140,44 @@ public class AuthenticationMailWindow {
 		panel.add(lblInicieASesso);
 	}
 
+	/**
+	 * @return
+	 */
 	public JFrame getFrame() {
 		return frame;
 	}
 
+	/**
+	 * @param frame
+	 */
 	public void setFrame(JFrame frame) {
 		this.frame = frame;
 	}
 
+	/**
+	 * @return
+	 */
 	public String getUser() {
 		return user;
 	}
 
+	/**
+	 * @param user
+	 */
 	public void setUser(String user) {
 		this.user = user;
 	}
 
+	/**
+	 * @return
+	 */
 	public String getPass() {
 		return pass;
 	}
 
+	/**
+	 * @param pass
+	 */
 	public void setPass(String pass) {
 		this.pass = pass;
 	}

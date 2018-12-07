@@ -12,6 +12,10 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+/**
+ * @author Pedro
+ *
+ */
 public class PresentationMailWindow {
 
 	private JFrame frame;
@@ -146,10 +150,16 @@ public class PresentationMailWindow {
 				panel.add(fancyShowUser);
 	}
 
+	/**
+	 * @return
+	 */
 	public JFrame getFrame() {
 		return frame;
 	}
 
+	/**
+	 * @param frame
+	 */
 	public void setFrame(JFrame frame) {
 		this.frame = frame;
 	}
