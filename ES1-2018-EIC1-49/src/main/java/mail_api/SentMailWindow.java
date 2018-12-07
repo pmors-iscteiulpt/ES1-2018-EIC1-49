@@ -2,7 +2,6 @@ package mail_api;
 
 import java.awt.Color;
 import java.awt.EventQueue;
-import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -34,15 +33,12 @@ public class SentMailWindow {
 	private PresentationMailWindow pmw;
 	private AuthenticationMailWindow amw;
 	private MailAPI mail = new MailAPI();
-	public String user;
-	public String pass;
 	private JRadioButton rdbtnEmailsEnviadosPelo;
 	private JList<String> list_1;
 	private JTextField textField_1;
-	public String toRespond;
-	public java.util.List<Message> mail2 = mail.message2;
-	public Message[] messages = mail.getMessages();
-	public PopUp_Mail popup;
+	private String toRespond;
+	private Message[] messages = mail.getMessages();
+	private PopUp_Mail popup;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -125,7 +121,7 @@ public class SentMailWindow {
 		rdbtnEmailsEnviadosPelo.setBounds(345, 62, 236, 25);
 		panel.add(rdbtnEmailsEnviadosPelo);
 
-		JRadioButton rdbtnEmailsDirector = new JRadioButton("E-mails enviados pelo director");
+		JRadioButton rdbtnEmailsDirector = new JRadioButton("E-mails enviados pela reitora");
 		rdbtnEmailsDirector.setBackground(Color.ORANGE);
 		rdbtnEmailsDirector.setBounds(345, 87, 236, 25);
 		panel.add(rdbtnEmailsDirector);
@@ -136,9 +132,14 @@ public class SentMailWindow {
 		btnNewButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				pmw = new PresentationMailWindow(null);
-				pmw.getFrame().setVisible(true);
-				frame.setVisible(false);
+				if (!mail.connectedToInternet()) {
+					JOptionPane.showMessageDialog(null, "Precisa de estar online para enviar e-mails");
+				} else {
+
+					pmw = new PresentationMailWindow(null);
+					pmw.getFrame().setVisible(true);
+					frame.setVisible(false);
+				}
 			}
 		});
 		panel.add(btnNewButton);
@@ -170,7 +171,7 @@ public class SentMailWindow {
 				if (rdbtnEmailsEnviadosPelo.isSelected()) {
 					try {
 						mail.getEmail();
-						list_1.setModel(mail.listaDeEmails);
+						list_1.setModel(mail.getListaDeEmails());
 
 					} catch (Exception e1) {
 						e1.printStackTrace();
@@ -180,13 +181,10 @@ public class SentMailWindow {
 				if (rdbtnEmailsDirector.isSelected()) {
 					try {
 						mail.getEmailfromReitora();
-						list_1.setModel(mail.emailsReitor);
-						System.out.println(list_1.isSelectionEmpty());
-
+						list_1.setModel(mail.getEmailsReitor());
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					} catch (Exception e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 				}
@@ -233,7 +231,7 @@ public class SentMailWindow {
 				list_1.clearSelection();
 
 				mail.searchForTagInMailBox(textField_1.getText());
-				list_1.setModel(mail.listaDeProcuraDeEmails);
+				list_1.setModel(mail.getListaDeProcuraDeEmails());
 			}
 		});
 
@@ -245,23 +243,32 @@ public class SentMailWindow {
 					btnResponder.addActionListener(new ActionListener() {
 
 						public void actionPerformed(ActionEvent e) {
-							for (int i = 0; i < mail.listaDeEmails.size(); i++) {
-								if (i == index) {
-									toRespond = mail.listaDeEmails.getElementAt(i);
-									System.out.println(toRespond);
-									pmw = new PresentationMailWindow(toRespond);
-									pmw.getFrame().setVisible(true);
-									frame.setVisible(false);
+							if (rdbtnEmailsEnviadosPelo.isSelected())
+								if (!mail.connectedToInternet()) {
+									JOptionPane.showMessageDialog(null, "N�o � poss�vel enviar e-mails offline");
+								} else {
+									for (int i = 0; i < mail.getListaDeEmails().size(); i++) {
+										if (i == index) {
+											toRespond = mail.getlistaDeEmails().getElementAt(i);
+											System.out.println(toRespond);
+											pmw = new PresentationMailWindow(toRespond);
+											pmw.getFrame().setVisible(true);
+											frame.setVisible(false);
+										}
+									}
 								}
-							}
 							if (rdbtnEmailsDirector.isSelected()) {
-								for (int i = 0; i < mail.emailsReitor.size(); i++) {
-									if (i == index) {
-										toRespond = mail.emailsReitor.getElementAt(i);
-										System.out.println(toRespond);
-										pmw = new PresentationMailWindow(toRespond);
-										pmw.getFrame().setVisible(true);
-										frame.setVisible(false);
+								if (!mail.connectedToInternet()) {
+									JOptionPane.showMessageDialog(null, "N�o � poss�vel enviar e-mails offline");
+								} else {
+									for (int i = 0; i < mail.getEmailsReitor().size(); i++) {
+										if (i == index) {
+											toRespond = mail.getEmailsReitor().getElementAt(i);
+											System.out.println(toRespond);
+											pmw = new PresentationMailWindow(toRespond);
+											pmw.getFrame().setVisible(true);
+											frame.setVisible(false);
+										}
 									}
 								}
 							}
@@ -298,54 +305,55 @@ public class SentMailWindow {
 				} catch (MessagingException e1) {
 					e1.printStackTrace();
 				}
-				list_1.setModel(mail.post_24h);
+				list_1.setModel(mail.getPost_24h());
 			}
 		});
 
 		list_1.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent evt) {
 				int index = list_1.getSelectedIndex();
-
 				if (evt.getClickCount() == 2) {
-					String from = mail.getUsername();
-					String password = mail.getPass();
-
-					try {
-						Properties properties = new Properties();
-						properties.put("mail.pop3.host", "outlook.office365.com");
-						properties.put("mail.pop3.port", "995");
-						properties.put("mail.pop3s.ssl.trust", "*"); // This is the most IMP property
-
-						Session emailSession = Session.getDefaultInstance(properties);
-						Store store = emailSession.getStore("pop3s"); // try imap or impas
-						store.connect("outlook.office365.com", from, password);
-						Folder emailFolder = store.getFolder("INBOX");
-						emailFolder.open(Folder.READ_ONLY);
-						messages = emailFolder.getMessages();
-
-						for (int i = 0; i < (messages.length + 60) - messages.length; i++) {
-
-							Message message = messages[i];
-							if (index == i) {
-
-								String message_show = mail.getTextFromMessage(message);
-								popup = new PopUp_Mail();
-								popup.getLblTweetDe().setText(message.getFrom()[0].toString());
-								popup.getTextArea().setText(message_show);
-								popup.getLblData().setText(message.getSentDate().toString());
-								popup.getFrame().setVisible(true);
-								popup.getTextArea().setLineWrap(true);
-								popup.getTextArea().setWrapStyleWord(true);
+					if (!mail.connectedToInternet()) {
+						JOptionPane.showMessageDialog(null, "Precisa de estar online para ver conte�do do e-mail");
+					} else {
+						String from = mail.getUsername();
+						String password = mail.getPass();
+						try {
+							Properties properties = new Properties();
+							properties.put("mail.pop3.host", "outlook.office365.com");
+							properties.put("mail.pop3.port", "995");
+							properties.put("mail.pop3s.ssl.trust", "*"); // This is the most IMP property
+							Session emailSession = Session.getDefaultInstance(properties);
+							Store store = emailSession.getStore("pop3s"); // try imap or impas
+							store.connect("outlook.office365.com", from, password);
+							Folder emailFolder = store.getFolder("INBOX");
+							emailFolder.open(Folder.READ_ONLY);
+							messages = emailFolder.getMessages();
+							for (int i = 0; i < mail.getlistaDeEmails().size(); i++) {
+									if (index == i) {
+										popup = new PopUp_Mail();
+										popup.getTextArea().setText(mail.getlistaDeEmails().get(i));
+										popup.getFrame().setVisible(true);
+										popup.getTextArea().setLineWrap(true);
+										popup.getTextArea().setWrapStyleWord(true);
+									}
 							}
+							for (int j = 0; j < mail.getEmailsReitor().size(); j++) {
+									if(index == j) {
+										popup = new PopUp_Mail();
+										popup.getTextArea().setText(mail.getEmailsReitor().get(j));
+										popup.getFrame().setVisible(true);
+										popup.getTextArea().setLineWrap(true);
+										popup.getTextArea().setWrapStyleWord(true);
+								}
+							}
+							emailFolder.close(false);
+							store.close();
+						} catch (NoSuchProviderException nspe) {
+							nspe.printStackTrace();
+						} catch (MessagingException me) {
+							me.printStackTrace();
 						}
-						emailFolder.close(false);
-						store.close();
-					} catch (NoSuchProviderException nspe) {
-						nspe.printStackTrace();
-					} catch (MessagingException me) {
-						me.printStackTrace();
-					} catch (IOException e) {
-						e.printStackTrace();
 					}
 				}
 			}

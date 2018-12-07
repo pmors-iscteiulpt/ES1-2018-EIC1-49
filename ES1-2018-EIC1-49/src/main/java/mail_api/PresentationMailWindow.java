@@ -27,10 +27,6 @@ public class PresentationMailWindow {
 	private JTextField subject;
 	private SentMailWindow smw;
 	
-	/**
-	 * Launch the application.
-	 * @wbp.parser.entryPoint
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -43,19 +39,10 @@ public class PresentationMailWindow {
 			}
 		});
 	}
-
-	/**
-	 * Create the application.
-	 * @wbp.parser.entryPoint
-	 */
 	public PresentationMailWindow(String toRespond) {
 		initialize(toRespond);
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 * @wbp.parser.entryPoint
-	 */
 	private void initialize(String toRespond) {
 		frame = new JFrame();
 		frame.setBounds(250, 250, 777, 501);
@@ -139,9 +126,11 @@ public class PresentationMailWindow {
 				sendTo.setBounds(84, 13, 116, 22);
 				panel_2.add(sendTo);
 				sendTo.setColumns(10);
+				if(toRespond !=null) {
 				String [] v = toRespond.split("<");
 				String [] c = v[v.length-1].split(">");
 				sendTo.setText(c[0]);
+				}
 				
 				subject = new JTextField();
 				subject.setBounds(84, 48, 116, 22);

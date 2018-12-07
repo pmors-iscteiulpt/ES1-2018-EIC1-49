@@ -1,12 +1,15 @@
 package mail_api;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
+import java.util.Scanner;
 
 import javax.mail.Address;
 import javax.mail.BodyPart;
@@ -21,183 +24,157 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.swing.DefaultListModel;
-import javax.swing.JOptionPane;
 
 public class MailAPI {
 	private static String username;
 	private static String password;
 	private static String from;
 	private static String pass;
-	MailAPI mail;
+	private MailAPI mail;
 	private Address from1;
 	private String subj;
-	public DefaultListModel<String> listaDeEmails = new DefaultListModel<String>();
-	public DefaultListModel<String> listaDeProcuraDeEmails = new DefaultListModel<String>();
-	public DefaultListModel<String> post_24h = new DefaultListModel<String>();
+	private DefaultListModel<String> listaDeEmails = new DefaultListModel<String>();
+	private DefaultListModel<String> listaDeProcuraDeEmails = new DefaultListModel<String>();
+	private DefaultListModel<String> post_24h = new DefaultListModel<String>();
 	private String result;
 	protected List<Message> message2 = new ArrayList<Message>();
 	private Message[] messages;
-	public DefaultListModel<String> emailsReitor = new DefaultListModel<String>();
+	private DefaultListModel<String> emailsReitor = new DefaultListModel<String>();
+	private String Content;
 
-	public static void main(String[] args) {
-	}
-
-	public Message[] getMessages() {
-		return messages;
-	}
-
-	public void setMessages(Message[] messages) {
-		this.messages = messages;
-	}
-
-	/**
-	 * @return the listaDeEmails
-	 */
-	public DefaultListModel<String> getlistaDeEmails() {
-		return listaDeEmails;
-	}
-
-	/**
-	 * @param listaDeEmails the listaDeEmails to set
-	 */
-	public void setlistaDeEmails(DefaultListModel<String> listaDeEmails) {
-		this.listaDeEmails = listaDeEmails;
-	}
-
-	public void getMailCredentials(String user, String pass) {
-		MailAPI.username = user;
-		MailAPI.password = pass;
-	}
+	private PrintWriter pw;
 
 	public void getEmailfromReitora() throws Exception {
 
-		mail = new MailAPI();
+		if (!connectedToInternet()) {
+			getEmailsReitoraOffline();
+		} else {
+			mail = new MailAPI();
+			from = mail.getUsername();
+			pass = mail.getPass();
 
-		from = mail.getUsername();
-		pass = mail.getPass();
+			try {
+				Properties properties = new Properties();
+				properties.put("mail.pop3.host", "outlook.office365.com");
+				properties.put("mail.pop3.port", "995");
+				properties.put("mail.pop3s.ssl.trust", "*"); // This is the most IMP property
+				Session emailSession = Session.getInstance(properties);
+				Store store = emailSession.getStore("pop3s"); // try imap or impas
+				store.connect("outlook.office365.com", from, password);
+				Folder emailFolder = store.getFolder("INBOX");
+				emailFolder.open(Folder.READ_ONLY);
+				Message[] messages = emailFolder.getMessages();
+				pw = new PrintWriter(new File(
+						"C:\\Users\\Pedro\\git\\ES1-2018-EIC1-49\\ES1-2018-EIC1-49\\src\\main\\java\\mail_api\\emailsReitora.txt"));
+				emailsReitor.clear();
+				for (int i = 0; i < (messages.length + 60) - messages.length; i++) {
+					Message message = messages[i];
+					if (message.getFrom()[0].toString().contains("reitor@iscte-iul.pt")) {
+						String result;
+						result = getTextFromMessage(message);
+						from1 = message.getFrom()[0];
+						subj = message.getSubject();
+						if (message != null) {
 
-		try {
-			Properties properties = new Properties();
-
-			properties.put("mail.pop3.host", "outlook.office365.com");
-			properties.put("mail.pop3.port", "995");
-			properties.put("mail.pop3s.ssl.trust", "*"); // This is the most IMP property
-
-			Session emailSession = Session.getInstance(properties);
-
-			// create the POP3 store object and connect with the pop server
-
-			Store store = emailSession.getStore("pop3s"); // try imap or impas
-			store.connect("outlook.office365.com", from, password);
-
-			// create the folder object and open it
-			Folder emailFolder = store.getFolder("INBOX");
-			emailFolder.open(Folder.READ_ONLY);
-
-			// retrieve the messages from the folder in an array and print it
-			Message[] messages = emailFolder.getMessages();
-
-			for (int i = 0; i < (messages.length + 60) - messages.length; i++) {
-
-				Message message = messages[i];
-				if (message.getFrom()[0].toString().contains("reitor@iscte-iul.pt")) {
-					String result;
-					result = getTextFromMessage(message);
-					from1 = message.getFrom()[0];
-					subj = message.getSubject();
-
-					if (message != null) {
-						System.out.println("FROM: " + from1 + "        " + "SUBJECT: " + subj + " ");
-						emailsReitor.addElement("FROM: " + from1 + "        " + "SUBJECT: " + subj + " ");
-
+							emailsReitor.addElement(
+									"FROM: " + from1 + "        " + "SUBJECT: " + subj + "Message: " + result);
+							pw.println("FROM: " + from1 + "        " + "SUBJECT: " + subj);
+						}
 					}
 				}
+				pw.close();
+				emailFolder.close(false);
+				store.close();
+			} catch (NoSuchProviderException nspe) {
+				nspe.printStackTrace();
+			} catch (MessagingException me) {
+				me.printStackTrace();
 			}
-			emailFolder.close(false);
-			store.close();
-		} catch (NoSuchProviderException nspe) {
-			nspe.printStackTrace();
-		} catch (MessagingException me) {
-			me.printStackTrace();
+		}
+	}
+
+	private void getEmailsReitoraOffline() {
+		emailsReitor.clear();
+		try {
+			Scanner scanner = new Scanner(new File(
+					"C:\\Users\\Asus\\git\\ES1-2018-EIC1-49\\ES1-2018-EIC1-49\\src\\main\\java\\mail_api\\emailsReitora.txt"));
+			while (scanner.hasNextLine()) {
+				String aux = scanner.nextLine();
+				emailsReitor.addElement(aux);
+			}
+			scanner.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
 	public void getEmail() throws Exception {
 		mail = new MailAPI();
-
 		from = mail.getUsername();
 		pass = mail.getPass();
+		if (!connectedToInternet()) {
+			getEmailsOffline();
+		} else {
+			try {
+				Properties properties = new Properties();
+				properties.put("mail.pop3.host", "outlook.office365.com");
+				properties.put("mail.pop3.port", "995");
+				properties.put("mail.pop3s.ssl.trust", "*");
+				Session emailSession = Session.getInstance(properties);
+				Store store = emailSession.getStore("pop3s");
+				store.connect("outlook.office365.com", from, pass);
+				Folder emailFolder = store.getFolder("INBOX");
+				emailFolder.open(Folder.READ_ONLY);
+				messages = emailFolder.getMessages();
+				pw = new PrintWriter(new File(
+						"C:\\Users\\Pedro\\git\\ES1-2018-EIC1-49\\ES1-2018-EIC1-49\\src\\main\\java\\mail_api\\emails.txt"));
 
-		try {
-			Properties properties = new Properties();
-
-			properties.put("mail.pop3.host", "outlook.office365.com");
-			properties.put("mail.pop3.port", "995");
-			properties.put("mail.pop3s.ssl.trust", "*"); // This is the most IMP property
-
-			Session emailSession = Session.getInstance(properties);
-
-			// create the POP3 store object and connect with the pop server
-
-			Store store = emailSession.getStore("pop3s"); // try imap or impas
-			store.connect("outlook.office365.com", from, password);
-
-			// create the folder object and open it
-			Folder emailFolder = store.getFolder("INBOX");
-			emailFolder.open(Folder.READ_ONLY);
-
-			// retrieve the messages from the folder in an array and print it
-			messages = emailFolder.getMessages();
-
-			for (int i = 0; i < (messages.length + 60) - messages.length; i++) {
-
-				Message message = messages[i];
-				if (message.getFrom()[0].toString().contains("iscte-iul.pt")) {
-					from1 = message.getFrom()[0];
-					subj = message.getSubject();
-					System.out.println(from1);
-					System.out.println(subj);
-					if (message != null) {
-
-						listaDeEmails.addElement("FROM: " + from1 + "        " + "SUBJECT: " + subj);
+				listaDeEmails.clear();
+				for (int i = 0; i < (messages.length + 60) - messages.length; i++) {
+					Message message = messages[i];
+					if (message.getFrom()[0].toString().contains("iscte-iul.pt")) {
+						String result;
+						result = getTextFromMessage(message);
+						from1 = message.getFrom()[0];
+						subj = message.getSubject();
+						Content = mail.getTextFromMessage(message);
+						System.out.println(from1);
+						System.out.println(subj);
+						if (message != null) {
+							listaDeEmails.addElement(
+									"FROM: " + from1 + "        " + "SUBJECT: " + subj + "Message: " + result);
+							pw.println("FROM: " + from1 + "        " + "SUBJECT: " + subj);
+						}
 					}
 				}
+				pw.close();
+				emailFolder.close(false);
+				store.close();
+			} catch (NoSuchProviderException nspe) {
+				nspe.printStackTrace();
+			} catch (MessagingException me) {
+				me.printStackTrace();
 			}
-			emailFolder.close(false);
-			store.close();
-		} catch (NoSuchProviderException nspe) {
-			nspe.printStackTrace();
-		} catch (MessagingException me) {
-			me.printStackTrace();
 		}
 	}
 
-	/**
-	 * @return the from1
-	 */
-	public Address getFrom1() {
-		return from1;
-	}
+	private void getEmailsOffline() {
+		listaDeEmails.clear();
+		try {
+			Scanner scanner = new Scanner(new File(
+					"C:\\Users\\Asus\\git\\ES1-2018-EIC1-49\\ES1-2018-EIC1-49\\src\\main\\java\\mail_api\\emailsReitora.txt"));
+			while (scanner.hasNextLine()) {
+				String aux = scanner.nextLine();
+				listaDeEmails.addElement(aux);
+			}
+			scanner.close();
 
-	/**
-	 * @param from1 the from1 to set
-	 */
-	public void setFrom1(Address from1) {
-		this.from1 = from1;
-	}
+		} catch (
 
-	/**
-	 * @return the subj
-	 */
-	public String getSubj() {
-		return subj;
-	}
-
-	/**
-	 * @param subj the subj to set
-	 */
-	public void setSubj(String subj) {
-		this.subj = subj;
+		Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void sendEmail(String address, String subject, String message) throws Exception {
@@ -267,22 +244,6 @@ public class MailAPI {
 		return result;
 	}
 
-	public String getPass() {
-		return password;
-	}
-
-	public void setPass(String pass) {
-		this.password = pass;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public static void setUsername(String username) {
-		MailAPI.username = username;
-	}
-
 	public void searchForTagInMailBox(String tag) {
 		listaDeProcuraDeEmails.clear();
 		for (int tweet = 0; tweet < listaDeEmails.size(); tweet++) {
@@ -296,7 +257,7 @@ public class MailAPI {
 		}
 	}
 
-	public void showListMailsDirector() throws Exception {
+	public void showListMailsReitora() throws Exception {
 		listaDeProcuraDeEmails.clear();
 		String mailDaReitora = "<reitora@iscte-iul.pt>";
 		for (int tweet = 0; tweet < listaDeEmails.size(); tweet++) {
@@ -310,53 +271,6 @@ public class MailAPI {
 		}
 	}
 
-	public void showListMailsISCTE() throws IOException {
-		from = mail.getUsername();
-		pass = mail.getPass();
-
-		try {
-			Properties properties = new Properties();
-
-			properties.put("mail.pop3.host", "outlook.office365.com");
-			properties.put("mail.pop3.port", "995");
-			properties.put("mail.pop3s.ssl.trust", "*"); // This is the most IMP property
-
-			Session emailSession = Session.getInstance(properties);
-
-			// create the POP3 store object and connect with the pop server
-
-			Store store = emailSession.getStore("pop3s"); // try imap or impas
-			store.connect("outlook.office365.com", from, password);
-
-			// create the folder object and open it
-			Folder emailFolder = store.getFolder("INBOX");
-			emailFolder.open(Folder.READ_ONLY);
-
-			// retrieve the messages from the folder in an array and print it
-			Message[] messages = emailFolder.getMessages();
-
-			for (int i = 0; i < (messages.length + 60) - messages.length; i++) {
-				Message message = messages[i];
-				if (message.getSubject().toString().contains("ISCTE-IUL")) {
-
-					result = getTextFromMessage(message);
-					System.out.println("From: " + message.getFrom()[0]);
-					from1 = message.getFrom()[0];
-					subj = message.getSubject();
-					if (message != null) {
-						listaDeEmails.addElement("FROM: " + from1 + "        " + "SUBJECT: " + subj);
-					}
-				}
-			}
-			emailFolder.close(false);
-			store.close();
-		} catch (NoSuchProviderException nspe) {
-			nspe.printStackTrace();
-		} catch (MessagingException me) {
-			me.printStackTrace();
-		}
-	}
-
 	public List<Message> getMessage2() {
 		return message2;
 	}
@@ -365,11 +279,9 @@ public class MailAPI {
 		this.message2 = message2;
 	}
 
-	public boolean conectedToInternet() {
-
+	public boolean connectedToInternet() {
 		Socket sock = new Socket();
 		InetSocketAddress addr = new InetSocketAddress("www.google.com", 80);
-
 		try {
 			sock.connect(addr, 3000);
 			return true;
@@ -397,4 +309,141 @@ public class MailAPI {
 		if (post_24h.isEmpty())
 			post_24h.addElement("::N�o existe nenhum mail nas �ltimas 24h!::");
 	}
+
+	public String getPass() {
+		return password;
+	}
+
+	public void setPass(String pass) {
+		this.password = pass;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public static void setUsername(String username) {
+		MailAPI.username = username;
+	}
+
+	public Message[] getMessages() {
+		return messages;
+	}
+
+	public void setMessages(Message[] messages) {
+		this.messages = messages;
+	}
+
+	public DefaultListModel<String> getlistaDeEmails() {
+		return listaDeEmails;
+	}
+
+	public void setlistaDeEmails(DefaultListModel<String> listaDeEmails) {
+		this.listaDeEmails = listaDeEmails;
+	}
+
+	public void getMailCredentials(String user, String pass) {
+		MailAPI.username = user;
+		MailAPI.password = pass;
+	}
+
+	public Address getFrom1() {
+		return from1;
+	}
+
+	/**
+	 * @param from1
+	 *            the from1 to set
+	 */
+	public void setFrom1(Address from1) {
+		this.from1 = from1;
+	}
+
+	/**
+	 * @return the subj
+	 */
+	public String getSubj() {
+		return subj;
+	}
+
+	/**
+	 * @param subj
+	 *            the subj to set
+	 */
+	public void setSubj(String subj) {
+		this.subj = subj;
+	}
+
+	public static String getPassword() {
+		return password;
+	}
+
+	public static void setPassword(String password) {
+		MailAPI.password = password;
+	}
+
+	public static String getFrom() {
+		return from;
+	}
+
+	public static void setFrom(String from) {
+		MailAPI.from = from;
+	}
+
+	public MailAPI getMail() {
+		return mail;
+	}
+
+	public void setMail(MailAPI mail) {
+		this.mail = mail;
+	}
+
+	public DefaultListModel<String> getListaDeEmails() {
+		return listaDeEmails;
+	}
+
+	public void setListaDeEmails(DefaultListModel<String> listaDeEmails) {
+		this.listaDeEmails = listaDeEmails;
+	}
+
+	public DefaultListModel<String> getListaDeProcuraDeEmails() {
+		return listaDeProcuraDeEmails;
+	}
+
+	public void setListaDeProcuraDeEmails(DefaultListModel<String> listaDeProcuraDeEmails) {
+		this.listaDeProcuraDeEmails = listaDeProcuraDeEmails;
+	}
+
+	public DefaultListModel<String> getPost_24h() {
+		return post_24h;
+	}
+
+	public void setPost_24h(DefaultListModel<String> post_24h) {
+		this.post_24h = post_24h;
+	}
+
+	public String getResult() {
+		return result;
+	}
+
+	public void setResult(String result) {
+		this.result = result;
+	}
+
+	public DefaultListModel<String> getEmailsReitor() {
+		return emailsReitor;
+	}
+
+	public void setEmailsReitor(DefaultListModel<String> emailsReitor) {
+		this.emailsReitor = emailsReitor;
+	}
+
+	public PrintWriter getPw() {
+		return pw;
+	}
+
+	public void setPw(PrintWriter pw) {
+		this.pw = pw;
+	}
+
 }

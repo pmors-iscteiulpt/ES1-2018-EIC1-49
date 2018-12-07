@@ -1,4 +1,4 @@
-package ES1_2018_EIC1_49.EIC1_49;
+package menu;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JToggleButton;
 
+import XML.CreateXML;
 import facebook_api.AuthenticationFacebookWindow;
 import mail_api.AuthenticationMailWindow;
 import twitter4j.Status;

@@ -1,8 +1,10 @@
 package mail_api;
 
 import java.awt.Color;
-import ES1_2018_EIC1_49.EIC1_49.*;
+
+import XML.CreateXML;
 import mail_api.MailAPI;
+import menu.App;
 
 import java.awt.EventQueue;
 
@@ -24,8 +26,8 @@ public class AuthenticationMailWindow {
 	private JFrame frame;
 	private JTextField textField;
 	private JPasswordField passwordField;
-	public String user;
-	public String pass;
+	private String user;
+	private String pass;
 	private MailAPI mail = new MailAPI();
 	private SentMailWindow smw = new SentMailWindow();
 	private App app;

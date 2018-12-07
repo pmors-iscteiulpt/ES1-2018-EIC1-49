@@ -11,6 +11,12 @@ import com.restfb.types.Page;
 import com.restfb.types.FacebookType;
 import com.restfb.types.Post;
 import com.restfb.types.User;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.net.InetSocketAddress;
+import java.net.Socket;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -18,6 +24,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Scanner;
 
 import javax.swing.DefaultListModel;
 
@@ -40,78 +47,41 @@ public class facebookAPI {
 	@FXML
 	private Post aPostmew;
 	private PasswordField password;
-	private String accessToken = "EAAEZBg2PIN94BACKtNtDCZBfNFPFlpsgdKSEpHOQWWtmdujQZAZBvgGzNk3JQDqe5jAQ7viszVoZCjGz0BjjK21fBc71rCmPC19zlMPpjLE2hHO2rpq7wZBfJBlXenmpyGraHRb9O1pZBMQ9erbDGDTF6C8sZBfStUGIA4maEFrGZBK7FG4EzPen2KTeZCmWUu8TUVhPtLbXDZCmwZDZD";
+	private String accessToken = "EAAEZBg2PIN94BAPt4Fydip95mT6fUAZCVcZCELgrpXV86hzB7uVQHyIHpF4sjXcDRPkkadrqr56rrOjpoj5pNUqv6oVhIdfNb5h0X208EgJ2I9OqU0UnKekmPa8lHgOZCU79pHODTgmYKV2eZArlRhfyNZA6ZAXyotrHdJJkTP2RmbicMJmVJVL6dTMKZCKKzrPlgyNwQERKqgZDZD";
 	DefaultListModel<String> listaPostsFB = new DefaultListModel<String>();
-
 	DefaultListModel<String> listaForSearchPostsFB = new DefaultListModel<String>();
 	DefaultListModel<String> post_24h = new DefaultListModel<String>();
-	private ArrayList<Post> posts;
+	private List<Post> posts = new ArrayList<Post>();
+	private PrintWriter pw;
 
-	public void AuthUser() {
+	public void AuthUser() throws FileNotFoundException {
 
-		FacebookClient fbClient = new DefaultFacebookClient(accessToken);
-		Connection<Post> result = fbClient.fetchConnection("me/feed", Post.class);
-
-		posts = new ArrayList<Post>();
-		int cont = 0;
-		for (List<Post> page : result) {
-			for (Post aPost : page) {
-				if (aPost.getMessage() != null) {
-
-					posts.add(aPost);
-					cont++;
-					listaPostsFB.addElement(aPost.getCreatedTime() + " - " + aPost.getMessage());
+		if (!connectedToInternet()) {
+			getPostsOffline();
+		} else {
+			FacebookClient fbClient = new DefaultFacebookClient(accessToken);
+			Connection<Post> result = fbClient.fetchConnection("me/feed", Post.class);
+			listaPostsFB.clear();
+			posts = new ArrayList<Post>();
+			int cont = 0;
+			pw = new PrintWriter(new File(
+					"C:\\Users\\Asus\\git\\ES1-2018-EIC1-49\\ES1-2018-EIC1-49\\src\\main\\java\\mail_api\\emailsReitora.txt"));
+			listaPostsFB.clear();
+			for (List<Post> page : result) {
+				for (Post aPost : page) {
+					if (aPost.getMessage() != null) {
+						posts.add(aPost);
+						cont++;
+						listaPostsFB.addElement(aPost.getCreatedTime() + " - " + aPost.getMessage());
+						pw.println(aPost.getCreatedTime() + " - " + aPost.getMessage());
+					}
 				}
 			}
+			pw.close();
 		}
-
-		System.out.println(cont);
-		// driver.quit();
 	}
 
-	/**
-	 * @return the posts
-	 */
-	public ArrayList<Post> getPosts() {
-		return posts;
-	}
-
-	/**
-	 * @param posts the posts to set
-	 */
-	public void setPosts(ArrayList<Post> posts) {
-		this.posts = posts;
-	}
-
-	/**
-	 * @return the accessToken
-	 */
-	public String getAccessToken() {
-		return accessToken;
-	}
-
-	/**
-	 * @param accessToken the accessToken to set
-	 */
-	public void setAccessToken(String accessToken) {
-		this.accessToken = accessToken;
-	}
-
-	/**
-	 * @return the aPostmew
-	 */
-	public Post getaPostmew() {
-		return aPostmew;
-	}
-
-	/**
-	 * @param aPostmew the aPostmew to set
-	 */
-	public void setaPostmew(Post aPostmew) {
-		this.aPostmew = aPostmew;
-	}
-
-	public void searchForUserPosts(String tag) {
+	public void searchForUserPosts(String tag) throws FileNotFoundException {
 		AuthUser();
 		for (int tweet = 0; tweet < listaPostsFB.size(); tweet++) {
 			String element = listaPostsFB.getElementAt(tweet);
@@ -122,7 +92,23 @@ public class facebookAPI {
 				}
 			}
 		}
-		
+
+	}
+
+	public void getPostsOffline() {
+		listaPostsFB.clear();
+		try {
+			Scanner scanner = new Scanner(new File(
+					"C:\\Users\\Asus\\git\\ES1-2018-EIC1-49\\ES1-2018-EIC1-49\\src\\main\\java\\mail_api\\emailsReitora.txt"));
+			while (scanner.hasNextLine()) {
+				String aux = scanner.nextLine();
+				listaPostsFB.addElement(aux);
+			}
+			scanner.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void post(String text_to_post) {
@@ -138,18 +124,55 @@ public class facebookAPI {
 	public void filtrarUltimas24horas() {
 		Date today = new Date();
 		Long dateInLong = today.getTime();
-		for (int post = 0; post < listaPostsFB.size(); post++) {
+		for (int post = 0; post < posts.size(); post++) {
 			String element = listaPostsFB.getElementAt(post);
-			String[] partes = element.split(" ");
-			int last_index = partes.length - 1;
-			Long millie = Long.parseLong(partes[last_index]);
+			Long millie = posts.get(post).getCreatedTime().getTime();
 			Long periodo_24 = dateInLong - 86400000;
-			// ultimas 24horas
 			if (millie >= periodo_24)
 				post_24h.addElement(element);
 		}
 		if (post_24h.isEmpty())
-			post_24h.addElement("::Não existe nenhum Post nas últimas 24h!::");
+			post_24h.addElement("::N�o existe nenhum Post nas �ltimas 24h!::");
+	}
+
+	public boolean connectedToInternet() {
+		Socket sock = new Socket();
+		InetSocketAddress addr = new InetSocketAddress("www.google.com", 80);
+		try {
+			sock.connect(addr, 3000);
+			return true;
+		} catch (Exception e) {
+			return false;
+		} finally {
+			try {
+				sock.close();
+			} catch (Exception e) {
+			}
+		}
+	}
+
+	public List<Post> getPosts() {
+		return posts;
+	}
+
+	public void setPosts(ArrayList<Post> posts) {
+		this.posts = posts;
+	}
+
+	public String getAccessToken() {
+		return accessToken;
+	}
+
+	public void setAccessToken(String accessToken) {
+		this.accessToken = accessToken;
+	}
+
+	public Post getaPostmew() {
+		return aPostmew;
+	}
+
+	public void setaPostmew(Post aPostmew) {
+		this.aPostmew = aPostmew;
 	}
 
 }

@@ -1,4 +1,4 @@
-package ES1_2018_EIC1_49.EIC1_49;
+package XML;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -11,8 +11,11 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
+import menu.Utilizador;
+import menu.Utilizadores;
+
 public class CreateXML {
-	private String filepath = "C:\\Users\\Pedro\\git\\ES1-2018-EIC1-49\\ES1-2018-EIC1-49\\src\\main\\java\\XML\\";
+	private String filepath = "C:\\Users\\Asus\\git\\ES1-2018-EIC1-49\\ES1-2018-EIC1-49\\src\\main\\java\\XML\\";
 	private File xmlFile = new File(filepath + "config.xml");
 //	private bdaAPP bdaapp = new bdaAPP();
 

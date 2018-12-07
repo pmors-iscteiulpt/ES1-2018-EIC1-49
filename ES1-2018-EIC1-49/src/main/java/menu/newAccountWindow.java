@@ -1,4 +1,4 @@
-package ES1_2018_EIC1_49.EIC1_49;
+package menu;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -9,6 +9,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
+import XML.CreateXML;
 
 public class newAccountWindow {
 

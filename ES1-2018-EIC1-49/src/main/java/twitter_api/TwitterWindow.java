@@ -24,8 +24,8 @@ import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.ListSelectionModel;
 
-import ES1_2018_EIC1_49.EIC1_49.App;
 import mail_api.PopUp_Mail;
+import menu.App;
 import twitter4j.Status;
 import twitter4j.TwitterException;
 
@@ -35,14 +35,15 @@ public class TwitterWindow {
 	private JTextField txtFechar;
 	private JList<String> list_1;
 	private JScrollPane scrollPane;
-	twitterAPI twitterAPI = new twitterAPI();
+	private twitterAPI twitterAPI = new twitterAPI();
 	private JTextField textField;
-	public static List<Status> status;
+	private List<Status> status;
 	private long statusId;
 	private twitterAPI signin;
 	private App app;
 	private JTextField textField_1;
 	private PopUp_Twitter popup;
+	private DataBaseTwitter data;
 
 	/**
 	 * Launch the application.
@@ -68,16 +69,14 @@ public class TwitterWindow {
 	}
 
 	/**
-	 * @param frame the frame to set
+	 * @param frame
+	 *            the frame to set
 	 */
 	public void setFrame(JFrame frame) {
 		this.frame = frame;
 	}
 
-	/**
-	 * Create the application.
-	 */
-	public TwitterWindow() {
+	public TwitterWindow() throws IllegalStateException, FileNotFoundException {
 		try {
 			initialize();
 		} catch (TwitterException e) {
@@ -86,10 +85,7 @@ public class TwitterWindow {
 		}
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() throws TwitterException {
+	private void initialize() throws TwitterException, IllegalStateException, FileNotFoundException {
 		frame = new JFrame();
 		frame.setBounds(500, 500, 800, 500);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -137,6 +133,9 @@ public class TwitterWindow {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				} catch (UnsupportedEncodingException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IllegalStateException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
@@ -199,7 +198,7 @@ public class TwitterWindow {
 			public void actionPerformed(ActionEvent e) {
 				twitterAPI.searchForTagInISCTETimeLine(textField_1.getText());
 				list_1.clearSelection();
-				list_1.setModel(twitterAPI.searchTagList);
+				list_1.setModel(twitterAPI.getSearchTagList());
 			}
 		});
 
@@ -252,10 +251,10 @@ public class TwitterWindow {
 		number_followers.setBounds(124, 30, 85, 29);
 		panel_4.add(number_followers);
 
-		JLabel numero_following = new JLabel(twitterAPI.getNumberFollowing());
-		numero_following.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		numero_following.setBounds(34, 30, 78, 29);
-		panel_4.add(numero_following);
+		JLabel number_following = new JLabel(twitterAPI.getNumberFollowing());
+		number_following.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		number_following.setBounds(34, 30, 78, 29);
+		panel_4.add(number_following);
 
 		JPanel panel_5 = new JPanel();
 		panel_5.setBackground(Color.LIGHT_GRAY);
@@ -287,7 +286,7 @@ public class TwitterWindow {
 		btnFollowing.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				list_1.clearSelection();
-				list_1.setModel(twitterAPI.followingList);
+				list_1.setModel(twitterAPI.getFollowingList());
 				panel_3.setVisible(false);
 				panel_2.setVisible(false);
 			}
@@ -295,23 +294,29 @@ public class TwitterWindow {
 		btnFollowers.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				list_1.clearSelection();
-				list_1.setModel(twitterAPI.followersList);
+				list_1.setModel(twitterAPI.getFollowersList());
 				panel_3.setVisible(false);
 				panel_2.setVisible(false);
 			}
 		});
 
 		list_1.addMouseListener(new MouseAdapter() {
+
 			public void mouseClicked(MouseEvent evt) {
-				status = twitterAPI.getStatus();
 				int index = list_1.getSelectedIndex();
-				if (evt.getClickCount() == 1) {
-					panel_2.setVisible(true);
-					for (int i = 0; i < status.size(); i++) {
-						if (i == index)
-							statusId = status.get(i).getId();
+				if (!twitterAPI.connectedToInternet()) {
+					JOptionPane.showMessageDialog(null, "Não pode retweetar offline");
+					System.out.println("Não pode retweetar offline");
+				} else {
+					if (evt.getClickCount() == 1) {
+						panel_2.setVisible(true);
+						for (int i = 0; i < status.size(); i++) {
+							if (i == index)
+								statusId = status.get(i).getId();
+						}
 					}
 				}
+
 				if (evt.getClickCount() == 2) {
 					for (int i = 0; i < status.size(); i++) {
 						if (index == i) {
@@ -327,6 +332,12 @@ public class TwitterWindow {
 					}
 				}
 			}
+
 		});
+	}
+
+	@Override
+	public String toString() {
+		return super.toString();
 	}
 }

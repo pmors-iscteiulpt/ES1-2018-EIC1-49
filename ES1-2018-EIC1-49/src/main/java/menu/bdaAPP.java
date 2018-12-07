@@ -1,4 +1,4 @@
-package ES1_2018_EIC1_49.EIC1_49;
+package menu;
 
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -21,6 +21,8 @@ import javax.swing.JTextField;
 import javax.swing.plaf.OptionPaneUI;
 
 import org.apache.commons.io.FileUtils;
+
+import XML.CreateXML;
 
 public class bdaAPP extends JFrame {
 
