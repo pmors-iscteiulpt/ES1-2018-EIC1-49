@@ -30,8 +30,6 @@ public class twitterAPI {
 	public DefaultListModel<String> followingList = new DefaultListModel<String>();
 	public DefaultListModel<String> post_24h = new DefaultListModel<String>();
 
-
-	
 	public int numero_followers;
 	public int numero_following;
 
@@ -69,6 +67,12 @@ public class twitterAPI {
 	public static void setStatus(List<Status> status) {
 		twitterAPI.status = status;
 	}
+
+	/**
+	 * Funcao que faz login no Twitter atravez dos tokens da API do twitter
+	 * 
+	 * @author Daniel Leal
+	 */
 
 	public void logIn() throws URISyntaxException, IOException, TwitterException {
 
@@ -127,6 +131,13 @@ public class twitterAPI {
 		}
 	}
 
+	/**
+	 * Funçao que cria um novo tweet na aplicaçao e publica na feed do utilizador em
+	 * sessao
+	 * 
+	 * @author Daniel Leal
+	 */
+
 	public void tweet(String twit, twitterAPI signin) throws TwitterException {
 
 		ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
@@ -141,6 +152,12 @@ public class twitterAPI {
 		twitterIt.updateStatus(twit);
 		System.out.println("tweet postado");
 	}
+
+	/**
+	 * Funçao que retweeta na aplicaçao e publica na feed do utilizador em sessao
+	 * 
+	 * @author Daniel Leal
+	 */
 
 	public void retweetIt(long statusId, twitterAPI signin) {
 		ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
@@ -159,6 +176,12 @@ public class twitterAPI {
 			e.printStackTrace();
 		}
 	}
+
+	/**
+	 * Funçao que lista os utilizadores que seguem o utilizador em sessao
+	 * 
+	 * @author Daniel Leal
+	 */
 
 	public void showFollowersList() throws IllegalStateException, TwitterException {
 		ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
@@ -189,6 +212,12 @@ public class twitterAPI {
 		this.numero_followers = numberFollowers;
 	}
 
+	/**
+	 * Funçao que lista os utilizadores que o utilizador em sessao segue
+	 * 
+	 * @author Daniel Leal
+	 */
+
 	public void showFollowingList() throws IllegalStateException, TwitterException {
 		ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
 		configurationBuilder.setDebugEnabled(true).setOAuthConsumerKey("42kwK0tk5ewLK2hTCeWVl6ZlP")
@@ -218,11 +247,23 @@ public class twitterAPI {
 		this.numero_following = numberFollowing;
 	}
 
+	/**
+	 * Funçao que conta o numero de followers do utilizador em sessao
+	 * 
+	 * @author Daniel Leal
+	 */
+
 	public String getNumberFollowers() throws IllegalStateException, TwitterException {
 		showFollowersList();
 		String nf = new Integer(numero_followers).toString();
 		return nf;
 	}
+
+	/**
+	 * Funçao que conta o numero de utilizadores que o utilizador em sessao segue
+	 * 
+	 * @author Daniel Leal
+	 */
 
 	public String getNumberFollowing() throws IllegalStateException, TwitterException {
 		showFollowingList();
@@ -243,6 +284,12 @@ public class twitterAPI {
 		}
 
 	}
+
+	/**
+	 * Funçao que filtra os tweets das ultimas 24h
+	 * 
+	 * @author Daniel Leal
+	 */
 
 	public void filtrarUltimas24horas() {
 		Date today = new Date();

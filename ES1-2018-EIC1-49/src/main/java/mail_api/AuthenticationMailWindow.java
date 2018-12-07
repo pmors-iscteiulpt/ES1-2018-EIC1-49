@@ -21,6 +21,15 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 
 public class AuthenticationMailWindow {
+
+	/**
+	 * 
+	 * Janela de autenticaçao de email
+	 * 
+	 * @author Antonio Correia
+	 * 
+	 * 
+	 */
 	private JFrame frame;
 	private JTextField textField;
 	private JPasswordField passwordField;
@@ -31,25 +40,13 @@ public class AuthenticationMailWindow {
 	private App app;
 	private CreateXML createxml = new CreateXML();
 
-	public String getUser() {
-		return user;
-	}
-
-	public void setUser(String user) {
-		this.user = user;
-	}
-
-	public String getPass() {
-		return pass;
-	}
-
-	public void setPass(String pass) {
-		this.pass = pass;
-	}
-
 	/**
+	 * 
 	 * Launch the application.
+	 * 
+	 * @author Antonio Correia
 	 */
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -71,8 +68,14 @@ public class AuthenticationMailWindow {
 	}
 
 	/**
+	 * 
+	 * 
 	 * Initialize the contents of the frame.
+	 * 
+	 * @author Antonio Correia
+	 *
 	 */
+
 	@SuppressWarnings("deprecation")
 	private void initialize() {
 		frame = new JFrame();
@@ -137,7 +140,7 @@ public class AuthenticationMailWindow {
 				smw.getFrame().setVisible(true);
 				frame.setVisible(false);
 				mail.getMailCredentials(user, pass);
-				System.out.println(user + "," + pass);
+
 				try {
 					createxml.complementUserEmail(user);
 				} catch (JAXBException e1) {
@@ -157,5 +160,21 @@ public class AuthenticationMailWindow {
 
 	public void setFrame(JFrame frame) {
 		this.frame = frame;
+	}
+
+	public String getUser() {
+		return user;
+	}
+
+	public void setUser(String user) {
+		this.user = user;
+	}
+
+	public String getPass() {
+		return pass;
+	}
+
+	public void setPass(String pass) {
+		this.pass = pass;
 	}
 }

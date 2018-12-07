@@ -2,6 +2,7 @@ package facebook_api;
 
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -18,32 +19,15 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import javax.swing.JToggleButton;
 import javax.swing.border.MatteBorder;
 
 import com.restfb.types.Post;
 
-import mail_api.AuthenticationMailWindow;
-import mail_api.MailAPI;
-import mail_api.PresentationMailWindow;
-import mail_api.SentMailWindow;
-import twitter4j.Status;
-
-import javax.swing.JToggleButton;
-import javax.swing.JTextField;
-import java.awt.Font;
-import javax.swing.JScrollPane;
-
 public class facebookWindow {
 	private JFrame frame;
-
-	public JFrame getFrame() {
-		return frame;
-	}
-
-	public void setFrame(JFrame frame) {
-		this.frame = frame;
-	}
-
 	public String user;
 	public String pass;
 	private JTextField facebook_textField;
@@ -53,9 +37,12 @@ public class facebookWindow {
 	private printWriter printwriter;
 	private JTextField textField_1;
 	public static List<Post> post;
+	private JTextField textField;
 
 	/**
 	 * Launch the application.
+	 * 
+	 * @author Pedro Ramos
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -80,7 +67,9 @@ public class facebookWindow {
 	}
 
 	/**
-	 * Initialize the contents of the frame.
+	 * Funcoes visuais da frame e criacao das funcoes para os butoes
+	 * 
+	 * @author Pedro Ramos
 	 */
 	@SuppressWarnings("deprecation")
 	private void initialize() {
@@ -135,18 +124,6 @@ public class facebookWindow {
 		list_1 = new JList<String>();
 		scrollPane.setViewportView(list_1);
 
-		JRadioButton rdbtnEmailsEnviadosPelo = new JRadioButton("ISCTE");
-		rdbtnEmailsEnviadosPelo.setBackground(Color.ORANGE);
-		rdbtnEmailsEnviadosPelo.setBounds(321, 53, 300, 25);
-		panel.add(rdbtnEmailsEnviadosPelo);
-
-		JRadioButton rdbtnEmailsEnviadosPelo_1 = new JRadioButton("Engenharia de Software I");
-		rdbtnEmailsEnviadosPelo_1.setBackground(Color.ORANGE);
-		rdbtnEmailsEnviadosPelo_1.setBounds(321, 78, 300, 25);
-		panel.add(rdbtnEmailsEnviadosPelo_1);
-
-<<<<<<< HEAD
-=======
 		JButton btnNewButton = new JButton("O que?");
 		btnNewButton.setBackground(Color.WHITE);
 		btnNewButton.setBounds(640, 407, 107, 25);
@@ -157,16 +134,10 @@ public class facebookWindow {
 		});
 		panel.add(btnNewButton);
 
-		JButton btnFiltrar = new JButton("Filtrar");
-		btnFiltrar.setBackground(Color.ORANGE);
-		btnFiltrar.setBounds(486, 124, 97, 25);
-		panel.add(btnFiltrar);
-
 		JLabel lblNewLabel_2 = new JLabel("");
 		lblNewLabel_2.setBounds(676, 380, 64, 32);
 		panel.add(lblNewLabel_2);
 
->>>>>>> refs/remotes/origin/master
 		JLabel lblNewLabel_3 = new JLabel("New label");
 		lblNewLabel_3.setBounds(650, 66, 56, 16);
 		panel.add(lblNewLabel_3);
@@ -186,45 +157,45 @@ public class facebookWindow {
 		tglbtnPostar.setBackground(Color.WHITE);
 		tglbtnPostar.setBounds(450, 35, 84, 25);
 		panel_2.add(tglbtnPostar);
+		textField = new JTextField();
+
 		tglbtnPostar.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
-				fapi.post(textField.getText());
+				fapi.post1(textField.getText());
 				JOptionPane.showMessageDialog(null, "Mensagem postada no seu perfil com sucesso!");
 			}
 		});
 
-<<<<<<< HEAD
 		textField = new JTextField();
 		textField.setColumns(10);
 		textField.setBounds(12, 6, 522, 22);
 		panel_2.add(textField);
-=======
+
 		facebook_textField = new JTextField();
 		facebook_textField.setColumns(10);
 		facebook_textField.setBounds(12, 6, 480, 22);
 		panel_2.add(facebook_textField);
-		
+
 		tglbtnPostar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				fapi.post(facebook_textField.getText());
+				fapi.post1(facebook_textField.getText());
 			}
 		});
->>>>>>> refs/remotes/origin/master
 
-		JLabel lblEmQueEsts = new JLabel("Em que estÃ¡s a pensar?");
+		JLabel lblEmQueEsts = new JLabel("Em que estás a pensar?");
 		lblEmQueEsts.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblEmQueEsts.setBounds(179, 36, 179, 21);
 		panel_2.add(lblEmQueEsts);
 
-		JLabel lblNewLabel_4 = new JLabel("Publicacoes");
+		JLabel lblNewLabel_4 = new JLabel("Publicações");
 
 		lblNewLabel_4.setBackground(new Color(135, 206, 250));
 		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblNewLabel_4.setBounds(77, 128, 113, 25);
 		panel.add(lblNewLabel_4);
 
-		JButton btnVerPublicaes = new JButton("Ver publicaÃ§Ãµes");
+		JButton btnVerPublicaes = new JButton("Ver publicações");
 		btnVerPublicaes.setBackground(Color.ORANGE);
 		btnVerPublicaes.setBounds(167, 125, 136, 25);
 		panel.add(btnVerPublicaes);
@@ -273,17 +244,11 @@ public class facebookWindow {
 		lblOrganizarPorTempo.setBounds(33, 0, 76, 16);
 		panel_5.add(lblOrganizarPorTempo);
 
-		JButton btnFiltrard = new JButton("Filtrar");
-		btnFiltrard.setBackground(new Color(135, 206, 235));
-		btnFiltrard.setBounds(35, 18, 67, 22);
-		panel_5.add(btnFiltrard);
-		btnFiltrard.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent e) {
-				fapi.filtrarUltimas24horas();
-				list_1.setModel(fapi.post_24h);
-			}
-		});
+		/**
+		 * Adiciona as funcionalidades dos actionListeners()
+		 * 
+		 * @author Pedro Ramos
+		 */
 
 		btnVerPublicaes.addActionListener(new ActionListener() {
 
@@ -319,5 +284,13 @@ public class facebookWindow {
 				}
 			}
 		});
+	}
+
+	public JFrame getFrame() {
+		return frame;
+	}
+
+	public void setFrame(JFrame frame) {
+		this.frame = frame;
 	}
 }

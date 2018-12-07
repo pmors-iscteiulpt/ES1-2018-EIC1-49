@@ -41,24 +41,10 @@ public class AuthenticationFacebookWindow {
 	private App app;
 	private facebookWindow fbw;
 
-	public String getUser() {
-		return user;
-	}
-
-	public void setUser(String user) {
-		this.user = user;
-	}
-
-	public String getPass() {
-		return pass;
-	}
-
-	public void setPass(String pass) {
-		this.pass = pass;
-	}
-
 	/**
 	 * Launch the application.
+	 * 
+	 * @author Pedro Ramos
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -76,14 +62,21 @@ public class AuthenticationFacebookWindow {
 
 	/**
 	 * Create the application.
+	 * 
+	 * @author Pedro Ramos
+	 *
 	 */
 	public AuthenticationFacebookWindow() {
 		initialize();
 	}
 
 	/**
+	 * 
 	 * Initialize the contents of the frame.
+	 * 
+	 * @author Pedro Ramos
 	 */
+
 	@SuppressWarnings("deprecation")
 	private void initialize() {
 		frame = new JFrame();
@@ -162,6 +155,22 @@ public class AuthenticationFacebookWindow {
 		JLabel lblInicieASesso = new JLabel("Inicie a sua conta para continuar");
 		lblInicieASesso.setBounds(151, 159, 187, 16);
 		panel.add(lblInicieASesso);
+	}
+
+	public String getUser() {
+		return user;
+	}
+
+	public void setUser(String user) {
+		this.user = user;
+	}
+
+	public String getPass() {
+		return pass;
+	}
+
+	public void setPass(String pass) {
+		this.pass = pass;
 	}
 
 	public MailAPI getMail() {

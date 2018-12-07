@@ -3,7 +3,6 @@ package ES1_2018_EIC1_49.EIC1_49;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -40,23 +39,13 @@ public class App extends JFrame {
 	private CreateXML xml = new CreateXML();
 
 	/**
+	 * @author Daniel Leal
+	 * 
 	 * @description Frame onde concentra as funcionalidades do projeto, ou seja,
 	 *              onde acede as funcionalidades do Email, do Facebook e do Twitter
+	 * 
+	 * 
 	 */
-
-	/**
-	 * @return the frame
-	 */
-	public JFrame getFrame() {
-		return frame;
-	}
-
-	/**
-	 * @param frame the frame to set
-	 */
-	public void setFrame(JFrame frame) {
-		this.frame = frame;
-	}
 
 	/**
 	 * Create the application.
@@ -67,8 +56,13 @@ public class App extends JFrame {
 	}
 
 	/**
+	 * 
 	 * Initialize the contents of the frame.
+	 * 
+	 * @author Pedro Almeida
+	 *
 	 */
+
 	private void initialize() {
 
 		frame = new JFrame();
@@ -164,6 +158,20 @@ public class App extends JFrame {
 	}
 
 	/**
+	 * @return the frame
+	 */
+	public JFrame getFrame() {
+		return frame;
+	}
+
+	/**
+	 * @param frame the frame to set
+	 */
+	public void setFrame(JFrame frame) {
+		this.frame = frame;
+	}
+
+	/**
 	 * @return the oAuthConsumerKey
 	 */
 	public String getOAuthConsumerKey() {
@@ -238,8 +246,4 @@ public class App extends JFrame {
 			}
 		});
 	}
-
-//	public int getIndex() {
-//		return index;
-//	}
 }

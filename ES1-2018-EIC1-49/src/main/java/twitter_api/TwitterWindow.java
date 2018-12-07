@@ -39,11 +39,14 @@ public class TwitterWindow {
 	private twitterAPI signin;
 	private App app;
 	private JTextField textField_1;
-	private PopUp popUp;
+//	private PopUp popUp;
 
 	/**
 	 * Launch the application.
+	 * 
+	 * @author Daniel Leal
 	 */
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -58,21 +61,11 @@ public class TwitterWindow {
 	}
 
 	/**
-	 * @return the frame
-	 */
-	public JFrame getFrame() {
-		return frame;
-	}
-
-	/**
-	 * @param frame the frame to set
-	 */
-	public void setFrame(JFrame frame) {
-		this.frame = frame;
-	}
-
-	/**
 	 * Create the application.
+	 * 
+	 * @author Daniel Leal
+	 * 
+	 * 
 	 */
 	public TwitterWindow() {
 		try {
@@ -84,8 +77,12 @@ public class TwitterWindow {
 	}
 
 	/**
+	 * 
 	 * Initialize the contents of the frame.
+	 * 
+	 * @author Daniel Leal
 	 */
+	
 	private void initialize() throws TwitterException {
 		frame = new JFrame();
 		frame.setBounds(500, 500, 800, 500);
@@ -289,8 +286,7 @@ public class TwitterWindow {
 				panel_2.setVisible(false);
 			}
 		});
-		
-		
+
 		list_1.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent evt) {
 				status = twitterAPI.getStatus();
@@ -305,13 +301,30 @@ public class TwitterWindow {
 				if (evt.getClickCount() == 3) {
 					for (int i = 0; i < status.size(); i++) {
 						if (index == i) {
-							String title= "Tweet de " + status.get(i).getUser().getName() + " | " + status.get(i).getUser().getCreatedAt();
-							String message = status.get(i).getText(); 
+							String title = "Tweet de " + status.get(i).getUser().getName() + " | "
+									+ status.get(i).getUser().getCreatedAt();
+							String message = status.get(i).getText();
 							JOptionPane.showMessageDialog(null, message, title, JOptionPane.INFORMATION_MESSAGE);
 						}
 					}
 				}
 			}
 		});
+	}
+
+	/**
+	 * @author Daniel Leal
+	 * 
+	 * @return the frame
+	 */
+	public JFrame getFrame() {
+		return frame;
+	}
+
+	/**
+	 * @param frame the frame to set
+	 */
+	public void setFrame(JFrame frame) {
+		this.frame = frame;
 	}
 }

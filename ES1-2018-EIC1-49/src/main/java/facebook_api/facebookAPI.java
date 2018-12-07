@@ -1,54 +1,58 @@
 package facebook_api;
 
+import java.util.Date;
+import java.util.List;
+import java.util.Properties;
+
+import javax.mail.Folder;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.NoSuchProviderException;
+import javax.mail.Session;
+import javax.mail.Store;
+import javax.swing.DefaultListModel;
+
 import com.restfb.Connection;
 import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
-import com.restfb.FacebookClient.AccessToken;
 import com.restfb.Parameter;
-<<<<<<< HEAD
 import com.restfb.exception.FacebookException;
 import com.restfb.types.FacebookType;
-import com.restfb.types.Page;
-=======
-import com.restfb.types.FacebookType;
->>>>>>> refs/remotes/origin/master
 import com.restfb.types.Post;
-import com.restfb.types.User;
-import java.net.URL;
-import java.util.Date;
-import java.util.List;
-import java.util.ResourceBundle;
 
-import javax.swing.DefaultListModel;
-
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-
-import org.jboss.netty.util.internal.SystemPropertyUtil;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import mail_api.MailAPI;
 
 public class facebookAPI {
+
+	/**
+	 * Classe de API do facebook
+	 * 
+	 * @author Pedro Ramos
+	 * 
+	 * 
+	 */
 	@FXML
 	private TextField username;
 	@FXML
 	private Post aPostmew;
 	private PasswordField password;
-	private String accessToken = "EAAEZBg2PIN94BAMPDvOtQBHFQtWmK8MmhA0AfxpLDeXmoUKYe3rcQRMZCAxW3sI1R7o5RHbZCYB7fRcZChVTvVJMvrjcxYxUP0L9qgN0ZChJyAZBV1cftbTBxcvSoUyMy66ZAMrklkw0pZC6L8EdDZCxmjHuBGK51UNwnd2JnqR8cvGGTILgrDLf9sjO7K2OZBZBnf7Pp2OLsfvhQZDZD";
+	private String accessToken = "EAAEZBg2PIN94BAKJQdPQVWP4VHXOkoypR8UYaayZADxqzNsBhosZB8f1ZCwZCUAmG8bU7XXw0npXYXIqTP7K9S5irGukZBc9FNoDkiYysMav56SJvjDfsNQjbPI55IYggfz3S4GTKEa3pvMrxvXpzice4ZA9b2JIFuVFWHuJTHZAx4ZBajyzMk2IQ5C7DGS8vh0tRdfOCTmQxewZDZD";
 	DefaultListModel<String> listaPostsFB = new DefaultListModel<String>();
 	DefaultListModel<String> listaForSearchPostsFB = new DefaultListModel<String>();
-<<<<<<< HEAD
 	DefaultListModel<String> post_24h = new DefaultListModel<String>();
 
-=======
->>>>>>> refs/remotes/origin/master
+	/**
+	 * Funcao que da autorizaçao do utilizador á API Funcão onde sao colocados os
+	 * tokens do facebook
+	 * 
+	 * @author Pedro Ramos
+	 * 
+	 * 
+	 */
+
 	public void AuthUser() {
 		String domain = "http://radixcode.com/";
 		String appID = "1115442835290294";
@@ -59,17 +63,6 @@ public class facebookAPI {
 				+ "user_relationships,user_religion_politics,user_status,user_tagged_places,user_videos,user_website,user_work_history,ads_management,ads_read,email,"
 				+ "manage_notifications,manage_pages,publish_actions,read_friendlists,read_insights,read_mailbox,read_page_mailboxes,read_stream,rsvp_event";
 
-		/*
-		 * System.setProperty("webdriver.gecko.driver",
-		 * "C:\\Users\\Pedro\\git\\ES1-2018-EIC1-49\\geckodriver.exe");
-		 * WebDriver driver = new FirefoxDriver();
-		 * driver.get("http://www.facebook.com");
-		 * driver.findElement(By.id("email")).sendKeys(username.getText());
-		 * driver.findElement(By.id("pass")).sendKeys(password.getText());
-		 * driver.findElement(By.id("u_0_2")).click();
-		 * System.out.println("dsd");
-		 */
-
 		FacebookClient fbClient = new DefaultFacebookClient(accessToken);
 		Connection<Post> result = fbClient.fetchConnection("me/feed", Post.class);
 
@@ -78,13 +71,11 @@ public class facebookAPI {
 			for (Post aPost : page) {
 				if (aPost.getMessage() != null) {
 					cont++;
-					listaPostsFB.addElement(aPost.getCreatedTime() + " - " + aPost.getMessage() + " " + aPost.getCreatedTime().getTime());
+					listaPostsFB.addElement(aPost.getCreatedTime() + " - " + aPost.getMessage() + " "
+							+ aPost.getCreatedTime().getTime());
 				}
 			}
 		}
-
-		System.out.println(cont);
-		// driver.quit();
 	}
 
 	/**
@@ -95,8 +86,7 @@ public class facebookAPI {
 	}
 
 	/**
-	 * @param accessToken
-	 *            the accessToken to set
+	 * @param accessToken the accessToken to set
 	 */
 	public void setAccessToken(String accessToken) {
 		this.accessToken = accessToken;
@@ -110,12 +100,19 @@ public class facebookAPI {
 	}
 
 	/**
-	 * @param aPostmew
-	 *            the aPostmew to set
+	 * @param aPostmew the aPostmew to set
 	 */
 	public void setaPostmew(Post aPostmew) {
 		this.aPostmew = aPostmew;
 	}
+
+	/**
+	 * Procura de posts do utilizador em sessao por uma palavra chave
+	 * 
+	 * @author Pedro Ramos
+	 * 
+	 * 
+	 */
 
 	public void searchForUserPosts(String tag) {
 		AuthUser();
@@ -131,8 +128,16 @@ public class facebookAPI {
 		listaForSearchPostsFB.clear();
 	}
 
-<<<<<<< HEAD
-	public void post(String text_to_post) {
+	/**
+	 * Funçao que intercala a API e a window e faz a "postagem" de mensagens no feed
+	 * do perfil logado
+	 * 
+	 * @author Pedro Ramos
+	 * 
+	 * 
+	 */
+
+	public void post1(String text_to_post) {
 		try {
 			@SuppressWarnings("deprecation")
 			FacebookClient fbClient = new DefaultFacebookClient(accessToken);
@@ -142,7 +147,14 @@ public class facebookAPI {
 		}
 	}
 
-	
+	/**
+	 * Funcao que devolve posts feitos pelo utilizador em sessao nas utlimas 24h
+	 * 
+	 * @author Pedro Ramos
+	 * 
+	 * 
+	 */
+
 	public void filtrarUltimas24horas() {
 		Date today = new Date();
 		Long dateInLong = today.getTime();
@@ -159,12 +171,11 @@ public class facebookAPI {
 		if (post_24h.isEmpty())
 			post_24h.addElement("::Não existe nenhum Tweet nas últimas 24h!::");
 	}
-=======
-	@SuppressWarnings("deprecation")
-	public void post(String message) {
-		FacebookClient fbClient = new DefaultFacebookClient(accessToken);
-		fbClient.publish("me/feed", FacebookType.class, Parameter.with("message", message));
-	}
 
->>>>>>> refs/remotes/origin/master
+//	@SuppressWarnings("deprecation")
+//	public void post(String message) {
+//		FacebookClient fbClient = new DefaultFacebookClient(accessToken);
+//		fbClient.publish("me/feed", FacebookType.class, Parameter.with("message", message));
+//	}
+
 }

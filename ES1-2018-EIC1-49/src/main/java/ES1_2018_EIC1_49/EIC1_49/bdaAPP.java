@@ -33,6 +33,7 @@ public class bdaAPP extends JFrame {
 	private String userGranted;
 	public int index;
 	private java.util.List<Utilizador> users = file.getusersList();
+	private String filepath = file.getFilepath();
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -181,8 +182,7 @@ public class bdaAPP extends JFrame {
 
 	public void saveInfile(int i) {
 		try {
-			File fac = new File(
-					"C:\\Users\\Pedro Almeida\\git\\ES1-2018-EIC1-49\\ES1-2018-EIC1-49\\src\\main\\java\\XML\\acessos");
+			File fac = new File(filepath + "acessos");
 			if (!fac.exists()) {
 				fac.createNewFile();
 			}

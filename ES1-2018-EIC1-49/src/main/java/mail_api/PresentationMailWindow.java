@@ -13,6 +13,7 @@ import mail_api.MailAPI;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -159,6 +160,11 @@ public class PresentationMailWindow {
 				fancyShowUser.setBounds(642, 188, 129, 27);
 				panel.add(fancyShowUser);
 	}
+	
+//	public void msgFiltradas(String sender) {
+//		ArrayList<> mailsRecebidos = new ArrayList<>();
+//		
+//	}
 
 	public JFrame getFrame() {
 		return frame;

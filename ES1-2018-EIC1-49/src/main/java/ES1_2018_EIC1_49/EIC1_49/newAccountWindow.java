@@ -100,6 +100,8 @@ public class newAccountWindow {
 				Utilizador newUser = new Utilizador(textField.getText(), textField_1.getText(), textField_2.getText());
 				CreateXML createxml = new CreateXML();
 				createxml.addUser(newUser);
+				bdaApp = new bdaAPP();
+				bdaApp.getFrame().setVisible(true);
 				frame.setVisible(false);
 
 			}

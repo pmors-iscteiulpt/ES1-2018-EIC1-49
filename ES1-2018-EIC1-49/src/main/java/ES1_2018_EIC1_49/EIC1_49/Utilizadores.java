@@ -8,6 +8,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "users")
 public class Utilizadores {
 
+	/**
+	 * @author Pedro Almeida
+	 * 
+	 */
+
 	private List<Utilizador> users;
 
 	@XmlElement(name = "user")

@@ -25,24 +25,12 @@ public class AuthenticationTwitterWindow {
 	private App app;
 	private CreateXML createxml = new CreateXML();
 
-	public String getUser() {
-		return user;
-	}
-
-	public void setUser(String user) {
-		this.user = user;
-	}
-
-	public String getPass() {
-		return pass;
-	}
-
-	public void setPass(String pass) {
-		this.pass = pass;
-	}
-
 	/**
+	 * 
 	 * Launch the application.
+	 * 
+	 * @author Daniel Leal
+	 * 
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -56,6 +44,15 @@ public class AuthenticationTwitterWindow {
 			}
 		});
 	}
+
+	/**
+	 * 
+	 * Construtor da janela de login do Twitter na App.
+	 * 
+	 * @author Daniel Leal
+	 * 
+	 * 
+	 */
 
 	public AuthenticationTwitterWindow() {
 		initialize();
@@ -120,8 +117,6 @@ public class AuthenticationTwitterWindow {
 		panel.add(btnIniciarSesso);
 		btnIniciarSesso.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//				String user = textField.getText();
-//				String pass = passwordField.getText();
 				smw.getFrame().setVisible(true);
 				frame.setVisible(false);
 				try {
@@ -135,6 +130,22 @@ public class AuthenticationTwitterWindow {
 		JLabel lblInicieASesso = new JLabel("Inicie a sua conta para continuar");
 		lblInicieASesso.setBounds(151, 159, 187, 16);
 		panel.add(lblInicieASesso);
+	}
+
+	public String getUser() {
+		return user;
+	}
+
+	public void setUser(String user) {
+		this.user = user;
+	}
+
+	public String getPass() {
+		return pass;
+	}
+
+	public void setPass(String pass) {
+		this.pass = pass;
 	}
 
 	public JFrame getFrame() {

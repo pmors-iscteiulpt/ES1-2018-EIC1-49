@@ -168,18 +168,22 @@ public class SentMailWindow {
 						list_1.setModel(mail.listaDeEmails);
 
 					} catch (Exception e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 				}
 
-				else if (rdbtnEmailsEnviadosPelo.isSelected()) {
+				if (rdbtnEmailsDirector.isSelected()) {
 					try {
-						mail.showListMailsISCTE();
+						mail.getEmailfromReitora();
+						list_1.setModel(mail.emailsReitor);
+						System.out.println(list_1.isSelectionEmpty());
+
 					} catch (IOException e1) {
 						e1.printStackTrace();
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
 					}
-					list_1.setModel(mail.listaDeProcuraDeEmails);
 				}
 			}
 		});

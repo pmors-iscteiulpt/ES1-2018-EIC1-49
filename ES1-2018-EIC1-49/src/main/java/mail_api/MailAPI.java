@@ -33,6 +33,7 @@ public class MailAPI {
 	public DefaultListModel<String> listaDeEmails = new DefaultListModel<String>();
 	public DefaultListModel<String> listaDeProcuraDeEmails = new DefaultListModel<String>();
 	public DefaultListModel<String> post_24h = new DefaultListModel<String>();
+	public DefaultListModel<String> emailsReitor = new DefaultListModel<String>();
 
 	public Message messages[];
 
@@ -64,6 +65,59 @@ public class MailAPI {
 	public void getMailCredentials(String user, String pass) {
 		MailAPI.username = user;
 		MailAPI.password = pass;
+	}
+
+	public void getEmailfromReitora() throws Exception {
+
+		mail = new MailAPI();
+
+		from = mail.getUsername();
+		pass = mail.getPass();
+
+		try {
+			Properties properties = new Properties();
+
+			properties.put("mail.pop3.host", "outlook.office365.com");
+			properties.put("mail.pop3.port", "995");
+			properties.put("mail.pop3s.ssl.trust", "*"); // This is the most IMP property
+
+			Session emailSession = Session.getDefaultInstance(properties);
+
+			// create the POP3 store object and connect with the pop server
+
+			Store store = emailSession.getStore("pop3s"); // try imap or impas
+			store.connect("outlook.office365.com", from, password);
+
+			// create the folder object and open it
+			Folder emailFolder = store.getFolder("INBOX");
+			emailFolder.open(Folder.READ_ONLY);
+
+			// retrieve the messages from the folder in an array and print it
+			Message[] messages = emailFolder.getMessages();
+
+			for (int i = 0; i < (messages.length + 60) - messages.length; i++) {
+
+				Message message = messages[i];
+				if (message.getFrom()[0].toString().contains("reitor@iscte-iul.pt")) {
+					String result;
+					result = getTextFromMessage(message);
+					from1 = message.getFrom()[0];
+					subj = message.getSubject();
+
+					if (message != null) {
+						System.out.println("FROM: " + from1 + "        " + "SUBJECT: " + subj + " ");
+						emailsReitor.addElement("FROM: " + from1 + "        " + "SUBJECT: " + subj + " ");
+
+					}
+				}
+			}
+			emailFolder.close(false);
+			store.close();
+		} catch (NoSuchProviderException nspe) {
+			nspe.printStackTrace();
+		} catch (MessagingException me) {
+			me.printStackTrace();
+		}
 	}
 
 	public void getEmail() throws Exception {
@@ -101,9 +155,11 @@ public class MailAPI {
 					result = getTextFromMessage(message);
 					from1 = message.getFrom()[0];
 					subj = message.getSubject();
+
 					if (message != null) {
-						listaDeEmails.addElement("FROM: " + from1 + "        " + "SUBJECT: " + subj + " " + message.getReceivedDate().getTime());
-						
+						System.out.println("FROM: " + from1 + "        " + "SUBJECT: " + subj + " ");
+						listaDeEmails.addElement("FROM: " + from1 + "        " + "SUBJECT: " + subj + " ");
+
 					}
 				}
 			}
@@ -240,63 +296,6 @@ public class MailAPI {
 		}
 	}
 
-	public void showListMailsDirector() throws Exception {
-		listaDeProcuraDeEmails.clear();
-		String mailDaReitora = "<reitora@iscte-iul.pt>";
-		for (int tweet = 0; tweet < listaDeEmails.size(); tweet++) {
-			String element = listaDeEmails.getElementAt(tweet);
-			String[] partes = element.split(" ");
-			for (int palavras_do_tweet = 0; palavras_do_tweet < partes.length; palavras_do_tweet++) {
-				if (partes[palavras_do_tweet].equals(mailDaReitora)) {
-					listaDeProcuraDeEmails.addElement(element);
-				}
-			}
-		}
-	}
-
-	public void showListMailsISCTE() throws IOException {
-		from = mail.getUsername();
-		pass = mail.getPass();
-
-		try {
-			Properties properties = new Properties();
-			properties.setProperty("mail.store.protocol", "imaps");
-
-			Session emailSession = Session.getDefaultInstance(properties);
-
-			Store emailStore = emailSession.getStore("imaps");
-			emailStore.connect("imap-mail.outlook.com", from, pass);
-
-			Folder emailFolder = emailStore.getFolder("INBOX");
-
-			emailFolder.open(Folder.READ_ONLY);
-
-			Message messages[] = emailFolder.getMessages();
-			System.out.println(messages.length);
-
-			for (int i = 0; i < (messages.length + 60) - messages.length; i++) {
-
-				Message message = messages[i];
-				if (message.getSubject().toString().contains("ISCTE-IUL")) {
-					String result;
-					result = getTextFromMessage(message);
-					System.out.println("From: " + message.getFrom()[0]);
-					from1 = message.getFrom()[0];
-					subj = message.getSubject();
-					if (message != null) {
-						listaDeEmails.addElement("FROM: " + from1 + "        " + "SUBJECT: " + subj);
-					}
-				}
-			}
-			emailFolder.close(false);
-			emailStore.close();
-		} catch (NoSuchProviderException nspe) {
-			nspe.printStackTrace();
-		} catch (MessagingException me) {
-			me.printStackTrace();
-		}
-	}
-	
 	public void filtrarUltimas24horas() {
 		Date today = new Date();
 		Long dateInLong = today.getTime();

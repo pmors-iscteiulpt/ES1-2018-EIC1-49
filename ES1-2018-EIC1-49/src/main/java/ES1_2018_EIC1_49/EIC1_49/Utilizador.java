@@ -7,6 +7,12 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement(name = "user")
 public class Utilizador {
 
+	/**
+	 * Classe que articula o primeiro login na App
+	 * 
+	 * @author Pedro Almeida
+	 */
+
 	private String username;
 	private String pw;
 	private String curso;
@@ -17,6 +23,12 @@ public class Utilizador {
 	public Utilizador() {
 	}
 
+	/**
+	 * Construtor da classe
+	 * 
+	 * @author Pedro Almeida
+	 */
+
 	public Utilizador(String username, String pw, String curso) {
 		super();
 		this.username = username;
@@ -26,6 +38,12 @@ public class Utilizador {
 		this.tw_username = null;
 		this.email_username = null;
 	}
+
+	/**
+	 * Getters e setters da classe Utilizador
+	 * 
+	 * @author Pedro Almeida
+	 */
 
 	@XmlElement
 	public String getUsername() {
