@@ -2,8 +2,16 @@ package mail_api;
 
 import java.awt.Color;
 
+<<<<<<< HEAD
+=======
+import XML.CreateXML;
+>>>>>>> refs/remotes/origin/master
 import mail_api.MailAPI;
+<<<<<<< HEAD
 import menu.*;
+=======
+import menu.App;
+>>>>>>> refs/remotes/origin/master
 
 import java.awt.EventQueue;
 
@@ -34,8 +42,8 @@ public class AuthenticationMailWindow {
 	private JFrame frame;
 	private JTextField textField;
 	private JPasswordField passwordField;
-	public String user;
-	public String pass;
+	private String user;
+	private String pass;
 	private MailAPI mail = new MailAPI();
 	private SentMailWindow smw = new SentMailWindow();
 	private App app;

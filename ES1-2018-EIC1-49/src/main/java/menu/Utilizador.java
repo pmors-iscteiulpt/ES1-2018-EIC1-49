@@ -7,6 +7,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement(name = "user")
 public class Utilizador {
 
+<<<<<<< HEAD
 	/**
 	 * Classe que articula o primeiro login na App
 	 * 
@@ -44,6 +45,27 @@ public class Utilizador {
 	 * 
 	 * @author Pedro Almeida
 	 */
+=======
+	private String username;
+	private String pw;
+	private String curso;
+	private String fb_username;
+	private String tw_username;
+	private String email_username;
+
+	public Utilizador() {
+	}
+
+	public Utilizador(String username, String pw, String curso) {
+		super();
+		this.username = username;
+		this.pw = pw;
+		this.curso = curso;
+		this.fb_username = null;
+		this.tw_username = null;
+		this.email_username = null;
+	}
+>>>>>>> refs/remotes/origin/master
 
 	@XmlElement
 	public String getUsername() {

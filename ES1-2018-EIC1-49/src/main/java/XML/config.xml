@@ -2,19 +2,42 @@
 <users>
     <user>
         <curso>lei</curso>
+<<<<<<< HEAD
         <email_username>pgoaa</email_username>
+=======
+>>>>>>> refs/remotes/origin/master
         <pw>123</pw>
         <username>pedro</username>
     </user>
     <user>
+<<<<<<< HEAD
         <curso>patio</curso>
+=======
+        <curso>lei</curso>
+>>>>>>> refs/remotes/origin/master
         <pw>123</pw>
         <username>ramos</username>
     </user>
     <user>
+<<<<<<< HEAD
         <curso>ley</curso>
         <email_username>leal123</email_username>
+=======
+        <curso>lei</curso>
+        <email_username>drllo@iscte-iul.pt</email_username>
+        <fb_username></fb_username>
+>>>>>>> refs/remotes/origin/master
         <pw>123</pw>
         <username>leal</username>
     </user>
+<<<<<<< HEAD
+=======
+    <user>
+        <curso>lei</curso>
+        <email_username>toni@iscte.pt</email_username>
+        <fb_username></fb_username>
+        <pw>asd</pw>
+        <username>antonio</username>
+    </user>
+>>>>>>> refs/remotes/origin/master
 </users>

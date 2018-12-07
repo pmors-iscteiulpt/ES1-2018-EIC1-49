@@ -7,9 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -18,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+<<<<<<< HEAD
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -25,6 +24,12 @@ import javax.swing.JToggleButton;
 import javax.swing.border.MatteBorder;
 
 import com.restfb.types.Post;
+=======
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import javax.swing.JToggleButton;
+import javax.swing.border.MatteBorder;
+>>>>>>> refs/remotes/origin/master
 
 public class facebookWindow {
 	private JFrame frame;
@@ -34,16 +39,22 @@ public class facebookWindow {
 	private AuthenticationFacebookWindow afw;
 	private facebookAPI fapi = new facebookAPI();
 	private JList<String> list_1;
-	private printWriter printwriter;
 	private JTextField textField_1;
+<<<<<<< HEAD
 	public static List<Post> post;
 	private JTextField textField;
+=======
+	public PopUp_Facebook popup;
+	private JTextField textField;
+	private String message_show;
+>>>>>>> refs/remotes/origin/master
 
 	/**
 	 * Launch the application.
 	 * 
 	 * @author Pedro Ramos
 	 */
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -90,8 +101,7 @@ public class facebookWindow {
 		panel.add(lblSessoActiva);
 
 		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(
-				new ImageIcon(facebookWindow.class.getResource("/ES1_2018_EIC1_49/EIC1_49/Facebook-Logo-100.png")));
+		lblNewLabel.setIcon(new ImageIcon(facebookWindow.class.getResource("/facebook_api/Facebook-Logo-100.png")));
 		lblNewLabel.setBounds(640, 27, 100, 100);
 		panel.add(lblNewLabel);
 
@@ -124,6 +134,7 @@ public class facebookWindow {
 		list_1 = new JList<String>();
 		scrollPane.setViewportView(list_1);
 
+<<<<<<< HEAD
 		JButton btnNewButton = new JButton("O que?");
 		btnNewButton.setBackground(Color.WHITE);
 		btnNewButton.setBounds(640, 407, 107, 25);
@@ -134,6 +145,8 @@ public class facebookWindow {
 		});
 		panel.add(btnNewButton);
 
+=======
+>>>>>>> refs/remotes/origin/master
 		JLabel lblNewLabel_2 = new JLabel("");
 		lblNewLabel_2.setBounds(676, 380, 64, 32);
 		panel.add(lblNewLabel_2);
@@ -162,8 +175,17 @@ public class facebookWindow {
 		tglbtnPostar.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
+<<<<<<< HEAD
 				fapi.post1(textField.getText());
 				JOptionPane.showMessageDialog(null, "Mensagem postada no seu perfil com sucesso!");
+=======
+				if (!fapi.connectedToInternet()) {
+					JOptionPane.showMessageDialog(null, "Nï¿½o ï¿½ possï¿½vel fazer um post offline");
+				} else {
+					fapi.post(textField.getText());
+					JOptionPane.showMessageDialog(null, "Mensagem postada no seu perfil com sucesso!");
+				}
+>>>>>>> refs/remotes/origin/master
 			}
 		});
 
@@ -171,7 +193,10 @@ public class facebookWindow {
 		textField.setColumns(10);
 		textField.setBounds(12, 6, 522, 22);
 		panel_2.add(textField);
+<<<<<<< HEAD
 
+=======
+>>>>>>> refs/remotes/origin/master
 		facebook_textField = new JTextField();
 		facebook_textField.setColumns(10);
 		facebook_textField.setBounds(12, 6, 480, 22);
@@ -183,25 +208,37 @@ public class facebookWindow {
 			}
 		});
 
+<<<<<<< HEAD
 		JLabel lblEmQueEsts = new JLabel("Em que estás a pensar?");
+=======
+		JLabel lblEmQueEsts = new JLabel("Em que est\u00E1s a pensar?");
+>>>>>>> refs/remotes/origin/master
 		lblEmQueEsts.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblEmQueEsts.setBounds(179, 36, 179, 21);
 		panel_2.add(lblEmQueEsts);
 
+<<<<<<< HEAD
 		JLabel lblNewLabel_4 = new JLabel("Publicações");
+=======
+		JLabel lblNewLabel_4 = new JLabel("Publica\u00E7\u00F5es");
+>>>>>>> refs/remotes/origin/master
 
 		lblNewLabel_4.setBackground(new Color(135, 206, 250));
 		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblNewLabel_4.setBounds(77, 128, 113, 25);
 		panel.add(lblNewLabel_4);
 
+<<<<<<< HEAD
 		JButton btnVerPublicaes = new JButton("Ver publicações");
+=======
+		JButton btnVerPublicaes = new JButton("Ver publica\u00E7\u00F5es");
+>>>>>>> refs/remotes/origin/master
 		btnVerPublicaes.setBackground(Color.ORANGE);
-		btnVerPublicaes.setBounds(167, 125, 136, 25);
+		btnVerPublicaes.setBounds(167, 125, 154, 25);
 		panel.add(btnVerPublicaes);
 
 		JPanel panel_3 = new JPanel();
-		panel_3.setBounds(136, 32, 164, 83);
+		panel_3.setBounds(167, 27, 154, 83);
 		panel.add(panel_3);
 		panel_3.setVisible(true);
 		panel_3.setLayout(null);
@@ -222,7 +259,12 @@ public class facebookWindow {
 		btnProcurar.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				fapi.searchForUserPosts(textField_1.getText());
+				fapi.listaForSearchPostsFB.clear();
+				try {
+					fapi.searchForUserPosts(textField_1.getText());
+				} catch (FileNotFoundException e1) {
+					e1.printStackTrace();
+				}
 				list_1.clearSelection();
 				list_1.setModel(fapi.listaForSearchPostsFB);
 			}
@@ -230,7 +272,7 @@ public class facebookWindow {
 
 		JPanel panel_5 = new JPanel();
 		panel_5.setBackground(Color.LIGHT_GRAY);
-		panel_5.setBounds(455, 9, 164, 43);
+		panel_5.setBounds(495, 106, 127, 43);
 		panel.add(panel_5);
 		panel_5.setLayout(null);
 		panel_5.setVisible(false);
@@ -254,35 +296,41 @@ public class facebookWindow {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				list_1.clearSelection();
-				fapi.AuthUser();
-				list_1.setModel(fapi.listaPostsFB);
-				printwriter = new printWriter();
-				panel_5.setVisible(true);
+				fapi.listaPostsFB.clear();
 				try {
-					printwriter.printOnFile(fapi.listaPostsFB, new File(
-							"C:\\Users\\Asus\\git\\ES1-2018-EIC1-49\\ES1-2018-EIC1-49\\src\\main\\java\\DataBase\\facebookDataBase.txt"));
+					fapi.AuthUser();
 				} catch (FileNotFoundException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+				list_1.setModel(fapi.listaPostsFB);
+				panel_5.setVisible(true);
 			}
 		});
 
 		list_1.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent evt) {
 				int index = list_1.getSelectedIndex();
-				if (evt.getClickCount() == 3) {
-					for (int i = 0; i < fapi.listaPostsFB.size(); i++) {
-						if (index == i) {
-							String[] partes = fapi.listaPostsFB.get(i).split(" ");
-							String title = "Post de  " + partes[0] + " | " + partes[fapi.listaPostsFB.size() - 1];
-							String message = fapi.listaPostsFB.get(i).toString();
-							JOptionPane.showMessageDialog(null, message, title, JOptionPane.INFORMATION_MESSAGE);
+				if (evt.getClickCount() == 2) {
+					if (!fapi.connectedToInternet()) {
+						JOptionPane.showMessageDialog(null, "Nï¿½o ï¿½ possï¿½vel ver conteï¿½do do post offline");
+					} else {
+						for (int i = 0; i < fapi.getPosts().size(); i++) {
+							if (index == i) {
+								popup = new PopUp_Facebook();
+								popup.getLblTweetDe().setText(fapi.getPosts().get(i).getName());
+								popup.getLblData().setText(fapi.getPosts().get(i).getCreatedTime().toString());
+								message_show = fapi.getPosts().get(i).getMessage();
+								popup.getTextArea().setText(message_show);
+								popup.getFrame().setVisible(true);
+								popup.getTextArea().setLineWrap(true);
+								popup.getTextArea().setWrapStyleWord(true);
+							}
 						}
 					}
 				}
 			}
+
 		});
 	}
 

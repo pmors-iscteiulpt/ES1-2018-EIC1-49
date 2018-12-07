@@ -1,6 +1,13 @@
 package twitter_api;
 
 import java.awt.Color;
+<<<<<<< HEAD
+=======
+
+import XML.CreateXML;
+import menu.*;
+
+>>>>>>> refs/remotes/origin/master
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -14,6 +21,7 @@ import menu.*;
 import javax.swing.JPasswordField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
 
 import javax.swing.JButton;
 
@@ -23,7 +31,7 @@ public class AuthenticationTwitterWindow {
 	private JPasswordField passwordField;
 	public String user;
 	public String pass;
-	private TwitterWindow smw = new TwitterWindow();
+	private TwitterWindow smw;
 	private App app;
 	private CreateXML createxml = new CreateXML();
 
@@ -119,8 +127,23 @@ public class AuthenticationTwitterWindow {
 		panel.add(btnIniciarSesso);
 		btnIniciarSesso.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+<<<<<<< HEAD
 				smw.getFrame().setVisible(true);
 				frame.setVisible(false);
+=======
+				try {
+					smw= new TwitterWindow();
+					smw.getFrame().setVisible(true);
+					frame.setVisible(false);
+				} catch (IllegalStateException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				} catch (FileNotFoundException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				}
+
+>>>>>>> refs/remotes/origin/master
 				try {
 					createxml.complementUserTwitter(user);
 				} catch (JAXBException e1) {

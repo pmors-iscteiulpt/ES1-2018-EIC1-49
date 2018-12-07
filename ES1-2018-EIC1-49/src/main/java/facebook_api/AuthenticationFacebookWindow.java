@@ -2,8 +2,16 @@ package facebook_api;
 
 import java.awt.Color;
 
+<<<<<<< HEAD
+=======
+import XML.CreateXML;
+>>>>>>> refs/remotes/origin/master
 import mail_api.MailAPI;
+<<<<<<< HEAD
 import menu.*;
+=======
+import menu.App;
+>>>>>>> refs/remotes/origin/master
 
 import java.awt.EventQueue;
 
@@ -93,8 +101,7 @@ public class AuthenticationFacebookWindow {
 
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setBounds(197, 34, 100, 100);
-		lblNewLabel.setIcon(new ImageIcon(
-				AuthenticationFacebookWindow.class.getResource("/ES1_2018_EIC1_49/EIC1_49/Facebook-Logo-100.png")));
+		lblNewLabel.setIcon(new ImageIcon(AuthenticationFacebookWindow.class.getResource("/facebook_api/Facebook-Logo-100.png")));
 		panel.add(lblNewLabel);
 
 		textField = new JTextField();

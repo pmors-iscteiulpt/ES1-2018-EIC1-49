@@ -2,29 +2,30 @@ package mail_api;
 
 import java.awt.Color;
 import java.awt.EventQueue;
-import java.awt.List;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.mail.MessagingException;
-import javax.swing.ImageIcon;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.util.Properties;
 
+import javax.mail.Folder;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.NoSuchProviderException;
+import javax.mail.Session;
+import javax.mail.Store;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.border.MatteBorder;
-
-import mail_api.MailAPI;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.border.MatteBorder;
 
 public class SentMailWindow {
 
@@ -32,12 +33,12 @@ public class SentMailWindow {
 	private PresentationMailWindow pmw;
 	private AuthenticationMailWindow amw;
 	private MailAPI mail = new MailAPI();
-	public String user;
-	public String pass;
 	private JRadioButton rdbtnEmailsEnviadosPelo;
 	private JList<String> list_1;
 	private JTextField textField_1;
-	public String toRespond;
+	private String toRespond;
+	private Message[] messages = mail.getMessages();
+	private PopUp_Mail popup;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -60,7 +61,7 @@ public class SentMailWindow {
 		frame = new JFrame();
 		frame.setBounds(250, 250, 777, 501);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 		frame.setResizable(false);
 		frame.getContentPane().setLayout(null);
 
@@ -120,7 +121,7 @@ public class SentMailWindow {
 		rdbtnEmailsEnviadosPelo.setBounds(345, 62, 236, 25);
 		panel.add(rdbtnEmailsEnviadosPelo);
 
-		JRadioButton rdbtnEmailsDirector = new JRadioButton("E-mails enviados pelo director");
+		JRadioButton rdbtnEmailsDirector = new JRadioButton("E-mails enviados pela reitora");
 		rdbtnEmailsDirector.setBackground(Color.ORANGE);
 		rdbtnEmailsDirector.setBounds(345, 87, 236, 25);
 		panel.add(rdbtnEmailsDirector);
@@ -131,9 +132,14 @@ public class SentMailWindow {
 		btnNewButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				pmw = new PresentationMailWindow();
-				pmw.getFrame().setVisible(true);
-				frame.setVisible(false);
+				if (!mail.connectedToInternet()) {
+					JOptionPane.showMessageDialog(null, "Precisa de estar online para enviar e-mails");
+				} else {
+
+					pmw = new PresentationMailWindow(null);
+					pmw.getFrame().setVisible(true);
+					frame.setVisible(false);
+				}
 			}
 		});
 		panel.add(btnNewButton);
@@ -165,7 +171,7 @@ public class SentMailWindow {
 				if (rdbtnEmailsEnviadosPelo.isSelected()) {
 					try {
 						mail.getEmail();
-						list_1.setModel(mail.listaDeEmails);
+						list_1.setModel(mail.getListaDeEmails());
 
 					} catch (Exception e1) {
 						e1.printStackTrace();
@@ -175,13 +181,20 @@ public class SentMailWindow {
 				if (rdbtnEmailsDirector.isSelected()) {
 					try {
 						mail.getEmailfromReitora();
+<<<<<<< HEAD
 						list_1.setModel(mail.emailsReitor);
 						System.out.println(list_1.isSelectionEmpty());
 
+=======
+						list_1.setModel(mail.getEmailsReitor());
+>>>>>>> refs/remotes/origin/master
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					} catch (Exception e1) {
+<<<<<<< HEAD
 						// TODO Auto-generated catch block
+=======
+>>>>>>> refs/remotes/origin/master
 						e1.printStackTrace();
 					}
 				}
@@ -228,7 +241,7 @@ public class SentMailWindow {
 				list_1.clearSelection();
 
 				mail.searchForTagInMailBox(textField_1.getText());
-				list_1.setModel(mail.listaDeProcuraDeEmails);
+				list_1.setModel(mail.getListaDeProcuraDeEmails());
 			}
 		});
 
@@ -237,38 +250,44 @@ public class SentMailWindow {
 				int index = list_1.getSelectedIndex();
 				if (evt.getClickCount() == 1) {
 					panel_2.setVisible(true);
-					for (int i = 0; i < mail.getMessages().length; i++) {
-						if (i == index)
-							try {
-								toRespond = mail.getMessages()[i].getFrom()[0].toString();
-								System.out.println(toRespond);
-							} catch (MessagingException e) {
-								e.printStackTrace();
-							}
-						pmw = new PresentationMailWindow();
-						pmw.getFrame().setVisible(true);
-						frame.setVisible(false);
-					}
-				}
-				if (evt.getClickCount() == 3) {
-					for (int i = 0; i < mail.getMessages().length; i++) {
-						if (index == i) {
-							String title;
-							try {
-								title = "Mail de " + mail.getMessages()[i].getFrom() + " | "
-										+ mail.getMessages()[i].getReceivedDate();
-								String message = mail.getMessages()[i].getContentType().toString();
-								JOptionPane.showMessageDialog(null, message, title, JOptionPane.INFORMATION_MESSAGE);
-							} catch (MessagingException e) {
-								e.printStackTrace();
+					btnResponder.addActionListener(new ActionListener() {
+
+						public void actionPerformed(ActionEvent e) {
+							if (rdbtnEmailsEnviadosPelo.isSelected())
+								if (!mail.connectedToInternet()) {
+									JOptionPane.showMessageDialog(null, "N�o � poss�vel enviar e-mails offline");
+								} else {
+									for (int i = 0; i < mail.getListaDeEmails().size(); i++) {
+										if (i == index) {
+											toRespond = mail.getlistaDeEmails().getElementAt(i);
+											System.out.println(toRespond);
+											pmw = new PresentationMailWindow(toRespond);
+											pmw.getFrame().setVisible(true);
+											frame.setVisible(false);
+										}
+									}
+								}
+							if (rdbtnEmailsDirector.isSelected()) {
+								if (!mail.connectedToInternet()) {
+									JOptionPane.showMessageDialog(null, "N�o � poss�vel enviar e-mails offline");
+								} else {
+									for (int i = 0; i < mail.getEmailsReitor().size(); i++) {
+										if (i == index) {
+											toRespond = mail.getEmailsReitor().getElementAt(i);
+											System.out.println(toRespond);
+											pmw = new PresentationMailWindow(toRespond);
+											pmw.getFrame().setVisible(true);
+											frame.setVisible(false);
+										}
+									}
+								}
 							}
 						}
-					}
+					});
 				}
 			}
 		});
 
-		JPanel panel_5 = new JPanel();
 		panel_5.setBackground(Color.LIGHT_GRAY);
 		panel_5.setBounds(455, 9, 164, 43);
 		panel.add(panel_5);
@@ -291,8 +310,62 @@ public class SentMailWindow {
 		btnFiltrard.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				mail.filtrarUltimas24horas();
-				list_1.setModel(mail.post_24h);
+				try {
+					mail.filtrarUltimas24horas();
+				} catch (MessagingException e1) {
+					e1.printStackTrace();
+				}
+				list_1.setModel(mail.getPost_24h());
+			}
+		});
+
+		list_1.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent evt) {
+				int index = list_1.getSelectedIndex();
+				if (evt.getClickCount() == 2) {
+					if (!mail.connectedToInternet()) {
+						JOptionPane.showMessageDialog(null, "Precisa de estar online para ver conte�do do e-mail");
+					} else {
+						String from = mail.getUsername();
+						String password = mail.getPass();
+						try {
+							Properties properties = new Properties();
+							properties.put("mail.pop3.host", "outlook.office365.com");
+							properties.put("mail.pop3.port", "995");
+							properties.put("mail.pop3s.ssl.trust", "*"); // This is the most IMP property
+							Session emailSession = Session.getDefaultInstance(properties);
+							Store store = emailSession.getStore("pop3s"); // try imap or impas
+							store.connect("outlook.office365.com", from, password);
+							Folder emailFolder = store.getFolder("INBOX");
+							emailFolder.open(Folder.READ_ONLY);
+							messages = emailFolder.getMessages();
+							for (int i = 0; i < mail.getlistaDeEmails().size(); i++) {
+									if (index == i) {
+										popup = new PopUp_Mail();
+										popup.getTextArea().setText(mail.getlistaDeEmails().get(i));
+										popup.getFrame().setVisible(true);
+										popup.getTextArea().setLineWrap(true);
+										popup.getTextArea().setWrapStyleWord(true);
+									}
+							}
+							for (int j = 0; j < mail.getEmailsReitor().size(); j++) {
+									if(index == j) {
+										popup = new PopUp_Mail();
+										popup.getTextArea().setText(mail.getEmailsReitor().get(j));
+										popup.getFrame().setVisible(true);
+										popup.getTextArea().setLineWrap(true);
+										popup.getTextArea().setWrapStyleWord(true);
+								}
+							}
+							emailFolder.close(false);
+							store.close();
+						} catch (NoSuchProviderException nspe) {
+							nspe.printStackTrace();
+						} catch (MessagingException me) {
+							me.printStackTrace();
+						}
+					}
+				}
 			}
 		});
 	}
@@ -304,5 +377,7 @@ public class SentMailWindow {
 	public void setFrame(JFrame frame) {
 		this.frame = frame;
 	}
+
+	JPanel panel_5 = new JPanel();
 
 }
